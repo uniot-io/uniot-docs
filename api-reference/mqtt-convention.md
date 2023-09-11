@@ -10,6 +10,89 @@ Uniot relies on MQTT protocol version 3.1.1, as it is the most widespread and we
 
 In the Uniot Platform, MQTT topics are structured to ensure logical organization and efficient communication.
 
+### **Device Communication**
+
+1. **Device Online Status & Capabilities**
+   * **Topic Format:** `<domain>/users/<userId>/devices/<deviceId>/status`
+   * **Purpose:** Denotes the online/offline status and provides key device metadata.
+   *   **Message Example (CBOR rendered as JSON):**
+
+       ```json
+       {
+         "online": 1,
+         "id": 0,
+         "primitives": ["device_write", "device_read", "analog_write", "analog_read", "button_clicked"],
+         "creator": "UNIOT",
+         "mqtt_size": 1024,
+         "d_in": 3,
+         "d_out": 3,
+         "a_in": 1,
+         "a_out": 3,
+         "timestamp": 1679968923
+       }
+
+       ```
+2. **Device Command and Scripting**
+   * **Topic Format:** `<domain>/users/<userId>/devices/<deviceId>/script`
+   * **Purpose:** For sending command scripts to devices.
+   *   **Message Example (CBOR rendered as JSON):**
+
+       ```json
+       {
+         "runtime": "uLisp",
+         "version": "0.1.3",
+         "code": "(task 30 300 ' (list (device_write 0 (= (% #t_pass 2) 0))))",
+         "timestamp": 1679968928
+       }
+
+       ```
+
+### **Event Communication**
+
+1. **User Device Events**
+   * **Topic Format:** `<domain>/users/<userId>/devices/<deviceId>/event/<eventID>`
+   * Users can create custom event types and publish messages to them.
+   *   **Message Example (CBOR rendered as JSON):**
+
+       ```json
+       {
+         "eventID": "rgb",
+         "value": 5007612,
+         "sender": {
+           "type": "device",
+           "id": "c8c9a30bdf9c"
+         },
+         "timestamp": 1679968935
+       }
+       ```
+2. **User Group Events**
+   * **Topic Format:** `<domain>/users/<userId>/groups/<groupId>/event/<eventID>`
+3. **Shared Group Events (Open to multiple users)**
+   * **Topic Format:** `<domain>/groups/shared/<sharedGroupId>/event/<eventID>`
+
+### **Group Classification**
+
+1.  **Personal Groups:** These are user-specific groups, where devices belonging to a single user are grouped together based on some criteria (e.g., function, location, or device type).
+
+    Topic: `<domain>/users/<userId>/groups/<groupId>/event/<eventID>`
+
+    Or: `<domain>/groups/private/<privateGroupId>/event/<eventID>`
+2.  **Shared Groups:** These are groups where devices from different users can join and share data or events.
+
+    Topic: `<domain>/groups/shared/<sharedGroupId>/event/<eventID>`
+3.  **Public Groups:** These might be open groups where any device or user can join, and data is made public for anyone to subscribe to. This could be useful for open-source projects or community-driven initiatives.
+
+    Topic: `<domain>/groups/public/<publicGroupId>/event/<eventID>`
+4.  **Collaborative Groups:** This is a blend of personal and shared groups. Here, a user can create a group and invite specific users to join. Only invited users can contribute, but all members can view or act on the data.
+
+    Topic: `<domain>/groups/collab/<collabGroupId>/event/<eventID>`
+5.  **Role-based Groups:** Devices are grouped based on roles. For instance, in a smart home setup, you might have groups like 'Security Devices', 'Entertainment Devices', etc.
+
+    Topic: `<domain>/groups/role/<roleGroupId>/event/<eventID>`
+6.  **Geo-based Groups:** Devices are grouped based on their geographical locations, useful for scenarios like smart city implementations where devices in a particular area or region might need to communicate more frequently.
+
+    Topic: `<domain>/groups/geo/<geoGroupId>/event/<eventID>`
+
 ## Payload Types
 
 While the primary payload type used by the Uniot Platform is CBOR (Concise Binary Object Representation), the platform's flexible architecture allows users to create custom topics tailored to their specific needs and third-party applications. In such cases, any data format can be employed, providing the freedom to choose the most suitable format for specific use cases. This flexibility ensures that Uniot can be seamlessly integrated with a wide range of devices and systems without sacrificing efficiency or compatibility.
