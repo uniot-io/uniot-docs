@@ -25,3 +25,5 @@
     * [Functions](sandbox/visual-block-editor/functions.md)
     * [Special Blocks](sandbox/visual-block-editor/special-blocks.md)
     * [Primitives](sandbox/visual-block-editor/primitives.md)
+  * [Logger](sandbox/logger.md)
+  * [Emulator](sandbox/emulator.md)
