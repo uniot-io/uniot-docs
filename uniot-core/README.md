@@ -20,26 +20,25 @@ Let's take a closer look at the architecture and what each module entails:
 
 1. **Core:** The Core module holds the fundamental classes of Uniot Core.
    * [**Scheduler**](scheduler/)**:** Task scheduling and execution.
-   * **Broker:** Contains classes related to message brokering, such as Publisher, Subscriber, and more.
-   * **Storage:** For various storage needs, such as CrashStorage and WifiStorage.
-   * **Network:** Covers network devices, schedulers, and configuration.
+   * [**EventBus**](eventbus/)**:** Contains classes related to event-driven communication between publishers and subscribers.
+   * [**Storage**](storage/) For various storage needs, such as CrashStorage and WifiStorage.
+   * [**Network**](network/)**:** Covers network devices, schedulers, and configuration.
+   * [**Register**](register/)**:** Registering GPIO pins, objects, and managing their associations.
    * [**Utils**](utils/)**:** Utility classes including ArrayBuilder, StringUtils, and more.
-   * **CBORWrapper:** Handles CBOR arrays and objects.
-   * **MQTTWrapper:** Classes for MQTT device handling and communication.
-   * **LispWrapper:** Includes Lisp helper and expediter classes.
-   * **Hardware:** Classes for hardware interfaces, like Buttons.
-   * _**Credentials:**_ Managing authentication and authorization.
+   * [**CBORWrapper**](cborwrapper/)**:** Handles CBOR arrays and objects.
+   * [**MQTTWrapper**](mqttwrapper/)**:** Classes for MQTT device handling and communication.
+   * [**LispWrapper**](lispwrapper/)**:** Includes Lisp helper and expeditor classes.
+   * [**Hardware**](hardware/)**:** Classes for hardware interfaces, like Buttons.
+   * [**Credentials**](credentials.md) Managing authentication and authorization.
    * _**Logger:**_ Logging utilities.
-   * _**PinMap:**_ Handling of pin mapping.
-2. **AppKit:** This module contains classes that form the application toolkit.
-   * **AppKit:** Main application handling.
-   * **LispDevice:** Integration of Lisp device.
-   * **LispPrimitives:** Primitive operations within the Lisp environment.
-3. **Platforms:**
-   * **Board-WittyCloud:** Platform-specific configuration for the Witty Cloud board.
-4. **Uniot**
-   * **Uniot:** Entry point for Uniot initialization.
-5. **WebPages**
+2. [**AppKit**](appkit/)**:** This module contains classes that form the application toolkit.
+   * [**AppKit**](appkit/appkit.md)**:** Main application handling.
+   * [**LispDevice**](appkit/lispdevice.md)**:** Integration of Lisp device.
+   * [**LispPrimitives**](appkit/lispprimitives.md)**:** Primitive operations within the Lisp environment.
+   * [**TopDevice**](appkit/topdevice.md)**:** Handling device-specific debugging functionalities
+3. **Uniot**
+   * [**Uniot**](uniot.md)**:** Entry point for Uniot initialization.
+4. **WebPages**
    * **config.min.html.gz.h:** The compiled Captive Portal configuration page.
 
 For detailed descriptions of each class and module, please navigate to their specific documentation pages.

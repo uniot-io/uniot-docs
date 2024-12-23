@@ -12,7 +12,7 @@ The Scheduler module in Uniot Core is an essential component that provides a rob
 
 An interface providing a protocol for objects that have executable tasks. It establishes a uniform method of execution, ensuring that any implementing object can be managed by the system's scheduler.
 
-[**ISchedulerKitConnection**](ischedulerkitconnection.md)
+[**ISchedulerKitConnection**](ischedulerconnectionkit.md)
 
 An essential bridge between various system objects and the `TaskScheduler`. This interface defines the protocol for how different entities, be it tasks or devices, integrate and interact with the core time management system.
 
