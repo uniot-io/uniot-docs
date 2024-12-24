@@ -6,27 +6,33 @@ Once you’ve defined a function, you can invoke it anywhere in your script.
 
 ## function definition
 
+<figure><img src="../../.gitbook/assets/functions_template.png" alt=""></figure>
+
 Defines a reusable function. May include parameters and a return value if configured.
 
-### Parameters
+<figure><img src="../../.gitbook/assets/functions_example.png" alt=""></figure>
+
+**Parameters:**
 
 * **Function Name** (String)
 * **Parameters** (Optional, various types)
 
-### Returns
+**Returns:**
 
 * **None** if no return is configured, or **Any type** if a return value is defined.
 
 ## function call
 
+<figure><img src="../../.gitbook/assets/functions_call.png" alt=""></figure>
+
 Calls a previously defined function, passing any required parameters.
 
-### Parameters
+**Parameters:**
 
 * **Function Name** (string): The name of the function being called.
 * **Input(s)** (optional): A value or expression for each parameter required by the function.
 
-### Returns
+**Returns:**
 
 * Depends on Function Definition:
   * If the function includes a return statement, this block will return the calculated result.

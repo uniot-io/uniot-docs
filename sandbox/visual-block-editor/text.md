@@ -9,44 +9,52 @@ The Text section provides blocks designed to handle and transform textual data, 
 
 ## value
 
+<figure><img src="../../.gitbook/assets/text_value.png" alt=""></figure>
+
 Represents a string of text that can be used as an input for other blocks in Blockly. It allows users to input or define a fixed piece of text for use in text manipulation, display, or logic operations.
 
-### Parameters
+**Parameters:**
 
 * **Text Value** (string)
 
-### Returns
+**Returns:**
 
 * **String**: The provided text.
 
 ## quote
 
+<figure><img src="../../.gitbook/assets/text_quote.png" alt=""></figure>
+
 Takes a numeric expression (or value) and converts it into a text string
 
-### Parameters
+**Parameters:**
 
 * **Expression** (number or operation): A number or a mathematical expression that will be evaluated and converted into a string.
 
-### Returns
+**Returns:**
 
 * **String**: The result of the numeric expression, converted to a text format.
 
 ## eval
 
+<figure><img src="../../.gitbook/assets/text_eval.png" alt=""></figure>
+
 Evaluates a numeric expression that has been converted to a text format and returns the numeric result of the calculation.
 
-### Parameters
+**Parameters:**
 
 * **Expression** (number or operation): A number or a mathematical expression that will be evaluated and converted into a string.
 
-### Returns
+**Returns:**
 
 * **String**: The result of the numeric expression, converted to a text format.
 
 ## print
 
+<figure><img src="../../.gitbook/assets/text_print.png" alt=""></figure>
+
 Sends a log to the MQTT broker. Logs appear on the device details page.
 
-### Parameters
+**Parameters:**
 
 * **Message** (string): A message to be sent as a log

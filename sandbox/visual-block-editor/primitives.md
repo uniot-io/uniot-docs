@@ -10,75 +10,87 @@ Using these primitives, you can easily incorporate hardware interaction into you
 
 ## analog read
 
+<figure><img src="../../.gitbook/assets/primitives_analog_read.png" alt=""></figure>
+
 Reads the value from an analog pin.
 
 > Read more about [analogRead()](https://docs.arduino.cc/language-reference/en/functions/analog-io/analogRead/) in Arduino
 
-### Parameters
+**Parameters:**
 
 * **Pin Number** (Number)
 
-### Returns
+**Returns:**
 
 * **Number**: In the range 0–1023.
 
 ## analog write
 
+<figure><img src="../../.gitbook/assets/primitives_analog_write.png" alt=""></figure>
+
 Writes a value to an analog pin.
 
 > Read more about [analogWrite()](https://docs.arduino.cc/language-reference/en/functions/analog-io/analogWrite/) in Arduino
 
-### Parameters
+**Parameters:**
 
 * **Pin Number** (Number)
 * **Value** (Number, 0-1023)
 
 ## digital read
 
+<figure><img src="../../.gitbook/assets/primitives_digital_read.png" alt=""></figure>
+
 Reads the digital state of a pin.
 
 > Read more about [digitalRead()](https://docs.arduino.cc/language-reference/en/functions/digital-io/digitalread/) in Arduino
 
-### Parameters
+**Parameters:**
 
 * **Pin Number** (Number)
 
-### Returns
+**Returns:**
 
 * **Boolean**: `true` (`HIGH` signal) or `false` (`LOW` signal)
 
 ## digital write
 
+<figure><img src="../../.gitbook/assets/primitives_digital_write.png" alt=""></figure>
+
 Sets a state to a pin.
 
 > Read more about [digitalWrite()](https://docs.arduino.cc/language-reference/en/functions/digital-io/digitalwrite/) in Arduino
 
-### Parameters
+**Parameters:**
 
 * **Pin Number** (Number)
 * **Boolean** `true` (`HIGH`) or `false` (`LOW`)
 
 ## button clicked
 
+<figure><img src="../../.gitbook/assets/primitives_button_clicked.png" alt=""></figure>
+
 Checks if a button on a specified pin has been clicked since last check.
 
-### Parameters
+**Parameters:**
 
 * **Pin Number** (Number)
 
-### Returns
+**Returns:**
 
 * **Boolean**: `true` if clicked, `false` otherwise.
 
 ## user primitive
 
+<figure><img src="../../.gitbook/assets/primitives_user_primitive.png" alt=""></figure>
+
 A template for defining custom primitives with configurable parameters and return values.\
 The user primitive returns a boolean value by default. If you need to perform only some actions and do not expect any data in response, you need to customize the block by clicking on the gear icon.
 
-### Parameters
+**Parameters:**
 
 * **Parameters** (As defined by the user)
 
-### Returns
+**Returns:**
 
 * **Any type**: As defined by the user.

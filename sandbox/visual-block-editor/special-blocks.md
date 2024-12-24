@@ -1,4 +1,4 @@
-# Special Blocks
+# Special
 
 The Special section provides blocks that allow you to add structure, timing, and event-driven behavior to your scripts. With these blocks, you can:
 
@@ -10,18 +10,22 @@ By using these Special blocks, you can create dynamic, event-responsive, and tim
 
 ## task
 
+<figure><img src="../../.gitbook/assets/special_main.png" alt=""></figure>
+
 Defines the primary execution loop for your script.
 
-### Parameters
+**Parameters:**
 
 * **Number of Executions** (Number): 0 for infinite.
 * **Frequency** (Number, ms): Delay between executions.
 
 ## task pass
 
+<figure><img src="../../.gitbook/assets/special_iterator.png" alt=""></figure>
+
 Returns iteration information about the current task execution.\\
 
-### Returns
+**Returns:**
 
 * **Number**: `-1` if infinite; otherwise a countdown from `n-1` to `0`.
 
@@ -29,33 +33,39 @@ Returns iteration information about the current task execution.\\
 
 ## is event
 
+<figure><img src="../../.gitbook/assets/special_is_event.png" alt=""></figure>
+
 Checks if an event with a specified name has been received from the MQTT broker.
 
-### Parameters
+**Parameters:**
 
 * **Event Name** (String)
 
-### Returns
+**Returns:**
 
 * **Boolean**: `true` if the event is present, `false` otherwise.
 
 ## pop event
 
+<figure><img src="../../.gitbook/assets/special_pop_event.png" alt=""></figure>
+
 Retrieves and removes the value associated with a specified event from the MQTT broker.
 
-### Parameters
+**Parameters:**
 
 * **Event Name** (String)
 
-### Returns
+**Returns:**
 
 * **Any type**: The value associated with that event.
 
 ## push event
 
+<figure><img src="../../.gitbook/assets/special_push_event.png" alt=""></figure>
+
 Sends an event with a value to the MQTT broker.
 
-### Parameters
+**Parameters:**
 
 * **Event Name** (String)
 * **Value** (Number, Boolean)

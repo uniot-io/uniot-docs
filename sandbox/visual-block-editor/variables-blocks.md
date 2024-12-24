@@ -1,4 +1,4 @@
-# Variables Blocks
+# Variables
 
 Variables allow you to store, retrieve, and manipulate data within the script. They are essential for keeping track of changing values, such as sensor readings, user inputs, or counters.
 
@@ -6,40 +6,48 @@ Variables allow you to store, retrieve, and manipulate data within the script. T
 
 ## set
 
+<figure><img src="../../.gitbook/assets/variables_set.png" alt=""></figure>
+
 Assigns a specified value to a variable. If the variable does not yet exist, this action creates it.
 
-### Parameters
+**Parameters:**
 
 * **Variable Name** (String): The name of the variable to set.
 * **Value** (Any type): The value to store in the variable.
 
 ## get
 
+<figure><img src="../../.gitbook/assets/variables_get.png" alt=""></figure>
+
 Retrieves the current value stored in a variable.
 
-### Parameters
+**Parameters:**
 
 * **Variable Name** (String): The name of the variable whose value you want to access.
 
-### Returns
+**Returns:**
 
 * **Any type**: The current value of the specified variable.
 
 ## change
 
+<figure><img src="../../.gitbook/assets/variables_change.png" alt=""></figure>
+
 Modifies a numeric variable by adding a specified amount to its current value. This is a shorthand operation for incrementing or decrementing numerical values stored in variables.
 
-### Parameters
+**Parameters:**
 
 * **Variable Name** (String): The name of the variable to change.
 * **Amount** (Number): The value to add to the variable’s current value.
 
 ## Dropdown menu
 
+<figure><img src="../../.gitbook/assets/variables_dropdown.png" alt=""></figure>
+
 Clicking on a variable's dropdown symbol (triangle) gives the following menu:
 
 The menu provides the following options.
 
-* the names of all existing variables defined in the program.
+* The names of all existing variables defined in the program.
 * "Rename variable...", changes the name of this variable wherever it appears in the program. Selecting this option opens a prompt for the new name.
 * "Delete the variable...", deletes all blocks that reference this variable wherever it appears in the program.

@@ -4,13 +4,13 @@ The emulator is a debugging tool that provides a virtual simulation of the primi
 
 By interacting with the emulator, you can simulate input and output, and test user-defined primitives with ease. This ensures your script behaves as expected in a controlled environment.
 
-## Components
-
 ### Digital Read
+
+<figure><img src="../.gitbook/assets/digital_read.png" alt=""></figure>
 
 The Digital Read component simulates the digital state of a specific pin. It acts as a toggle switch, allowing you to change the state manually and observe how the script reacts.
 
-> A block in the visual editor
+> [A block in the visual editor](./visual-block-editor/primitives.md#digital-read)
 
 **Features**:
 
@@ -21,13 +21,13 @@ The Digital Read component simulates the digital state of a specific pin. It act
 
 * Use this component to test scripts that rely on digital input (e.g., buttons, sensors).
 
-***
-
 ### DigitalWrite
+
+<figure><img src="../.gitbook/assets/digital_write.png" alt=""></figure>
 
 The Digital Write component displays the current state of a digital pin as set by your script. It provides visual feedback to verify that your script correctly controls the pin.
 
-> A block in the visual editor
+> [A block in the visual editor](./visual-block-editor/primitives.md#digital-write)
 
 **Features**:
 
@@ -38,13 +38,13 @@ The Digital Write component displays the current state of a digital pin as set b
 
 * Use this component to confirm that digital outputs (e.g., LEDs, relays) are correctly controlled by your script.
 
-***
-
 ### AnalogRead
+
+<figure><img src="../.gitbook/assets/analog_read.png" alt=""></figure>
 
 The Analog Read component is a knob that simulates a range of analog values for a specific pin. By rotating the knob, you can set the input value dynamically.
 
-> A block in the visual editor
+> [A block in the visual editor](./visual-block-editor/primitives.md#analog-read)
 
 **Features**:
 
@@ -55,13 +55,13 @@ The Analog Read component is a knob that simulates a range of analog values for 
 
 * Use this component to test scripts that depend on analog inputs, such as sensors (e.g., temperature, light, potentiometers).
 
-***
-
 ### AnalogWrite
+
+<figure><img src="../.gitbook/assets/analog_write.png" alt=""></figure>
 
 The Analog Write component displays the current analog output value of a specific pin as controlled by your script. This is commonly used to simulate devices or systems that require fine control over output levels, such as adjusting the intensity of an LED or controlling the position of a servo motor.
 
-> A block in the visual editor
+> [A block in the visual editor](./visual-block-editor/primitives.md#analog-write)
 
 **Features**:
 
@@ -72,13 +72,13 @@ The Analog Write component displays the current analog output value of a specifi
 
 * Use this component to verify analog outputs.
 
-***
-
 ### ButtonClicked
+
+<figure><img src="../.gitbook/assets/button_clicked.png" alt=""></figure>
 
 The Button Clicked component simulates a physical button connected to a specific pin. Clicking the button toggles its state, which is reflected in the script.
 
-> A block in the visual editor
+> [A block in the visual editor](./visual-block-editor/primitives.md#button-clicked)
 
 **Features**:
 
@@ -89,13 +89,13 @@ The Button Clicked component simulates a physical button connected to a specific
 
 * Use this component to test scripts that rely on button inputs for triggering events.
 
-***
-
 ### User Primitive
+
+<figure><img src="../.gitbook/assets/user_primitive.png" alt=""></figure>
 
 User-defined primitives provide a way to create custom interactions and behaviors. This component is dynamically generated based on the parameters defined in your script. It displays the parameters provided by the script and allows you to configure the return value interactively.
 
-> A block in the visual editor
+> [A block in the visual editor](./visual-block-editor/primitives.md#user-primitive)
 
 **Features**:
 
@@ -113,3 +113,5 @@ The configuration modal enables you to:
   * Dynamically: Write a JavaScript function that calculates the return value in real-time.
 
 The JavaScript function executes in a secure, sandboxed environment. This ensures safe and isolated execution of user-provided code.
+
+<figure><img src="../.gitbook/assets/user_primitive_settings.gif" alt=""></figure>
