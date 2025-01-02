@@ -6,11 +6,11 @@ Once you’ve defined a function, you can invoke it anywhere in your script.
 
 ## function definition
 
-<figure><img src="../../.gitbook/assets/functions_template.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/functions_template.png" alt=""><figcaption></figcaption></figure></div>
 
 Defines a reusable function. May include parameters and a return value if configured.
 
-<figure><img src="../../.gitbook/assets/functions_example.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/functions_example.png" alt=""><figcaption></figcaption></figure></div>
 
 **Parameters:**
 
@@ -23,7 +23,7 @@ Defines a reusable function. May include parameters and a return value if config
 
 ## function call
 
-<figure><img src="../../.gitbook/assets/functions_call.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/functions_call.png" alt=""><figcaption></figcaption></figure></div>
 
 Calls a previously defined function, passing any required parameters.
 

@@ -8,7 +8,7 @@ The Loops section provides blocks that enable you to repeatedly execute a set of
 
 ## repeat
 
-<figure><img src="../../.gitbook/assets/loops_repeat.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/loops_repeat.png" alt=""><figcaption></figcaption></figure></div>
 
 The simplest "repeat" block runs the code in its body the specified number of times. For example, the block on the image will print "Hello!" ten times.
 
@@ -18,7 +18,7 @@ The simplest "repeat" block runs the code in its body the specified number of ti
 
 ## repeat while
 
-<figure><img src="../../.gitbook/assets/loops_repeat_while.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/loops_repeat_while.png" alt=""><figcaption></figcaption></figure></div>
 
 Repeats the enclosed blocks as long as a condition is `true`.
 
@@ -28,7 +28,7 @@ Repeats the enclosed blocks as long as a condition is `true`.
 
 ## repeat until
 
-<figure><img src="../../.gitbook/assets/loops_repeat_until.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/loops_repeat_until.png" alt=""><figcaption></figcaption></figure></div>
 
 Repeats the enclosed blocks until a condition is `true`.
 
@@ -38,7 +38,7 @@ Repeats the enclosed blocks until a condition is `true`.
 
 ## iterator
 
-<figure><img src="../../.gitbook/assets/loops_iterator.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/loops_iterator.png" alt=""><figcaption></figcaption></figure></div>
 
 A block that returns an [iterator](https://en.wikipedia.org/wiki/For_loop#Loop_counters).
 
@@ -48,5 +48,4 @@ A block that returns an [iterator](https://en.wikipedia.org/wiki/For_loop#Loop_c
 
 > _**NOTE**_: An iterator can not be used outside the loop.
 >
-> <figure><img src="../../.gitbook/assets/loops_iterator_outside.png" alt=""></figure>
-
+> <img src="../../../.gitbook/assets/loops_iterator_outside.png" alt="" data-size="original">

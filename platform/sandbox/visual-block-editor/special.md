@@ -10,7 +10,7 @@ By using these Special blocks, you can create dynamic, event-responsive, and tim
 
 ## task
 
-<figure><img src="../../.gitbook/assets/special_main.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/special_main.png" alt=""><figcaption></figcaption></figure></div>
 
 Defines the primary execution loop for your script.
 
@@ -21,7 +21,7 @@ Defines the primary execution loop for your script.
 
 ## task pass
 
-<figure><img src="../../.gitbook/assets/special_iterator.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/special_iterator.png" alt=""><figcaption></figcaption></figure></div>
 
 Returns iteration information about the current task execution.\\
 
@@ -33,7 +33,7 @@ Returns iteration information about the current task execution.\\
 
 ## is event
 
-<figure><img src="../../.gitbook/assets/special_is_event.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/special_is_event.png" alt=""><figcaption></figcaption></figure></div>
 
 Checks if an event with a specified name has been received from the MQTT broker.
 
@@ -47,7 +47,7 @@ Checks if an event with a specified name has been received from the MQTT broker.
 
 ## pop event
 
-<figure><img src="../../.gitbook/assets/special_pop_event.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/special_pop_event.png" alt=""><figcaption></figcaption></figure></div>
 
 Retrieves and removes the value associated with a specified event from the MQTT broker.
 
@@ -61,7 +61,7 @@ Retrieves and removes the value associated with a specified event from the MQTT 
 
 ## push event
 
-<figure><img src="../../.gitbook/assets/special_push_event.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/special_push_event.png" alt=""><figcaption></figcaption></figure></div>
 
 Sends an event with a value to the MQTT broker.
 

@@ -1,13 +1,13 @@
 # Visual Block Editor
 
-Our Visual Block Editor is based on [Blockly](https://developers.google.com/blockly). With it, you can create scripts by assembling visual blocks. These scripts are then converted into LISP code and can be deployed to your IoT device.
+Our Visual Block Editor is based on [Blockly](https://developers.google.com/blockly). With it, you can create scripts by assembling visual blocks. These scripts are then converted into [UniotLisp](../../../advanced/uniot-lisp/language-description.md) code and can be deployed to your IoT device.
 
 ## How It Works
 
 1. **Arrange Blocks**: Drag and drop visual blocks to build your logic.
 2. **Interact with hardware**: Handle hardware I/O, read data, and manipulate state with [Primitives](primitives.md)
-3. **Interact with MQTT**: Handle events, push and pop event payloads, and integrate with external IoT services.
-4. **Generate LISP**: Compile your script to get LISP code.
+3. **Interact with MQTT**: Handle events, push and pop event payloads.
+4. **Generate LISP**: Compile your script to get [UniotLisp](../../../advanced/uniot-lisp/language-description.md) code.
 
 ## Components
 

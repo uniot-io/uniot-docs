@@ -37,9 +37,8 @@ Let's take a closer look at the architecture and what each module entails:
    * [**LispPrimitives**](appkit/lispprimitives.md)**:** Primitive operations within the Lisp environment.
    * [**TopDevice**](appkit/topdevice.md)**:** Handling device-specific debugging functionalities
 3. **Uniot**
-   * [**Uniot**](uniot.md)**:** Entry point for Uniot initialization.
+   * [**Uniot**](../../uniot-core/uniot.md)**:** Entry point for Uniot initialization.
 4. **WebPages**
    * **config.min.html.gz.h:** The compiled Captive Portal configuration page.
 
 For detailed descriptions of each class and module, please navigate to their specific documentation pages.
-

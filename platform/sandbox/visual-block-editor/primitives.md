@@ -10,7 +10,7 @@ Using these primitives, you can easily incorporate hardware interaction into you
 
 ## analog read
 
-<figure><img src="../../.gitbook/assets/primitives_analog_read.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/primitives_analog_read.png" alt=""><figcaption></figcaption></figure></div>
 
 Reads the value from an analog pin.
 
@@ -26,7 +26,7 @@ Reads the value from an analog pin.
 
 ## analog write
 
-<figure><img src="../../.gitbook/assets/primitives_analog_write.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/primitives_analog_write.png" alt=""><figcaption></figcaption></figure></div>
 
 Writes a value to an analog pin.
 
@@ -39,7 +39,7 @@ Writes a value to an analog pin.
 
 ## digital read
 
-<figure><img src="../../.gitbook/assets/primitives_digital_read.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/primitives_digital_read.png" alt=""><figcaption></figcaption></figure></div>
 
 Reads the digital state of a pin.
 
@@ -55,7 +55,7 @@ Reads the digital state of a pin.
 
 ## digital write
 
-<figure><img src="../../.gitbook/assets/primitives_digital_write.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/primitives_digital_write.png" alt=""><figcaption></figcaption></figure></div>
 
 Sets a state to a pin.
 
@@ -68,7 +68,7 @@ Sets a state to a pin.
 
 ## button clicked
 
-<figure><img src="../../.gitbook/assets/primitives_button_clicked.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/primitives_button_clicked.png" alt=""><figcaption></figcaption></figure></div>
 
 Checks if a button on a specified pin has been clicked since last check.
 
@@ -82,7 +82,7 @@ Checks if a button on a specified pin has been clicked since last check.
 
 ## user primitive
 
-<figure><img src="../../.gitbook/assets/primitives_user_primitive.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/primitives_user_primitive.png" alt=""><figcaption></figcaption></figure></div>
 
 A template for defining custom primitives with configurable parameters and return values.\
 The user primitive returns a boolean value by default. If you need to perform only some actions and do not expect any data in response, you need to customize the block by clicking on the gear icon.

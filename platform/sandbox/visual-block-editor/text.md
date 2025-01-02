@@ -9,7 +9,7 @@ The Text section provides blocks designed to handle and transform textual data, 
 
 ## value
 
-<figure><img src="../../.gitbook/assets/text_value.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/text_value.png" alt=""><figcaption></figcaption></figure></div>
 
 Represents a string of text that can be used as an input for other blocks in Blockly. It allows users to input or define a fixed piece of text for use in text manipulation, display, or logic operations.
 
@@ -23,7 +23,7 @@ Represents a string of text that can be used as an input for other blocks in Blo
 
 ## quote
 
-<figure><img src="../../.gitbook/assets/text_quote.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/text_quote.png" alt=""><figcaption></figcaption></figure></div>
 
 Takes a numeric expression (or value) and converts it into a text string
 
@@ -37,7 +37,7 @@ Takes a numeric expression (or value) and converts it into a text string
 
 ## eval
 
-<figure><img src="../../.gitbook/assets/text_eval.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/text_eval.png" alt=""><figcaption></figcaption></figure></div>
 
 Evaluates a numeric expression that has been converted to a text format and returns the numeric result of the calculation.
 
@@ -51,7 +51,7 @@ Evaluates a numeric expression that has been converted to a text format and retu
 
 ## print
 
-<figure><img src="../../.gitbook/assets/text_print.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/text_print.png" alt=""><figcaption></figcaption></figure></div>
 
 Sends a log to the MQTT broker. Logs appear on the device details page.
 

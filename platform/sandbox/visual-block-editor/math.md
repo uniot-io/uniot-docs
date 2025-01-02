@@ -10,7 +10,7 @@ Using these blocks, you can:
 
 ## value
 
-<figure><img src="../../.gitbook/assets/math_value.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/math_value.png" alt=""><figcaption></figcaption></figure></div>
 
 Represents a constant numeric value that can be used in mathematical operations, logic expressions, etc.
 
@@ -18,7 +18,7 @@ Represents a constant numeric value that can be used in mathematical operations,
 
 ## math operation
 
-<figure><img src="../../.gitbook/assets/math_operation.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/math_operation.png" alt=""><figcaption></figcaption></figure></div>
 
 Performs a mathematical operation on a given number. Specifically, it can either return the absolute value of the number or negate it by applying a negative sign (-).
 
@@ -28,7 +28,7 @@ Performs a mathematical operation on a given number. Specifically, it can either
 
 ## arithmetic
 
-<figure><img src="../../.gitbook/assets/math_arithmetic.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/math_arithmetic.png" alt=""><figcaption></figcaption></figure></div>
 
 Performs an arithmetic operation (add, subtract, multiply, divide) on two numeric inputs.
 
@@ -44,7 +44,7 @@ Performs an arithmetic operation (add, subtract, multiply, divide) on two numeri
 
 ## number condition
 
-<figure><img src="../../.gitbook/assets/math_number_condition.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/math_number_condition.png" alt=""><figcaption></figcaption></figure></div>
 
 Check if a number is an even, odd, positive, negative, or if it is divisible by certain number.
 
@@ -59,7 +59,7 @@ Check if a number is an even, odd, positive, negative, or if it is divisible by 
 
 ## remainder check
 
-<figure><img src="../../.gitbook/assets/math_remainder.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/math_remainder.png" alt=""><figcaption></figcaption></figure></div>
 
 Calculates the remainder of dividing two numbers.
 

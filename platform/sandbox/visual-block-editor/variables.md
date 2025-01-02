@@ -6,7 +6,7 @@ Variables allow you to store, retrieve, and manipulate data within the script. T
 
 ## set
 
-<figure><img src="../../.gitbook/assets/variables_set.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/variables_set.png" alt=""><figcaption></figcaption></figure></div>
 
 Assigns a specified value to a variable. If the variable does not yet exist, this action creates it.
 
@@ -17,7 +17,7 @@ Assigns a specified value to a variable. If the variable does not yet exist, thi
 
 ## get
 
-<figure><img src="../../.gitbook/assets/variables_get.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/variables_get.png" alt=""><figcaption></figcaption></figure></div>
 
 Retrieves the current value stored in a variable.
 
@@ -31,7 +31,7 @@ Retrieves the current value stored in a variable.
 
 ## change
 
-<figure><img src="../../.gitbook/assets/variables_change.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/variables_change.png" alt=""><figcaption></figcaption></figure></div>
 
 Modifies a numeric variable by adding a specified amount to its current value. This is a shorthand operation for incrementing or decrementing numerical values stored in variables.
 
@@ -42,7 +42,7 @@ Modifies a numeric variable by adding a specified amount to its current value. T
 
 ## Dropdown menu
 
-<figure><img src="../../.gitbook/assets/variables_dropdown.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/variables_dropdown.png" alt=""><figcaption></figcaption></figure></div>
 
 Clicking on a variable's dropdown symbol (triangle) gives the following menu:
 

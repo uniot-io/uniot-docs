@@ -6,11 +6,11 @@ By interacting with the emulator, you can simulate input and output, and test us
 
 ### Digital Read
 
-<figure><img src="../.gitbook/assets/digital_read.png" alt=""></figure>
+<div align="left"><figure><img src="../../.gitbook/assets/digital_read.png" alt=""><figcaption></figcaption></figure></div>
 
 The Digital Read component simulates the digital state of a specific pin. It acts as a toggle switch, allowing you to change the state manually and observe how the script reacts.
 
-> [A block in the visual editor](./visual-block-editor/primitives.md#digital-read)
+> [A block in the visual editor](visual-block-editor/primitives.md#digital-read)
 
 **Features**:
 
@@ -23,11 +23,11 @@ The Digital Read component simulates the digital state of a specific pin. It act
 
 ### DigitalWrite
 
-<figure><img src="../.gitbook/assets/digital_write.png" alt=""></figure>
+<div align="left"><figure><img src="../../.gitbook/assets/digital_write.png" alt=""><figcaption></figcaption></figure></div>
 
 The Digital Write component displays the current state of a digital pin as set by your script. It provides visual feedback to verify that your script correctly controls the pin.
 
-> [A block in the visual editor](./visual-block-editor/primitives.md#digital-write)
+> [A block in the visual editor](visual-block-editor/primitives.md#digital-write)
 
 **Features**:
 
@@ -40,11 +40,11 @@ The Digital Write component displays the current state of a digital pin as set b
 
 ### AnalogRead
 
-<figure><img src="../.gitbook/assets/analog_read.png" alt=""></figure>
+<div align="left"><figure><img src="../../.gitbook/assets/analog_read.png" alt=""><figcaption></figcaption></figure></div>
 
 The Analog Read component is a knob that simulates a range of analog values for a specific pin. By rotating the knob, you can set the input value dynamically.
 
-> [A block in the visual editor](./visual-block-editor/primitives.md#analog-read)
+> [A block in the visual editor](visual-block-editor/primitives.md#analog-read)
 
 **Features**:
 
@@ -57,11 +57,11 @@ The Analog Read component is a knob that simulates a range of analog values for 
 
 ### AnalogWrite
 
-<figure><img src="../.gitbook/assets/analog_write.png" alt=""></figure>
+<div align="left"><figure><img src="../../.gitbook/assets/analog_write.png" alt=""><figcaption></figcaption></figure></div>
 
 The Analog Write component displays the current analog output value of a specific pin as controlled by your script. This is commonly used to simulate devices or systems that require fine control over output levels, such as adjusting the intensity of an LED or controlling the position of a servo motor.
 
-> [A block in the visual editor](./visual-block-editor/primitives.md#analog-write)
+> [A block in the visual editor](visual-block-editor/primitives.md#analog-write)
 
 **Features**:
 
@@ -74,11 +74,11 @@ The Analog Write component displays the current analog output value of a specifi
 
 ### ButtonClicked
 
-<figure><img src="../.gitbook/assets/button_clicked.png" alt=""></figure>
+<div align="left"><figure><img src="../../.gitbook/assets/button_clicked.png" alt=""><figcaption></figcaption></figure></div>
 
 The Button Clicked component simulates a physical button connected to a specific pin. Clicking the button toggles its state, which is reflected in the script.
 
-> [A block in the visual editor](./visual-block-editor/primitives.md#button-clicked)
+> [A block in the visual editor](visual-block-editor/primitives.md#button-clicked)
 
 **Features**:
 
@@ -91,11 +91,11 @@ The Button Clicked component simulates a physical button connected to a specific
 
 ### User Primitive
 
-<figure><img src="../.gitbook/assets/user_primitive.png" alt=""></figure>
+<div align="left"><figure><img src="../../.gitbook/assets/user_primitive.png" alt=""><figcaption></figcaption></figure></div>
 
 User-defined primitives provide a way to create custom interactions and behaviors. This component is dynamically generated based on the parameters defined in your script. It displays the parameters provided by the script and allows you to configure the return value interactively.
 
-> [A block in the visual editor](./visual-block-editor/primitives.md#user-primitive)
+> [A block in the visual editor](visual-block-editor/primitives.md#user-primitive)
 
 **Features**:
 
@@ -107,11 +107,11 @@ User-defined primitives provide a way to create custom interactions and behavior
 The configuration modal enables you to:
 
 * Enable or disable a return value for the primitive.
-* Specify the return type, such as Bool, Int, F, or others.
+* Specify the return type, such as Bool, Int, Symbol, or others.
 * Define the return value:
   * Manually: Input a fixed value.
   * Dynamically: Write a JavaScript function that calculates the return value in real-time.
 
 The JavaScript function executes in a secure, sandboxed environment. This ensures safe and isolated execution of user-provided code.
 
-<figure><img src="../.gitbook/assets/user_primitive_settings.gif" alt=""></figure>
+<div align="left"><figure><img src="../../.gitbook/assets/user_primitive_settings.gif" alt=""><figcaption></figcaption></figure></div>

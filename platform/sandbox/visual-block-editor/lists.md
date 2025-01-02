@@ -2,7 +2,7 @@
 
 ## create empty list
 
-<figure><img src="../../.gitbook/assets/lists_create_empty.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/lists_create_empty.png" alt=""><figcaption></figcaption></figure></div>
 
 Creates an empty list.
 
@@ -12,7 +12,7 @@ Creates an empty list.
 
 ## create list with
 
-<figure><img src="../../.gitbook/assets/lists_create_with.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/lists_create_with.png" alt=""><figcaption></figcaption></figure></div>
 
 Creates a list with the specified items.
 
@@ -26,7 +26,7 @@ Creates a list with the specified items.
 
 ## create list
 
-<figure><img src="../../.gitbook/assets/lists_create_list.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/lists_create_list.png" alt=""><figcaption></figcaption></figure></div>
 
 \[description]
 
@@ -40,7 +40,7 @@ Creates a list with the specified items.
 
 ## head (Lisp CAR)
 
-<figure><img src="../../.gitbook/assets/lists_head.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/lists_head.png" alt=""><figcaption></figcaption></figure></div>
 
 \[description]
 
@@ -54,7 +54,7 @@ Creates a list with the specified items.
 
 ## tail (Lisp CDR)
 
-<figure><img src="../../.gitbook/assets/lists_tail.png" alt=""></figure>
+<div align="left"><figure><img src="../../../.gitbook/assets/lists_tail.png" alt=""><figcaption></figcaption></figure></div>
 
 \[description]
 

@@ -8,7 +8,7 @@ The `Storage` module is a fundamental component of the Uniot Core, responsible f
 
 The `Storage` class serves as the core component for handling file system operations. It abstracts the underlying file system differences between ESP8266 and ESP32 platforms by utilizing `SPIFFS` or `LittleFS` based on configuration. This class provides methods to store, restore, and clean data from specified file paths, ensuring efficient and reliable data management. It also manages the mounting and unmounting of the file system, optimizing resource usage by tracking active instances.
 
-[**CBORStorage**](cborstorage)
+[**CBORStorage**](../../../uniot-core/storage/cborstorage/)
 
 The `CBORStorage` class extends the `Storage` class to support structured data management using CBOR (Concise Binary Object Representation). This allows for efficient serialization and deserialization of complex data structures, making it ideal for storing configuration settings and other structured information. By leveraging CBOR, `CBORStorage` ensures that data is stored in a compact and easily parsable format, enhancing the versatility and scalability of the storage solutions within the Uniot framework.
 
