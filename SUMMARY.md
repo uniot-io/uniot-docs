@@ -3,7 +3,7 @@
 * [Introduction](README.md)
 * [Getting Started](getting-started/README.md)
   * [Firmware](getting-started/firmware.md)
-  * [Connecting a device](getting-started/connecting-a-device.md)
+  * [Connect Device](getting-started/connect-device.md)
   * [Troubleshooting](getting-started/troubleshooting.md)
 * [Guides](guides/README.md)
 

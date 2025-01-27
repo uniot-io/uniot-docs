@@ -2,15 +2,17 @@
 
 With Uniot Core, you don't have to worry about complexity anymore. Task scheduling, networking, storage management, and more - Uniot Core takes care of it all. You just need to describe the functionality of your specific device to unlock its full potential within the Uniot Platform.
 
-We have a <a href="https://github.com/uniot-io/uniot-firmwares" target="_blank">library</a> of ready-made firmwares. Any member of the community can submit their own firmware, and we will be happy to review and add it to the library. If there is a ready-made solution for your device, you can skip step 1 and go straight to [flashing a device](#2-flashing-a-device).
+We have a [library](https://github.com/uniot-io/uniot-firmwares) of ready-made firmwares. Any member of the community can submit their own firmware, and we will be happy to review and add it to the library. If there is a ready-made solution for your device, you can go straight to [flashing a device](#flashing-a-device).
 
-## 1. Writing a firmware
+## Writing a firmware
 
-For a better understanding of how Uniot Core works, we recommend that you read the documentation [here](../advanced/uniot-core/README.md)
+For a better understanding of how Uniot Core works, we recommend that you read the related documentation [here](../advanced/uniot-core/README.md)
 
 ### Setup PlatformIO
 
-Uniot Core employs <a href="https://platformio.org/" target="_blank">PlatformIO</a>, an open source ecosystem for IoT development, to manage the project's environment. This includes dependency management, streamlined build processes, and integration with various IDEs, ensuring a smooth development experience. The below is an example of PlatformIO configuration file with two environments (ESP8266 and ESP32):
+Uniot Core employs [PlatformIO](https://platformio.org/), an open source ecosystem for IoT development, to manage the project's environment. This includes dependency management, streamlined build processes, and integration with various IDEs, ensuring a smooth development experience. The below is an example of PlatformIO configuration file with two environments (ESP8266 and ESP32):
+
+{% code title="platformio.ini" overflow="wrap" %}
 
 ```ini
 [platformio]
@@ -43,6 +45,8 @@ framework = arduino
 board = esp32doit-devkit-v1
 monitor_filters = default, esp32_exception_decoder
 ```
+
+{% endcode %}
 
 ### Hardware common
 
@@ -111,9 +115,7 @@ void setup() {
 }
 ```
 
-This is a standard Arduino function that runs once when the device boots up. Here we initialize the core services, configure the network controller, configure the GPIO pins as digital and analog inputs and outputs, and describe your own primitives if necessary.
-
-Let's dive deeper into each part.
+This is a standard Arduino function that runs once when the device boots up. Here we initialize the core services, configure the network controller, configure the GPIO pins as digital and analog inputs and outputs, and describe your own primitives if necessary. Let's dive deeper into each part.
 
 ---
 
@@ -192,7 +194,9 @@ void loop() {
 
 This is a standard Arduino function that continuously runs after ``` void setup()```
 
-### The complete example
+### Complete Example
+
+{% code title="main.cpp" overflow="wrap" lineNumbers="true" %}
 
 ```cpp
 #include <AppKit.h>
@@ -247,8 +251,10 @@ void loop() {
 }
 ```
 
-## 2. Flashing a device
+{% endcode %}
+
+## Flashing a device
 
 Once the code is ready, you can build it and flash the device using PlatformIO. You can simply do this with the VSCode extension as shown in the screenshot:
 
-<div align="left"><figure><img src="../.gitbook/assets/platformio_upload.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/platformio_upload.png" alt=""><figcaption></figcaption></figure></div>
