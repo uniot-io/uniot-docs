@@ -50,7 +50,7 @@ monitor_filters = default, esp32_exception_decoder
 
 ### Hardware common
 
-```cpp
+```c++
 #include <AppKit.h>
 #include <Uniot.h>
 ```
@@ -60,7 +60,7 @@ These modules are required for any device.
 
 ### Definitions
 
-```cpp
+```c++
 #define PIN_LED 2
 #define PIN_BUTTON 0
 #define LED_PIN_LEVEL LOW
@@ -71,7 +71,7 @@ Here you define all the GPIO pins used.
 
 ### Tasks
 
-```cpp
+```c++
 auto taskPrintHeap = TaskScheduler::make([](SchedulerTask& self, short t) {
   Serial.println(ESP.getFreeHeap());
 });
@@ -85,7 +85,7 @@ You can define your own tasks to be scheduled and executed. In this example, the
 
 ### Setup
 
-```cpp
+```c++
 void setup() {
   Uniot.begin(); // required
 
@@ -121,7 +121,7 @@ This is a standard Arduino function that runs once when the device boots up. Her
 
 The following code initializes the core services by setting up task schedulers for event handling and date storage:
 
-```cpp
+```c++
 Uniot.begin()
 ```
 
@@ -129,7 +129,7 @@ Uniot.begin()
 
 The next code is the configuration of the network controller. Here we pass the LED pin and the button pin that will be used to indicate the network status and initiate actions such as reconnecting to the network or resetting the network configuration:
 
-```cpp
+```c++
 MainAppKit.configureNetworkController({
   .pinBtn = PIN_BUTTON,
   .activeLevelBtn = BTN_PIN_LEVEL,
@@ -143,7 +143,7 @@ MainAppKit.configureNetworkController({
 
 The next step is the GPIO pins configuration:
 
-```cpp
+```c++
 PrimitiveExpeditor::getRegisterManager().setDigitalOutput(PIN_LED);
 ```
 In this example, we set the LED as a digital output so that we can control its state later in the [Visual Editor](../platform/sandbox/visual-block-editor/README.md) or in [UniotLisp](../advanced/uniot-lisp/README.md) code.
@@ -152,7 +152,7 @@ In this example, we set the LED as a digital output so that we can control its s
 
 Registers the AppKit with the EventBus:
 
-```cpp
+```c++
 Uniot.getEventBus().registerKit(MainAppKit);
 ```
 
@@ -160,7 +160,7 @@ Uniot.getEventBus().registerKit(MainAppKit);
 
 Pushes the AppKit and your tasks to the Scheduler:
 
-```cpp
+```c++
 Uniot.getScheduler()
   .push(MainAppKit)
   .push("print_time", taskPrintTime)
@@ -171,7 +171,7 @@ Uniot.getScheduler()
 
 Schedules a task to be executed with a certain frequency:
 
-```cpp
+```c++
 taskPrintHeap->attach(500);
 taskPrintTime->attach(500);
 ```
@@ -180,13 +180,13 @@ taskPrintTime->attach(500);
 
 Attaches the AppKit to the system by initializing default primitives, attaching network and MQTT components, and running stored UniotLisp script:
 
-```cpp
+```c++
 MainAppKit.attach();
 ```
 
 ### Loop
 
-```cpp
+```c++
 void loop() {
   Uniot.loop();
 }
@@ -198,7 +198,7 @@ This is a standard Arduino function that continuously runs after ``` void setup(
 
 {% code title="main.cpp" overflow="wrap" lineNumbers="true" %}
 
-```cpp
+```c++
 #include <AppKit.h>
 #include <Uniot.h>
 #include <Date.h>
