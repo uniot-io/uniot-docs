@@ -198,7 +198,7 @@ This is a standard Arduino function that continuously runs after ``` void setup(
 
 {% code title="main.cpp" overflow="wrap" lineNumbers="true" %}
 
-```c++
+<pre><code class="language-c++">
 #include <AppKit.h>
 #include <Uniot.h>
 #include <Date.h>
@@ -249,7 +249,7 @@ void setup() {
 void loop() {
   Uniot.loop();
 }
-```
+</code></pre>
 
 {% endcode %}
 
