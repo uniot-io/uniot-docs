@@ -8,11 +8,15 @@ The Scheduler module in Uniot Core is an essential component that provides a rob
 
 ### Components
 
+[**TaskScheduler**](taskscheduler.md)
+
+The heart of the time management system in Uniot Core. It manages, schedules, and oversees the execution of all tasks. By maintaining a queue of tasks and executing them based on their individual schedules, it ensures the efficient and orderly operation of the entire Uniot Core system. It can also push tasks and interact with various components through the `ISchedulerKitConnection` interface.
+
 [**IExecutor**](iexecutor.md)
 
 An interface providing a protocol for objects that have executable tasks. It establishes a uniform method of execution, ensuring that any implementing object can be managed by the system's scheduler.
 
-[**ISchedulerKitConnection**](../../../uniot-core/scheduler/ischedulerconnectionkit.md)
+[**ISchedulerKitConnection**](ischedulerconnectionkit.md)
 
 An essential bridge between various system objects and the `TaskScheduler`. This interface defines the protocol for how different entities, be it tasks or devices, integrate and interact with the core time management system.
 
@@ -23,10 +27,6 @@ Represents an individual unit of work or operation scheduled to be executed at a
 [**SchedulerTask**](schedulertask.md)
 
 An enhancement of the `Task`, integrating the `IExecutor` interface. This allows for more flexible task definitions, including the ability to set how many times the task is repeated and ensuring tasks can be executed with contextual parameters.
-
-[**TaskScheduler**](taskscheduler.md)
-
-The heart of the time management system in Uniot Core. It manages, schedules, and oversees the execution of all tasks. By maintaining a queue of tasks and executing them based on their individual schedules, it ensures the efficient and orderly operation of the entire Uniot Core system. It can also push tasks and interact with various components through the `ISchedulerKitConnection` interface.
 
 ### Integration
 

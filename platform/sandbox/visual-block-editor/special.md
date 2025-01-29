@@ -29,7 +29,11 @@ Returns iteration information about the current task execution.\\
 
 * **Number**: `-1` if infinite; otherwise a countdown from `n-1` to `0`.
 
-> _**NOTE**_: An iterator can not be used outside the task.
+{% hint style="warning" %}
+
+An iterator can not be used outside the task.
+
+{% endhint %}
 
 ## is event
 
@@ -45,6 +49,12 @@ Checks if an event with a specified name has been received from the MQTT broker.
 
 * **Boolean**: `true` if the event is present, `false` otherwise.
 
+{% hint style="warning" %}
+
+This block will return `true` until you retrieve and remove the value using the [pop event](#pop-event) block.
+
+{% endhint %}
+
 ## pop event
 
 <div align="left"><figure><img src="../../../.gitbook/assets/special_pop_event.png" alt=""><figcaption></figcaption></figure></div>
@@ -57,7 +67,13 @@ Retrieves and removes the value associated with a specified event from the MQTT 
 
 **Returns:**
 
-* **Any type**: The value associated with that event.
+* **Number**: The value associated with that event.
+
+{% hint style="warning" %}
+
+The event payload is always of type Number.
+
+{% endhint %}
 
 ## push event
 
@@ -68,4 +84,10 @@ Sends an event with a value to the MQTT broker.
 **Parameters:**
 
 * **Event Name** (String)
-* **Value** (Number, Boolean)
+* **Value** (Number, Boolean) A Boolean value will be converted to a Number
+
+{% hint style="warning" %}
+
+The event value is always of type Number. A Boolean value will be converted to a number. A String value is not allowed
+
+{% endhint %}

@@ -5,7 +5,7 @@ This guide will help you get started quickly on your Uniot journey. Let's connec
 **To get started:**
 
 1. Have a supported hardware (ESP32, ESP8266)
-2. Write a firmware for your device using [Uniot Core](../advanced/uniot-core/README.md) or use ready-made firmware
+2. Customize a firmware for your device or use ready-made solution
 3. Create an account using [Uniot App](https://app.uniot.io) and connect your device
 
 If you have a supported device, let's start with the firmware:

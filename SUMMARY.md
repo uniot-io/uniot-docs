@@ -6,6 +6,7 @@
   * [Connect Device](getting-started/connect-device.md)
   * [Troubleshooting](getting-started/troubleshooting.md)
 * [Guides](guides/README.md)
+  * [ESP Dev Board](guides/1-development-board.md)
 
 ## Platform
 
@@ -23,6 +24,7 @@
       * [Primitives](platform/sandbox/visual-block-editor/primitives.md)
     * [Logger](platform/sandbox/logger.md)
     * [Emulator](platform/sandbox/emulator.md)
+    * [Control Panel](platform/sandbox/control-panel.md)
 
 ## Advanced
 
