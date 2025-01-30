@@ -21,6 +21,7 @@ Let's start with setting up PlatformIO, below is the configuration file:
 {% code title="platformio.ini" overflow="wrap" lineNumbers="true" %}
 
 ```ini
+[env:ESP12E]
 platform = espressif8266
 framework = arduino
 board = esp12e
@@ -31,7 +32,7 @@ build_unflags =
     -std=gnu++11
 build_flags =
     -std=gnu++17
-	-D UNIOT_CREATOR_ID="UNIOT" ; Put here your ID (any value to mark the device as yours)
+	-D UNIOT_CREATOR_ID=\"UNIOT\" ; Put here your ID (any value to mark the device as yours)
 	-D UNIOT_LOG_ENABLED=1
 	-D UNIOT_USE_LITTLEFS=1
 	-D UNIOT_LOG_LEVEL=4
@@ -53,7 +54,7 @@ First, let's take a look at the ESP8266 Witty Cloud Pinout:
   * **Green**: GPIO12 (D6)
   * **Blue**: GPIO13 (D7)
 
-All we need to do is define the external devices, configure the [NetworkController](../advanced/uniot-core/network/networkcontroller.md) and set up the [primitives]() so that we can later control the external devices in the script.
+All we need to do is define the external devices, configure the [NetworkController](../advanced/uniot-core/network/networkcontroller.md) and set up the [primitives](../general-concepts/primitives.md) so that we can later control the external devices in the script.
 
 {% code title="main.cpp" lineNumbers="true" %}
 

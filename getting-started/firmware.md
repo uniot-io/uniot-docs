@@ -2,7 +2,7 @@
 
 With Uniot Core, you don't have to worry about complexity anymore. Task scheduling, networking, storage management, and more - Uniot Core takes care of it all. You just need to describe the functionality of your specific device to unlock its full potential within the Uniot Platform.
 
-We have a [library](https://github.com/uniot-io/uniot-firmwares) of ready-made firmwares. Any member of the community can submit their own firmware, and we will be happy to review and add it to the library. If there is a ready-made solution for your device, you can go straight to [flashing a device](#flashing-a-device).
+We have a [library](https://github.com/uniot-io/uniot-library) of ready-made templates. Any member of the community can submit their own solution, and we will be happy to review and add it to the library. If there is a ready-made firmware for your device, you can go straight to [flashing a device](#flashing-a-device).
 
 ## Customizing a firmware
 
@@ -31,7 +31,7 @@ build_unflags =
     -std=gnu++11
 build_flags =
     -std=gnu++17
-	-D UNIOT_CREATOR_ID="UNIOT" ; Put here your ID (any value to mark the device as yours)
+	-D UNIOT_CREATOR_ID=\"UNIOT\" ; Put here your ID (any value to mark the device as yours)
 	-D UNIOT_LOG_ENABLED=1
 	-D UNIOT_USE_LITTLEFS=1
 	-D UNIOT_LOG_LEVEL=4

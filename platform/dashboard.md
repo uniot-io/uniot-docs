@@ -1,12 +1,12 @@
 # Dashboard
 
-Dashboards are an integral part of any IoT system. They allow you to monitor, analyze, and control devices. The basis of a dashboard is widgets. Each widget performs a specific input/output function when interacting with your hardware.
+[Dashboards](https://app.uniot.io/dashboard) are an integral part of any IoT system. They allow you to monitor, analyze, and control devices. The basis of a dashboard is widgets. Each widget performs a specific input/output function when interacting with your hardware.
 
 ## Overview
 
 <div><figure><img src="../.gitbook/assets/dashboard_main.png" alt=""><figcaption></figcaption></figure></div>
 
-You can access dashboards by opening the corresponding page in the left menu. If there is not default dashboard, a page with a list of all dashboards will be opened. If there is a default dashboard, you will be redirected directly to it. Dashboards consist of one or several widgets that are linked to a specified event.
+You can access dashboards by opening the corresponding page in the left menu. If there is not default dashboard, a page with a list of all dashboards will be opened. If there is a default dashboard, you will be redirected directly to it. Dashboards consist of one or several widgets that are linked to a specified events.
 
 ## Edit/View Modes
 
@@ -33,7 +33,7 @@ We are working on expanding the available widgets. We will regularly add new one
 There are 2 required fields when adding a widget to the dashboard:
 
 1. **name** - The name of the widget that will be used to label it on the dashboard.
-2. **event** - The event to which the widget will be linked.
+2. **event** - The event the widget will be linked to.
 
 <div><figure><img src="../.gitbook/assets/dashboard_widget_settings.png" alt=""><figcaption></figcaption></figure></div>
 
