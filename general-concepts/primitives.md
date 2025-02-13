@@ -1,10 +1,10 @@
 # Primitives
 
-**Primitives** are building blocks that bridge the gap between [scripts](./scripts.md) and hardware interactions. They serve as functions that are called by scripts to perform operations such as reading data from sensors, controlling actuators, and generally working with peripherals. With primitives, you can use the power of scripting to control and monitor hardware components without having to dive into complex hardware-specific code every time you want to change the behavior of a device.
+**Primitives** are building blocks that bridge the gap between [scripts](./scripting.md) and hardware interactions. They serve as functions that are called by scripts to perform operations such as reading data from sensors, controlling actuators, and generally working with peripherals. With primitives, you can use the power of scripting to control and monitor hardware components without having to dive into complex hardware-specific code every time you want to change the behavior of a device.
 
 ## Purpose
 
-The primary purposes of Primitives in the Uniot system include:
+The primary purposes of Primitives in the Uniot include:
 
 - **Abstraction:** Simplifies complex hardware interactions by providing high-level functions that encapsulate low-level operations.
 - **Modularity:** Promotes a modular architecture in which hardware functions are packaged into discrete, reusable components.
@@ -20,8 +20,8 @@ Primitives are implemented and managed within the [`PrimitiveExpeditor`](../adva
 
 There are two types of primitives:
 
-1. **Default Primitives**: Pre-defined primitives for basic digital and analog I/O operations and button interactions
-2. **User-written Primitives**: Custom primitives for controlling complex peripherals that require more sophisticated interactions
+1. **User-written Primitives**: Custom primitives for controlling complex peripherals that require more sophisticated interactions
+2. **Default Primitives**: Pre-defined primitives for basic digital and analog I/O operations and button interactions
 
 ### User-written Primitives
 
@@ -34,7 +34,9 @@ Object myPrimitiveFunction(Root root, VarObject env, VarObject list) {
   // Describe the primitive with its name, return type, argument count, and argument types
   auto expeditor = PrimitiveExpeditor::describe("pin_high", Lisp::Bool, 1, Lisp::Int)
                       .init(root, env, list);
-  expeditor.assertDescribedArgs(); // Ensure the provided arguments match the description
+
+  // Ensure the provided arguments match the description
+  expeditor.assertDescribedArgs();
 
   // Retrieve the first argument (pin number)
   auto pin = expeditor.getArgInt(0);
@@ -48,7 +50,8 @@ void setup() {
 
   // Add the primitive to the UniotLisp environment
   MainAppKit.getLisp().pushPrimitive(myPrimitiveFunction);
-  // ...
+
+  // ... other setup code ...
 }
 ```
 

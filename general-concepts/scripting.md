@@ -1,8 +1,8 @@
 # Scripting
 
-Scripts are one of the most interesting features of Uniot - they define how your device thinks and behaves. Think of scripts as a set of instructions that tell your device what to do: when to turn on lights, how to respond to button presses, how to process sensor data, or how to interact with other devices and dashboards via MQTT.
+`Scripts` are one of the most interesting features of Uniot - they define how your device thinks and behaves. Think of scripts as a set of instructions that tell your device what to do: when to turn on lights, how to respond to button presses, how to process sensor data, or how to interact with other devices and dashboards via MQTT.
 
-This flexibility means both beginners and experienced developers can create powerful IoT systems, from simple automated switches to complex sensor networks. Whether you're just starting your IoT journey or you're a seasoned programmer, Uniot's scripting capabilities provide the tools you need to bring your ideas to life.
+This flexibility means both beginners and experienced developers can create powerful IoT systems, from simple automated switches to complex networks. Whether you're just starting your IoT journey or you're a seasoned programmer, Uniot's scripting capabilities provide the tools you need to bring your ideas to life.
 
 ## Overview
 
