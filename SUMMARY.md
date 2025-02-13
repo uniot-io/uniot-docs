@@ -4,27 +4,33 @@
 * [Getting Started](getting-started/README.md)
   * [Firmware](getting-started/firmware.md)
   * [Connect Device](getting-started/connect-device.md)
-  * [Troubleshooting](getting-started/troubleshooting.md)
+  * [Troubleshooting](getting-started/troubleshooting.md)\
 * [Guides](guides/README.md)
-  * [ESP Dev Board](guides/1-development-board.md)
+  * [Development Board](guides/development-board.md)
+  * [Device Network](guides/device-network.md)
+
+## General Concepts
+
+* [Primitives](general-concepts/primitives.md)
+* [Scripting](general-concepts/scripting.md)
 
 ## Platform
 
-  * [Dashboard](platform/dashboard.md)
-  * [Sandbox](platform/sandbox/README.md)
-    * [Visual Block Editor](platform/sandbox/visual-block-editor/README.md)
-      * [Special](platform/sandbox/visual-block-editor/special.md)
-      * [Logic](platform/sandbox/visual-block-editor/logic.md)
-      * [Math](platform/sandbox/visual-block-editor/math.md)
-      * [Loops](platform/sandbox/visual-block-editor/loops.md)
-      * [Text](platform/sandbox/visual-block-editor/text.md)
-      * [Lists](platform/sandbox/visual-block-editor/lists.md)
-      * [Variables](platform/sandbox/visual-block-editor/variables.md)
-      * [Functions](platform/sandbox/visual-block-editor/functions.md)
-      * [Primitives](platform/sandbox/visual-block-editor/primitives.md)
-    * [Logger](platform/sandbox/logger.md)
-    * [Emulator](platform/sandbox/emulator.md)
-    * [Control Panel](platform/sandbox/control-panel.md)
+* [Dashboard](platform/dashboard.md)
+* [Sandbox](platform/sandbox/README.md)
+  * [Visual Editor](platform/sandbox/visual-block-editor/README.md)
+    * [Special](platform/sandbox/visual-block-editor/special.md)
+    * [Logic](platform/sandbox/visual-block-editor/logic.md)
+    * [Math](platform/sandbox/visual-block-editor/math.md)
+    * [Loops](platform/sandbox/visual-block-editor/loops.md)
+    * [Text](platform/sandbox/visual-block-editor/text.md)
+    * [Lists](platform/sandbox/visual-block-editor/lists.md)
+    * [Variables](platform/sandbox/visual-block-editor/variables.md)
+    * [Functions](platform/sandbox/visual-block-editor/functions.md)
+    * [Primitives](platform/sandbox/visual-block-editor/primitives.md)
+  * [Logger](platform/sandbox/logger.md)
+  * [Emulator](platform/sandbox/emulator.md)
+  * [Control Panel](platform/sandbox/control-panel.md)
 
 ## Advanced
 
@@ -100,4 +106,5 @@
   * [Embedding Instructions](advanced/uniot-lisp/embedding-instructions.md)
 
 ## API
-  * [MQTT Convention](api-reference/mqtt-convention.md)
+
+* [MQTT Convention](api-reference/mqtt-convention.md)
