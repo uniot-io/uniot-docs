@@ -10,7 +10,7 @@ By interacting with the emulator, you can simulate input and output, and test us
 
 The Digital Read component simulates the digital state of a specific pin. It acts as a toggle switch, allowing you to change the state manually and observe how the script reacts.
 
-> [A block in the visual editor](visual-block-editor/primitives.md#digital-read)
+> [A block in the visual editor](visual-editor/primitives.md#digital-read)
 
 **Features**:
 
@@ -27,7 +27,7 @@ The Digital Read component simulates the digital state of a specific pin. It act
 
 The Digital Write component displays the current state of a digital pin as set by your script. It provides visual feedback to verify that your script correctly controls the pin.
 
-> [A block in the visual editor](visual-block-editor/primitives.md#digital-write)
+> [A block in the visual editor](visual-editor/primitives.md#digital-write)
 
 **Features**:
 
@@ -44,7 +44,7 @@ The Digital Write component displays the current state of a digital pin as set b
 
 The Analog Read component is a knob that simulates a range of analog values for a specific pin. By rotating the knob, you can set the input value dynamically.
 
-> [A block in the visual editor](visual-block-editor/primitives.md#analog-read)
+> [A block in the visual editor](visual-editor/primitives.md#analog-read)
 
 **Features**:
 
@@ -61,7 +61,7 @@ The Analog Read component is a knob that simulates a range of analog values for 
 
 The Analog Write component displays the current analog output value of a specific pin as controlled by your script. This is commonly used to simulate devices or systems that require fine control over output levels, such as adjusting the intensity of an LED or controlling the position of a servo motor.
 
-> [A block in the visual editor](visual-block-editor/primitives.md#analog-write)
+> [A block in the visual editor](visual-editor/primitives.md#analog-write)
 
 **Features**:
 
@@ -78,7 +78,7 @@ The Analog Write component displays the current analog output value of a specifi
 
 The Button Clicked component simulates a physical button connected to a specific pin. Clicking the button toggles its state, which is reflected in the script.
 
-> [A block in the visual editor](visual-block-editor/primitives.md#button-clicked)
+> [A block in the visual editor](visual-editor/primitives.md#button-clicked)
 
 **Features**:
 
@@ -95,7 +95,7 @@ The Button Clicked component simulates a physical button connected to a specific
 
 User-defined primitives provide a way to create custom interactions and behaviors. This component is dynamically generated based on the parameters defined in your script. It displays the parameters provided by the script and allows you to configure the return value interactively.
 
-> [A block in the visual editor](visual-block-editor/primitives.md#user-primitive)
+> [A block in the visual editor](visual-editor/primitives.md#user-primitive)
 
 **Features**:
 

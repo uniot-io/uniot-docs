@@ -57,7 +57,7 @@ void setup() {
 
 {% endcode %}
 
-Once registered, this primitive is accessible from both [UniotLisp](../advanced/uniot-lisp/README.md) scripts and the [Visual Editor](../platform/sandbox/visual-block-editor/README.md).
+Once registered, this primitive is accessible from both [UniotLisp](../advanced/uniot-lisp/README.md) scripts and the [Visual Editor](../platform/sandbox/visual-editor/README.md).
 
 ### Default Primitives
 
@@ -128,7 +128,7 @@ You can view available primitives and registers for your device on the Uniot Pla
 <div><figure><img src="../.gitbook/assets/device_primitives.png" alt="Available Primitives"><figcaption>Primitives Tab</figcaption></figure></div>
 <div><figure><img src="../.gitbook/assets/device_registers.png" alt="Device Registers"><figcaption>Registers Tab</figcaption></figure></div>
 
-For more information about using primitives in scripts, see the [Primitives](../platform/sandbox/visual-block-editor/primitives.md) section of the Visual Editor.
+For more information about using primitives in scripts, see the [Primitives](../platform/sandbox/visual-editor/primitives.md) section of the Visual Editor.
 
 ## Related Topics
 

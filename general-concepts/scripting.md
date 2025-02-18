@@ -19,7 +19,7 @@ You can not use both methods simultaneously. Once you start writing UniotLisp co
 
 ## Visual Editor
 
-The Visual Editor provides an intuitive way to create scripts using a drag-and-drop interface. Read more about it in the [Visual Editor](../platform/sandbox/visual-block-editor/README.md) documentation.
+The Visual Editor provides an intuitive way to create scripts using a drag-and-drop interface. Read more about it in the [Visual Editor](../platform/sandbox/visual-editor/README.md) documentation.
 
 Ideal for:
 
@@ -71,13 +71,13 @@ This example script toggles an LED connected to pin 0 on and off every 500ms usi
 
 In this script, the following components are used:
 
-- [`task`](../platform/sandbox/visual-block-editor/special.md#task) block: Defines the main execution loop
-- [`set`](../platform/sandbox/visual-block-editor/variables.md#set) variable: Updates the value of the `state` variable
-- [`not`](../platform/sandbox/visual-block-editor/logic.md#not) variable: Inverts the value of the `state` variable
-- [`dwrite`](../platform/sandbox/visual-block-editor/primitives.md#digital-write) primitive: Writes a digital value to a pin 0
+- [`task`](../platform/sandbox/visual-editor/special.md#task) block: Defines the main execution loop
+- [`set`](../platform/sandbox/visual-editor/variables.md#set) variable: Updates the value of the `state` variable
+- [`not`](../platform/sandbox/visual-editor/logic.md#not) variable: Inverts the value of the `state` variable
+- [`dwrite`](../platform/sandbox/visual-editor/primitives.md#digital-write) primitive: Writes a digital value to a pin 0
 
 ## Related Topics
 
 - [Primitives](./primitives.md): Learn about hardware interaction functions
-- [Visual Editor](../platform/sandbox/visual-block-editor/README.md): Detailed guide to visual programming
+- [Visual Editor](../platform/sandbox/visual-editor/README.md): Detailed guide to visual programming
 - [UniotLisp](../advanced/uniot-lisp/README.md): Complete language documentation

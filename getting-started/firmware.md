@@ -152,7 +152,7 @@ Here you should configure digital and analog inputs and outputs. You should desc
 ```c++
 PrimitiveExpeditor::getRegisterManager().setDigitalOutput(PIN_LED);
 ```
-In this example, we set the LED as a digital output so that we can control its state later in the [Visual Editor](../platform/sandbox/visual-block-editor/README.md) or in [UniotLisp](../advanced/uniot-lisp/README.md) code.
+In this example, we set the LED as a digital output so that we can control its state later in the [Visual Editor](../platform/sandbox/visual-editor/README.md) or in [UniotLisp](../advanced/uniot-lisp/README.md) code.
 
 ---
 

@@ -7,6 +7,6 @@ Like any integrated development environment, Sandbox has a control panel. Here y
 
 {% hint style="danger" %}
 
-Compile the code only if you create the script in the [Visual Editor](./visual-block-editor/README.md). If you wrote the UniotLisp code directly, compiling will replace your code with the generated code from the visual blocks.
+Compile the code only if you create the script in the [Visual Editor](./visual-editor/README.md). If you wrote the UniotLisp code directly, compiling will replace your code with the generated code from the visual blocks.
 
 {% endhint %}

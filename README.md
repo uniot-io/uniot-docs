@@ -4,7 +4,7 @@ The [Uniot Platform](platform/) is a comprehensive and versatile ecosystem desig
 
 ## **Key Features**
 
-1. [**Visual Scripting**](platform/sandbox/visual-block-editor/): A user-friendly, block-based editor that allows anyone, even non-programmers, to create automation scenarios.
+1. [**Visual Scripting**](platform/sandbox/visual-editor/): A user-friendly, block-based editor that allows anyone, even non-programmers, to create automation scenarios.
 2. [**Edge Computing**](advanced/uniot-lisp/): On-device automation reduces dependency on centralized servers, ensuring higher reliability.
 3. [**Device Interconnectivity**](api-reference/mqtt-convention.md): Seamless communication between devices using an event-driven approach.
 4. [**Custom Dashboards**](platform/dashboard.md): Flexible tools to design personalized dashboards for real-time monitoring and control.
