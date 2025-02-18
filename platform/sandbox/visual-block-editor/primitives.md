@@ -1,96 +1,108 @@
 # Primitives
 
-The Primitives section provides direct access to your device’s input/output pins, allowing you to read sensor values, control actuators, and detect user interactions at a low level. By extending core Arduino functions, these blocks make it easy to interface with your hardware without writing additional code.
+Primitives provide direct access to your device's hardware capabilities. These fundamental blocks enable you to:
 
-* Retrieve values from sensors or determine if a button or switch is pressed.
-* Control LEDs, motors, and other actuators with precise or simple on/off signals.
-* Define your own functionality with parameters and return values tailored to your specific needs.
+- Read sensor values
+- Control digital outputs
+- Manage analog signals
+- Create custom hardware interactions
 
-Using these primitives, you can easily incorporate hardware interaction into your scripts, bridging the gap between the digital logic of your program and the physical world your device operates in.
+When using primitives, you'll work with [register](../../../general-concepts/primitives.md) indices rather than direct pin numbers. The register system organizes pins into categories (digital input/output, analog input/output) and assigns each pin an index. You can view the mapping between physical pins and register indices in your device's Registers tab on the Uniot Platform.
 
 ## analog read
 
 <div align="left"><figure><img src="../../../.gitbook/assets/primitives_analog_read.png" alt=""><figcaption></figcaption></figure></div>
 
-Reads the value from an analog pin.
-
-> Read more about [analogRead()](https://docs.arduino.cc/language-reference/en/functions/analog-io/analogRead/) in Arduino
+Reads an analog value from a specified pin (range: **0-1023**).
 
 **Parameters:**
 
-* **Pin Number** (Number)
+- **Pin** (Number): The analog pin to read from
 
 **Returns:**
 
-* **Number**: In the range 0–1023.
+- **Number**: Value between **0-1023**
+
+**Example:**
+
+<div><figure><img src="../../../.gitbook/assets/primitives_analog_read_example.png" alt=""><figcaption>Check light level and push event if it's too low.</figcaption></figure></div>
 
 ## analog write
 
 <div align="left"><figure><img src="../../../.gitbook/assets/primitives_analog_write.png" alt=""><figcaption></figcaption></figure></div>
 
-Writes a value to an analog pin.
-
-> Read more about [analogWrite()](https://docs.arduino.cc/language-reference/en/functions/analog-io/analogWrite/) in Arduino
+Sets an analog (PWM) value on a pin (range: **0-1023**).
 
 **Parameters:**
 
-* **Pin Number** (Number)
-* **Value** (Number, 0-1023)
+- **Pin** (Number): The PWM-capable pin
+- **Value** (Number): Value between **0-1023**
+
+**Example:**
+
+<div><figure><img src="../../../.gitbook/assets/primitives_analog_write_example.png" alt=""><figcaption>Receives brightness value from the dashboard (or another device) and sets it to the LED.</figcaption></figure></div>
 
 ## digital read
 
 <div align="left"><figure><img src="../../../.gitbook/assets/primitives_digital_read.png" alt=""><figcaption></figcaption></figure></div>
 
-Reads the digital state of a pin.
-
-> Read more about [digitalRead()](https://docs.arduino.cc/language-reference/en/functions/digital-io/digitalread/) in Arduino
+Reads a digital value from a pin (HIGH or LOW).
 
 **Parameters:**
 
-* **Pin Number** (Number)
+- **Pin** (Number): The digital pin to read from
 
 **Returns:**
 
-* **Boolean**: `true` (`HIGH` signal) or `false` (`LOW` signal)
+- **Boolean**: `#t` for high, `()` for low
+
+**Example:**
+
+<div><figure><img src="../../../.gitbook/assets/primitives_digital_read_example.png" alt=""><figcaption>Read switch state and push event when it is changed.</figcaption></figure></div>
 
 ## digital write
 
 <div align="left"><figure><img src="../../../.gitbook/assets/primitives_digital_write.png" alt=""><figcaption></figcaption></figure></div>
 
-Sets a state to a pin.
-
-> Read more about [digitalWrite()](https://docs.arduino.cc/language-reference/en/functions/digital-io/digitalwrite/) in Arduino
+Sets a digital pin to high or low.
 
 **Parameters:**
 
-* **Pin Number** (Number)
-* **Boolean** `true` (`HIGH`) or `false` (`LOW`)
+- **Pin** (Number): The digital pin
+- **Value** (Boolean): `#t` for high, `()` for low
 
-## button clicked
+**Example:**
 
-<div align="left"><figure><img src="../../../.gitbook/assets/primitives_button_clicked.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/primitives_digital_write_example.png" alt=""><figcaption>Reads the state of the switch and turns on the LED.</figcaption></figure></div>
 
-Checks if a button on a specified pin has been clicked since last check.
-
-**Parameters:**
-
-* **Pin Number** (Number)
-
-**Returns:**
-
-* **Boolean**: `true` if clicked, `false` otherwise.
-
-## user primitive
+## user primitive (template)
 
 <div align="left"><figure><img src="../../../.gitbook/assets/primitives_user_primitive.png" alt=""><figcaption></figcaption></figure></div>
 
-A template for defining custom primitives with configurable parameters and return values.\
-The user primitive returns a boolean value by default. If you need to perform only some actions and do not expect any data in response, you need to customize the block by clicking on the gear icon.
+A template for defining custom primitives with configurable parameters and return values. The user primitive returns a boolean value by default. If you need to perform only some actions and do not expect any data in response, you need to customize the block by clicking on the gear icon.
 
 **Parameters:**
 
-* **Parameters** (As defined by the user)
+- **Parameters** (As defined by the user)
 
 **Returns:**
 
-* **Any type**: As defined by the user.
+- **Any type** (As defined by the user)
+
+## user primitive (autogenerated)
+
+<div align="left"><figure><img src="../../../.gitbook/assets/primitives_user_primitive_auto.png" alt=""><figcaption></figcaption></figure></div>
+
+Accesses custom primitives defined in firmware. The primitive returns a boolean value by default. If you need to perform only some actions and do not expect any data in response, you need to customize the block by clicking on the gear icon.
+
+**Parameters:**
+
+- **Parameters** (As defined by the user)
+
+**Returns:**
+
+- **Any type** (As defined by the user)
+
+**Example:**
+
+<div><figure><img src="../../../.gitbook/assets/primitives_user_primitive_auto_example.png" alt=""><figcaption>Custom LED strip control</figcaption></figure></div>

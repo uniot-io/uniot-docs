@@ -31,4 +31,4 @@ Note: It may take up to 15 seconds for the device to connect to the network and 
 
 The device will now appear on the devices page under the Unauthorized tab. The last thing you need to do is authorize the device. That's it, the device is connected to the Platform, and you can create scripts for your device.
 
-Learn more about how to create a script [here](../platform/sandbox/README.md)
+Learn more about how to create a script [here](../general-concepts/scripting.md)

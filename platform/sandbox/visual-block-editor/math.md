@@ -4,70 +4,90 @@ The Math section provides a range of blocks that enable you to perform numerical
 
 Using these blocks, you can:
 
-* Perform basic arithmetic (addition, subtraction, multiplication, division).
-* Apply mathematical functions (absolute value, negatiation, checking value for compliance with different conditions).
-* Combine numeric operations with logic and loops to create complex, dynamic scripts.
+- Perform basic arithmetic (addition, subtraction, multiplication, division).
+- Apply mathematical functions (absolute value, negatiation, checking value for compliance with different conditions).
+- Combine numeric operations with logic and loops to create complex, dynamic scripts.
 
 ## value
 
 <div align="left"><figure><img src="../../../.gitbook/assets/math_value.png" alt=""><figcaption></figcaption></figure></div>
 
-Represents a constant numeric value that can be used in mathematical operations, logic expressions, etc.
+Represents a fixed numeric value.
 
-* **Input Value** (Number)
+**Parameters:**
+
+- **Input Value** (Number): The numeric value to represent.
+
+**Example:**
+
+<div><figure><img src="../../../.gitbook/assets/math_value_example.png" alt=""><figcaption>Define temperature thresholds</figcaption></figure></div>
 
 ## math operation
 
 <div align="left"><figure><img src="../../../.gitbook/assets/math_operation.png" alt=""><figcaption></figcaption></figure></div>
 
-Performs a mathematical operation on a given number. Specifically, it can either return the absolute value of the number or negate it by applying a negative sign (-).
+Performs operations like absolute value or negation.
 
 **Parameters:**
 
-* **Input Value** (Number)
+- **Input Value** (Number): The numeric value to operate on.
+
+**Example:**
+
+<div><figure><img src="../../../.gitbook/assets/math_operation_example.png" alt=""><figcaption>Temperature difference calculation</figcaption></figure></div>
 
 ## arithmetic
 
 <div align="left"><figure><img src="../../../.gitbook/assets/math_arithmetic.png" alt=""><figcaption></figcaption></figure></div>
 
-Performs an arithmetic operation (add, subtract, multiply, divide) on two numeric inputs.
+Performs basic arithmetic: add (+), subtract (-), multiply (*), divide (/).
 
 **Parameters:**
 
-* **Left Value** (Number)
-* **Right Value** (Number)
-* **Operator** (Enum): `+`, `-`, `×`, `÷`
+- **Left Value** (Number): The first numeric value.
+- **Right Value** (Number): The second numeric value.
 
 **Returns:**
 
-* **Number**: The result of the arithmetic operation.
+- **Number** (Number): The result of the arithmetic operation.
+
+**Example:**
+
+<div><figure><img src="../../../.gitbook/assets/math_arithmetic_example.png" alt=""><figcaption>Convert raw sensor value to voltage</figcaption></figure></div>
 
 ## number condition
 
 <div align="left"><figure><img src="../../../.gitbook/assets/math_number_condition.png" alt=""><figcaption></figcaption></figure></div>
 
-Check if a number is an even, odd, positive, negative, or if it is divisible by certain number.
+Checks numeric properties: even, odd, positive, negative, divisible by.
 
 **Parameters:**
 
-* **Input Value** (Number)
-* **Condition** (Enum): e.g. `event`, `odd`, `positive`, `negative`, `divisible by`
+- **Input Value** (Number): The numeric value to check.
 
 **Returns:**
 
-* **Boolean**: `true` if the condition is met, otherwise `false`
+- **Boolean** (Boolean): True if the condition is met, false otherwise.
+
+**Example:**
+
+<div><figure><img src="../../../.gitbook/assets/math_number_condition_example.png" alt=""><figcaption>Read sensor value every 5th script execution</figcaption></figure></div>
 
 ## remainder check
 
 <div align="left"><figure><img src="../../../.gitbook/assets/math_remainder.png" alt=""><figcaption></figcaption></figure></div>
 
-Calculates the remainder of dividing two numbers.
+Calculates the remainder after division.
 
 **Parameters:**
 
-* **Dividend** (Number)
-* **Divisor** (Number)
+- **Left Value** (Number): The first numeric value.
+- **Right Value** (Number): The second numeric value.
 
 **Returns:**
 
-* **Number**: The result of the arithmetic operation.
+- **Number** (Number): The remainder of the division.
+
+**Example:**
+
+<div><figure><img src="../../../.gitbook/assets/loops_iterator_example.png" alt=""><figcaption>Alternate on/off pattern for multiple LEDs</figcaption></figure></div>

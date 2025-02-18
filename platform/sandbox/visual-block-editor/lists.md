@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Lists
 
 ## create empty list

@@ -1,53 +1,57 @@
 # Text
 
-The Text section provides blocks designed to handle and transform textual data, as well as integrate text-based input and output into your scripts. This section empowers you to:
+Text section provides blocks designed to handle and transform textual data, as well as integrate text-based input and output into your scripts. This section empowers you to:
 
-* Represent fixed pieces of text for use in messages, labels, or conditional checks.
-* Convert numbers into strings, making it easier to display values or store them as text.
-* Evaluate text-based expressions, bridging the gap between string manipulation and numeric calculations.
-* Print logs and messages to the MQTT broker, simplifying the debugging and monitoring of your device’s behavior.
+- Represent fixed pieces of text for use in messages, labels, or conditional checks.
+- Convert numbers into strings, making it easier to display values or store them as text.
+- Evaluate text-based expressions, bridging the gap between string manipulation and numeric calculations.
+- Print logs and messages to the MQTT broker, simplifying the debugging and monitoring of your device’s behavior.
 
 ## value
 
 <div align="left"><figure><img src="../../../.gitbook/assets/text_value.png" alt=""><figcaption></figcaption></figure></div>
 
-Represents a string of text that can be used as an input for other blocks in Blockly. It allows users to input or define a fixed piece of text for use in text manipulation, display, or logic operations.
+Creates a text string that can be used in your program.
 
 **Parameters:**
 
-* **Text Value** (string)
+- **Text Value** (string)
 
 **Returns:**
 
-* **String**: The provided text.
+- **String**: The provided text.
+
+**Example:**
+
+<div align="left"><figure><img src="../../../.gitbook/assets/text_value_example.png" alt=""><figcaption>Text value creation</figcaption></figure></div>
 
 ## quote
 
 <div align="left"><figure><img src="../../../.gitbook/assets/text_quote.png" alt=""><figcaption></figcaption></figure></div>
 
-Takes a numeric expression (or value) and converts it into a text string
+Takes an expression (or value) and converts it into a text string.
 
 **Parameters:**
 
-* **Expression** (number or operation): A number or a mathematical expression that will be evaluated and converted into a string.
+- **Expression**: A value or a mathematical expression that will be evaluated and converted into a string.
 
 **Returns:**
 
-* **String**: The result of the numeric expression, converted to a text format.
+- **String**: The expression, converted to a text format.
 
 ## eval
 
 <div align="left"><figure><img src="../../../.gitbook/assets/text_eval.png" alt=""><figcaption></figcaption></figure></div>
 
-Evaluates a numeric expression that has been converted to a text format and returns the numeric result of the calculation.
+Evaluates an expression from text.
 
 **Parameters:**
 
-* **Expression** (number or operation): A number or a mathematical expression that will be evaluated and converted into a string.
+- **Expression**: A text string that contains an expression or a value.
 
 **Returns:**
 
-* **String**: The result of the numeric expression, converted to a text format.
+- **Any**: The result of the evaluated expression.
 
 ## print
 
@@ -57,4 +61,8 @@ Sends a log to the MQTT broker. Logs appear on the device details page.
 
 **Parameters:**
 
-* **Message** (string): A message to be sent as a log
+- **Message**: A text string that will be sent to the MQTT broker.
+
+**Example:**
+
+<div align="left"><figure><img src="../../../.gitbook/assets/text_print_example.png" alt=""><figcaption>Logging messages</figcaption></figure></div>

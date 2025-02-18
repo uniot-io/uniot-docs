@@ -94,23 +94,23 @@ The register manager provides four register types for default primitives:
 
 - `dwrite`: Register for writing digital values
   - Controls digital output pins like LEDs or relays
-  - Accepts boolean values (#t for HIGH, #f for LOW)
+  - Accepts boolean values (**#t** for **HIGH**, **()** for **LOW**)
   - Pins must be configured using `setDigitalOutput()`
 
 - `dread`: Register for reading digital values
   - Reads from digital input pins like buttons or switches
-  - Returns boolean values (#t for HIGH, #f for LOW)
+  - Returns boolean values (**#t** for **HIGH**, **()** for **LOW**)
   - Pins must be configured using `setDigitalInput()`
 
 - `awrite`: Register for writing analog values
   - Controls PWM-capable pins for analog output
-  - Accepts values from 0-1023 for variable control
+  - Accepts values from **0-1023** for variable control
   - Commonly used for LED brightness or motor speed
   - Pins must be configured using `setAnalogOutput()`
 
 - `aread`: Register for reading analog values
   - Reads from analog input pins like sensors
-  - Returns values from 0-1023 representing voltage levels
+  - Returns values from **0-1023** representing voltage levels
   - Used for temperature, light, or other analog sensors
   - Pins must be configured using `setAnalogInput()`
 
@@ -123,7 +123,7 @@ Using registers provides several benefits:
 
 ## Using Primitives
 
-You can view available primitives and registers for your device on the Uniot Platform. On the Registers page, hovering over a pin value shows its index, which you'll use when writing scripts.
+You can view available primitives and registers for your device on the Uniot Platform. On the Registers page, hovering over a pin value shows its index, **which you'll use when writing scripts**.
 
 <div><figure><img src="../.gitbook/assets/device_primitives.png" alt="Available Primitives"><figcaption>Primitives Tab</figcaption></figure></div>
 <div><figure><img src="../.gitbook/assets/device_registers.png" alt="Device Registers"><figcaption>Registers Tab</figcaption></figure></div>

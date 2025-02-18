@@ -4,7 +4,7 @@ The `ICOSESigner` interface defines a contract for COSE message signers. The int
 
 **Interface Definition:**
 
-```cpp
+```c++
 namespace uniot {
 class ICOSESigner {
  public:

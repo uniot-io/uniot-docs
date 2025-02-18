@@ -19,12 +19,12 @@ To begin using UniotLisp, follow these steps:
    * Add `libminilisp.c` to your project's source files.
    *   Include the header in your code:
 
-       ```c
+       ```c++
        #include "libminilisp.h"
        ```
 3.  **Define Print Functions**:
 
-    ```c
+    ```c++
     void printOut(const char *msg, int size) {
         fprintf(stdout, "OUT: %s\n", msg);
     }
@@ -39,7 +39,7 @@ To begin using UniotLisp, follow these steps:
     ```
 4.  **Initialize an Environment**:
 
-    ```c
+    ```c++
     void *env_constructor[3];
     void *root = NULL;
     Obj **genv;
@@ -52,7 +52,7 @@ To begin using UniotLisp, follow these steps:
     ```
 5.  **Initialize the Interpreter and Create an Environment**:
 
-    ```c
+    ```c++
     // Initialize the interpreter with a specified memory size (e.g., 4096 bytes)
     lisp_create(4096);
     lisp_set_printers(printOut, printLog, printErr);
@@ -64,7 +64,7 @@ To begin using UniotLisp, follow these steps:
     ```
 6.  **Evaluate Lisp Code**:
 
-    ```c
+    ```c++
     const char *code = "(+ 1 2 3)";
     if (lisp_eval(root, genv, code)) {
         // Evaluation succeeded
@@ -74,12 +74,12 @@ To begin using UniotLisp, follow these steps:
     ```
 7.  **Cleanup**:
 
-    ```c
+    ```c++
     lisp_destroy();
     ```
 8.  **Full Example Code**:
 
-    ```c
+    ```c++
     #include <stdio.h>
     #include "UniotLisp.h"
 
@@ -138,7 +138,7 @@ Understanding the foundational concepts of UniotLisp will aid in effectively uti
 
 #### **Obj Structure**
 
-```c
+```c++
 typedef struct Obj {
     unsigned char type;      // Type tag
     ...
@@ -194,7 +194,7 @@ Extending UniotLisp with new primitives allows you to introduce custom functiona
 
 A primitive function in UniotLisp is a C function that follows a specific signature:
 
-```c
+```c++
 typedef struct Obj *Primitive(void *root, struct Obj **env, struct Obj **args);
 ```
 
@@ -208,7 +208,7 @@ typedef struct Obj *Primitive(void *root, struct Obj **env, struct Obj **args);
 
 **Example**: Define a primitive that adds two integers.
 
-```c
+```c++
 static Obj *prim_add_two(void *root, Obj **env, Obj **args) {
     if (length(*args) != 2)
         error("add_two expects exactly two arguments");
@@ -229,7 +229,7 @@ After defining the primitive function, you need to register it within the interp
 
 **Function Signature**:
 
-```c
+```c++
 void add_primitive(void *root, Obj **env, const char *name, Primitive *fn);
 ```
 
@@ -242,7 +242,7 @@ void add_primitive(void *root, Obj **env, const char *name, Primitive *fn);
 
 **Example**: Register the `add_two` primitive.
 
-```c
+```c++
 add_primitive(root, env, "add-two", prim_add_two);
 ```
 
@@ -260,7 +260,7 @@ Use `add_constant` or `add_constant_int` to register the constant within the env
 
 **Function Signatures**:
 
-```c
+```c++
 void add_constant(void *root, Obj **env, const char *name, Obj **val);
 void add_constant_int(void *root, Obj **env, const char *name, int value);
 ```
@@ -269,14 +269,14 @@ void add_constant_int(void *root, Obj **env, const char *name, int value);
 
 **Example**: Register the `#version` constant.
 
-```c
+```c++
 Obj *VERSION = make_int(root, 10203); // Represents the version 1.2.3
 add_constant(root, env, "#version", &VERSION);
 ```
 
 or
 
-```c
+```c++
 add_constant_int(root, env, "#version", 10203);
 ```
 
@@ -298,13 +298,13 @@ UniotLisp incorporates robust error handling to ensure the interpreter remains s
 
 The `error` function is used to report errors and terminate the current evaluation gracefully.
 
-```c
+```c++
 void __attribute((noreturn)) error(const char *fmt, ...);
 ```
 
 **Usage**:
 
-```c
+```c++
 error("Undefined symbol: %s", symbol_name);
 ```
 
@@ -333,7 +333,7 @@ Some common error scenarios encountered during Lisp evaluation include:
     ```
 *   **Memory Exhaustion**: Running out of allocated memory.
 
-    ```c
+    ```c++
     error("Memory exhausted");
     ```
 
@@ -345,17 +345,17 @@ UniotLisp provides a set of API functions to interact with the interpreter progr
 
 *   **`lisp_create`**: Initializes the interpreter with a specified memory size.
 
-    ```c
+    ```c++
     void lisp_create(size_t size);
     ```
 *   **`lisp_destroy`**: Cleans up and frees allocated memory.
 
-    ```c
+    ```c++
     void lisp_destroy(void);
     ```
 *   **`lisp_is_created`**: Checks if the interpreter has been initialized.
 
-    ```c
+    ```c++
     bool lisp_is_created();
     ```
 
@@ -363,12 +363,12 @@ UniotLisp provides a set of API functions to interact with the interpreter progr
 
 *   **`lisp_eval`**: Parses and evaluates Lisp code from a string.
 
-    ```c
+    ```c++
     bool lisp_eval(void *root, Obj **env, const char *code);
     ```
 *   **`safe_eval`**: Evaluates an expression with error protection.
 
-    ```c
+    ```c++
     bool safe_eval(void *root, Obj **env, Obj **expr);
     ```
 
@@ -376,13 +376,13 @@ UniotLisp provides a set of API functions to interact with the interpreter progr
 
 *   **`lisp_set_cycle_yield`**: Sets a yield function to allow cooperative multitasking during long-running operations.
 
-    ```c
+    ```c++
     void lisp_set_cycle_yield(yield_def yield);
     ```
 
     Define a yield function that conforms to the `yield_def` type:
 
-    ```c
+    ```c++
     typedef void (*yield_def)();
 
     void my_yield_function() {
@@ -392,12 +392,12 @@ UniotLisp provides a set of API functions to interact with the interpreter progr
 
     Register the yield function:
 
-    ```c
+    ```c++
     lisp_set_cycle_yield(my_yield_function);
     ```
 *   **`lisp_set_printers`**: Configures output handlers for standard output, logs, and errors.
 
-    ```c
+    ```c++
     void lisp_set_printers(print_def out, print_def log, print_def err);
     ```
 
@@ -405,12 +405,12 @@ UniotLisp provides a set of API functions to interact with the interpreter progr
 
 *   **`lisp_mem_used`**: Retrieves the amount of memory used.
 
-    ```c
+    ```c++
     size_t lisp_mem_used(void);
     ```
 *   **`lisp_error_idx`**: Gets the current index in the input buffer where an error occurred.
 
-    ```c
+    ```c++
     int lisp_error_idx(void);
     ```
 

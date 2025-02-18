@@ -1,6 +1,6 @@
 # Scripting
 
-`Scripts` are one of the most interesting features of Uniot - they define how your device thinks and behaves. Think of scripts as a set of instructions that tell your device what to do: when to turn on lights, how to respond to button presses, how to process sensor data, or how to interact with other devices and dashboards via MQTT.
+**Scripts** are one of the most interesting features of Uniot - they define how your device thinks and behaves. Think of scripts as a set of instructions that tell your device what to do: when to turn on lights, how to respond to button presses, how to process sensor data, or how to interact with other devices and dashboards via MQTT.
 
 This flexibility means both beginners and experienced developers can create powerful IoT systems, from simple automated switches to complex networks. Whether you're just starting your IoT journey or you're a seasoned programmer, Uniot's scripting capabilities provide the tools you need to bring your ideas to life.
 
@@ -74,7 +74,7 @@ In this script, the following components are used:
 - [`task`](../platform/sandbox/visual-block-editor/special.md#task) block: Defines the main execution loop
 - [`set`](../platform/sandbox/visual-block-editor/variables.md#set) variable: Updates the value of the `state` variable
 - [`not`](../platform/sandbox/visual-block-editor/logic.md#not) variable: Inverts the value of the `state` variable
-- [`dwrite`](../platform/sandbox/visual-block-editor/primitives.md#dwrite) primitive: Writes a digital value to a pin 0
+- [`dwrite`](../platform/sandbox/visual-block-editor/primitives.md#digital-write) primitive: Writes a digital value to a pin 0
 
 ## Related Topics
 

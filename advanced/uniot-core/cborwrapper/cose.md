@@ -7,7 +7,7 @@ The `COSE` header defines enumerations and constants related to COSE messages. T
 * **COSETag**\
   Defines the various COSE message types by their corresponding tag values.
 
-  ```cpp
+  ```c++
   typedef enum COSETag {
     Sign = 98,
     Sign1 = 18,
@@ -21,7 +21,7 @@ The `COSE` header defines enumerations and constants related to COSE messages. T
 * **COSEHeaderLabel**\
   Defines standard header labels used within COSE messages.
 
-  ```cpp
+  ```c++
   typedef enum COSEHeaderLabel {
     Algorithm = 1,
     Critical = 2,
@@ -47,7 +47,7 @@ The `COSE` header defines enumerations and constants related to COSE messages. T
 * **COSEAlgorithm**\
   Defines supported cryptographic algorithms for COSE message signing and encryption.
 
-  ```cpp
+  ```c++
   typedef enum COSEAlgorithm {
     PS256 = -37,
     PS384 = -38,

@@ -1,37 +1,54 @@
 # Special
 
-The Special section provides blocks that allow you to add structure, timing, and event-driven behavior to your scripts. With these blocks, you can:
+Special blocks provide essential control over program execution and event handling in your IoT system. These blocks enable you to:
 
-* Define how often and how many times your main code should run.
-* Keep track of each execution cycle, allowing you to respond differently as a task progresses.
-* Receive and handle incoming messages from an MQTT broker, as well as send messages and data out, enabling real-time communication and interaction with other devices or services.
-
-By using these Special blocks, you can create dynamic, event-responsive, and time-aware scripts that are well suited for a wide range of IoT scenarios.
+- Control program timing and execution
+- Handle MQTT events
+- Manage program state
+- Create event-driven behaviors
 
 ## task
 
 <div align="left"><figure><img src="../../../.gitbook/assets/special_main.png" alt=""><figcaption></figcaption></figure></div>
 
-Defines the primary execution loop for your script.
+Creates a recurring task that executes at specified intervals. This is the primary execution loop required in every script - only one task block is allowed per script as it serves as the main program loop.
 
 **Parameters:**
 
-* **Number of Executions** (Number): 0 for infinite.
-* **Frequency** (Number, ms): Delay between executions.
+- **Iterations** (Number): How many times to run (0 for infinite)
+- **Interval** (Number): Time between executions in milliseconds
+
+**Example:**
+
+<div align="left"><figure><img src="../../../.gitbook/assets/special_task_example.png" alt=""><figcaption>Read temperature every 5 seconds and send an event with the value</figcaption></figure></div>
 
 ## task pass
 
 <div align="left"><figure><img src="../../../.gitbook/assets/special_iterator.png" alt=""><figcaption></figcaption></figure></div>
 
-Returns iteration information about the current task execution.\\
+Returns the current task iteration count. For infinite tasks (0 iterations), returns -1.
 
 **Returns:**
 
-* **Number**: `-1` if infinite; otherwise a countdown from `n-1` to `0`.
+- **Number** (Number): -1 if infinite; otherwise a **countdown from n-1 to 0**
 
 {% hint style="warning" %}
 
-An iterator can not be used outside the task.
+An iterator can not be used outside the task block.
+
+<div align="left"><figure><img src="../../../.gitbook/assets/special_iterator_outside.png" alt=""><figcaption></figcaption></figure></div>
+
+{% endhint %}
+
+**Example:**
+
+<div align="left"><figure><img src="../../../.gitbook/assets/special_task_pass_example.png" alt=""><figcaption>Create LED patterns based on iteration</figcaption></figure></div>
+
+{% hint style="info" %}
+
+A custom iterator implementation.
+
+<div align="left"><figure><img src="../../../.gitbook/assets/special_iterator_custom.png" alt=""><figcaption></figcaption></figure></div>
 
 {% endhint %}
 
@@ -39,41 +56,49 @@ An iterator can not be used outside the task.
 
 <div align="left"><figure><img src="../../../.gitbook/assets/special_is_event.png" alt=""><figcaption></figcaption></figure></div>
 
-Checks if an event with a specified name has been received from the MQTT broker.
+Checks if a specific MQTT event exists in the queue.
 
 **Parameters:**
 
-* **Event Name** (String)
+- **Event Name** (String): Name of the event to check
 
 **Returns:**
 
-* **Boolean**: `true` if the event is present, `false` otherwise.
+- **Boolean**: `#t` if event exists, `()` if not
 
 {% hint style="warning" %}
 
-This block will return `true` until you retrieve and remove the value using the [pop event](#pop-event) block.
+This block will return true until you retrieve and remove the value using the pop event block.
 
 {% endhint %}
+
+**Example:**
+
+<div align="left"><figure><img src="../../../.gitbook/assets/special_is_event_example.png" alt=""><figcaption>Check and retrieve an event</figcaption></figure></div>
 
 ## pop event
 
 <div align="left"><figure><img src="../../../.gitbook/assets/special_pop_event.png" alt=""><figcaption></figcaption></figure></div>
 
-Retrieves and removes the value associated with a specified event from the MQTT broker.
+Retrieves and removes the oldest event of the specified type from the queue.
 
 **Parameters:**
 
-* **Event Name** (String)
+- **Event Name** (String): Name of the event to retrieve
 
 **Returns:**
 
-* **Number**: The value associated with that event.
+- **Value**: The event value, or `()` if no event exists
 
 {% hint style="warning" %}
 
 The event payload is always of type Number.
 
 {% endhint %}
+
+**Example:**
+
+<div align="left"><figure><img src="../../../.gitbook/assets/special_is_event_example.png" alt=""><figcaption>Check and retrieve an event</figcaption></figure></div>
 
 ## push event
 
@@ -83,11 +108,15 @@ Sends an event with a value to the MQTT broker.
 
 **Parameters:**
 
-* **Event Name** (String)
-* **Value** (Number, Boolean) A Boolean value will be converted to a Number
+- **Event Name** (String): Name of the event
+- **Value**: Value to send (number or boolean)
 
 {% hint style="warning" %}
 
-The event value is always of type Number. A Boolean value will be converted to a number. A String value is not allowed
+The event payload is always of type Number. Boolean values are converted to 1 or 0.
 
 {% endhint %}
+
+**Example:**
+
+<div align="left"><figure><img src="../../../.gitbook/assets/special_push_event_example.png" alt=""><figcaption>Send sensor readings</figcaption></figure></div>

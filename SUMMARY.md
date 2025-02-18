@@ -24,7 +24,7 @@
     * [Math](platform/sandbox/visual-block-editor/math.md)
     * [Loops](platform/sandbox/visual-block-editor/loops.md)
     * [Text](platform/sandbox/visual-block-editor/text.md)
-    * [Lists](platform/sandbox/visual-block-editor/lists.md)
+    <!-- * [Lists](platform/sandbox/visual-block-editor/lists.md) -->
     * [Variables](platform/sandbox/visual-block-editor/variables.md)
     * [Functions](platform/sandbox/visual-block-editor/functions.md)
     * [Primitives](platform/sandbox/visual-block-editor/primitives.md)

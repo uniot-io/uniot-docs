@@ -19,7 +19,7 @@ The `PrimitiveExpeditor` class is responsible for defining, describing, and mana
   Retrieves the singleton instance of the [`RegisterManager`](../register/registermanager.md) responsible for managing primitive registers.
 
 * **`static PrimitiveExpeditorInitializer describe(const String &name, Lisp::Type returnType, int argsCount, ...)`**\
-  Describes a primitive by specifying its name, return type, and expected argument types. This method facilitates the definition of primitive characteristics before registration.
+  Describes a primitive by specifying its name, return type, number of arguments, and expected argument types. This method facilitates the definition of primitive characteristics before registration.
   * **`name`** (`const String &`): The name of the primitive.
   * **`returnType`** (`Lisp::Type`): The expected return type of the primitive.
   * **`argsCount`** (`int`): The number of arguments the primitive accepts.

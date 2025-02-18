@@ -27,3 +27,11 @@ Uniot stands out with its combination of ease of use, flexibility, and advanced 
 * Eliminating vendor lock-in by supporting a wide range of devices. It can be used as an alternative firmware for existing devices or in initial developments.
 
 This documentation will guide you through the various aspects of the platform, from setting up your first device to leveraging advanced features for complex applications. Let’s get started!
+
+## **Support**
+
+For additional help or to report issues:
+
+* Visit our [Community Forum](https://community.uniot.io)
+* Check our [GitHub Repository](https://github.com/uniot-io)
+* Contact support at support@uniot.io
