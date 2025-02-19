@@ -30,7 +30,7 @@ See [NetworkController](../advanced/uniot-core/network/networkcontroller.md) for
 
 ## Status Indication
 
-The LED indicates different network states through blink patterns:
+If your device has an LED, you can use LED indication to define different network states through blink patterns:
 
 | Pattern | Meaning | Description |
 |---------|---------|-------------|
@@ -40,7 +40,7 @@ The LED indicates different network states through blink patterns:
 
 ## Network Control
 
-The button provides network management functions:
+If your device has a button, you can use it to manage the network:
 
 ### Reconnect to WiFi
 

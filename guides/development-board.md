@@ -6,9 +6,10 @@ This guide walks you through connecting and using an ESP development board with 
 
 Before starting, we recommend reviewing:
 
+- [Scripting](../general-concepts/scripting.md)
+- [Primitives](../general-concepts/primitives.md)
 - [Dashboard](../platform/dashboard.md)
 - [Sandbox](../platform/sandbox/README.md)
-- [Uniot Core](../advanced/uniot-core/README.md)
 
 {% endhint %}
 
