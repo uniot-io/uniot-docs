@@ -1,6 +1,6 @@
 # Functions
 
-Functions enables you to organize and streamline your code by encapsulating repetitive or complex logic into reusable components. You can create your own functions with optional parameters and a return value, making it simple to break down larger tasks into smaller, more manageable parts.
+Functions enable you to organize and streamline your code by encapsulating repetitive or complex logic into reusable components. You can create your own functions with optional parameters and a return value, making it simple to break down larger tasks into smaller, more manageable parts.
 
 ## function definition
 

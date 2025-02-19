@@ -12,7 +12,7 @@ The `LispDevice` class handles script execution, event processing, and error man
 * **`virtual void syncSubscriptions() override`**\
   Subscribes to MQTT topics related to script execution and event handling, ensuring that the device listens to relevant messages.
 * **`unLisp &getLisp()`**\
-  Retrieves a reference to the [`unLisp`](../../../uniot-core/appkit/lispwrapper/unlisp.md) singleton instance, enabling access to the Lisp interpreter.
+  Retrieves a reference to the [`unLisp`](../lispwrapper/unlisp.md) singleton instance, enabling access to the Lisp interpreter.
 * **`void runStoredCode()`**\
   Restores stored Lisp scripts from persistent storage and executes them if persistence is enabled and no errors have occurred.
 * **`bool store()`**\

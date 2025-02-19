@@ -48,7 +48,7 @@ An iterator can not be used outside the task block.
 
 A custom iterator implementation.
 
-<div align="left"><figure><img src="../../../.gitbook/assets/special_iterator_custom.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/special_iterator_custom.png" alt=""><figcaption></figcaption></figure></div>
 
 {% endhint %}
 

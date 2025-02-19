@@ -45,11 +45,11 @@ Only the plain `if` block appears in the toolbox. To add `else if` and `else` cl
 
 <div align="left"><figure><img src="../../../.gitbook/assets/logic_if_settings.png" alt=""><figcaption></figcaption></figure></div>
 
-Drag `else if` and `else` clauses under the `if` block, as well as reordering and removing them. When finished, click on the gear icon, which closes the window, as shown here:
+You can drag `else if` and `else` clauses under the `if` block, reorder them, and remove them as needed. When finished, click on the gear icon to close the window, as shown here:
 
 <div align="left"><figure><img src="../../../.gitbook/assets/logic_if_settings2.gif" alt=""><figcaption></figcaption></figure></div>
 
-Note that the shapes of the blocks allows any number of `else if` subblocks to be added but only up to one `else` block.
+Note that the shape of the blocks allows any number of `else if` subblocks to be added but only up to one `else` block.
 
 ## comparison
 

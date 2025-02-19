@@ -4,17 +4,17 @@ The `DefaultPrimitives` component defines a set of primitives essential for inte
 
 **Member Variables:**
 
-- **`constexpr const char* dwrite`**
+- **`constexpr const char* dwrite`**\
   Represents the [`dwrite`](../appkit/lispprimitives.md) primitive, responsible for writing the current state to a specified GPIO pin.
 
-- **`constexpr const char* dread`**
+- **`constexpr const char* dread`**\
   Represents the [`dread`](../appkit/lispprimitives.md) primitive, responsible for reading the current state from a specified GPIO pin.
 
-- **`constexpr const char* awrite`**
+- **`constexpr const char* awrite`**\
   Represents the [`awrite`](../appkit/lispprimitives.md) primitive, responsible for writing the analog data to a specified GPIO pin.
 
-- **`constexpr const char* aread`**
+- **`constexpr const char* aread`**\
   Represents the [`aread`](../appkit/lispprimitives.md) primitive, responsible for reading the current analog data from a specified GPIO pin.
 
-- **`constexpr const char* bclicked`**
+- **`constexpr const char* bclicked`**\
   Represents the [`bclicked`](../appkit/lispprimitives.md) primitive, responsible for handling button click.

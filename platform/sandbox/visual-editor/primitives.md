@@ -7,7 +7,7 @@ Primitives provide direct access to your device's hardware capabilities. These f
 - Manage analog signals
 - Create custom hardware interactions
 
-When using primitives, you'll work with [register](../../../general-concepts/primitives.md) indices rather than direct pin numbers. The register system organizes pins into categories (digital input/output, analog input/output) and assigns each pin an index. You can view the mapping between physical pins and register indices in your device's Registers tab on the Uniot Platform.
+When using primitives, you'll work with [register](../../../general-concepts/primitives.md#registers) indices rather than direct pin numbers. The register system organizes pins into categories (digital input/output, analog input/output) and assigns each pin an index. You can view the mapping between physical pins and register indices in your device's Registers tab on the Uniot Platform.
 
 ## analog read
 
@@ -73,7 +73,25 @@ Sets a digital pin to high or low.
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/primitives_digital_write_example.png" alt=""><figcaption>Reads the state of the switch and turns on the LED.</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/primitives_digital_write_example.png" alt=""><figcaption>Checks if an event was received and sets the LED accordingly.</figcaption></figure></div>
+
+## button clicked
+
+<div align="left"><figure><img src="../../../.gitbook/assets/primitives_button_clicked.png" alt=""><figcaption></figcaption></figure></div>
+
+Checks if a button on a specified pin was clicked since the last check.
+
+**Parameters:**
+
+- **Pin** (Number): The digital pin
+
+**Returns:**
+
+- **Boolean**: `#t` if the button was clicked, `()` otherwise
+
+**Example:**
+
+<div><figure><img src="../../../.gitbook/assets/primitives_button_clicked_example.png" alt=""><figcaption>Checks if a button was clicked, change the state, and sets the LED accordingly.</figcaption></figure></div>
 
 ## user primitive (template)
 

@@ -5,7 +5,7 @@ The Math section provides a range of blocks that enable you to perform numerical
 Using these blocks, you can:
 
 - Perform basic arithmetic (addition, subtraction, multiplication, division).
-- Apply mathematical functions (absolute value, negatiation, checking value for compliance with different conditions).
+- Apply mathematical functions (absolute value, negotiation, checking value for compliance with different conditions).
 - Combine numeric operations with logic and loops to create complex, dynamic scripts.
 
 ## value
