@@ -8,8 +8,8 @@
 * [Guides](guides/README.md)
   * [Getting Started](guides/getting-started.md)
   * [Development Board](guides/development-board.md)
+  * [Uniot Badge](guides/uniot-badge.md)
   * [Device Network](guides/device-network.md)
-* [Uniot Badge](uniot-badge.md)
 
 ## General Concepts
 
