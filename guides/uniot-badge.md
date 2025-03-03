@@ -16,7 +16,7 @@ The Uniot Badge is equipped with the following hardware components:
 
 ## Getting Started
 
-To start working with the Uniot Badge, you need to flash the board and add it to the platform. The firmware source code can be found [here](https://github.com/uniot-io/uniot-promo-badge-firmware). Instructions for flashing and adding the device to the platform are available in the [Getting Started](../getting-started/) section.
+To start working with the Uniot Badge, you need to flash the board and add it to the platform. The firmware source code can be found [here](https://github.com/uniot-io/uniot-promo-badge-firmware). Instructions for flashing and adding the device to the platform are available in the [Getting Started](../guides/getting-started.md) section.
 
 ## Promo
 
@@ -218,7 +218,7 @@ To demonstrate the functionality of the badge, this script uses several blocks:
 
 ### Health and Wellness Reminder
 
-With this script, you can turn the badge into a personal reminder tool. It can vibrate at set frequencies to remind you to take a break, drink water, or stretch. The LEDs also are used to show different colors based on the type of reminder – blue for hydration, green for stretching, red for break.
+With this script, you can turn the badge into a personal reminder tool. It can vibrate at set frequencies to remind you to take a break, drink water, or stretch. The LEDs are also used to show different colors based on the type of reminder – blue for hydration, green for stretching, red for break.
 
 <figure><img src="../.gitbook/assets/uniot_badge_script_reminder.png" alt=""><figcaption><p>The visual script</p></figcaption></figure>
 
