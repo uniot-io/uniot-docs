@@ -52,7 +52,7 @@ monitor_filters = default, esp32_exception_decoder
 
 ### Hardware common
 
-```cpp
+```c++
 #include <AppKit.h>
 #include <Uniot.h>
 ```
@@ -61,7 +61,7 @@ These modules are required for any device. Include them to utilize Uniot Core.
 
 ### Definitions
 
-```cpp
+```c++
 #define PIN_LED 2
 #define PIN_BUTTON 0
 #define LED_PIN_LEVEL LOW
@@ -72,7 +72,7 @@ Here you should define all pins used by peripherals. In this example a LED conne
 
 ### Tasks
 
-```cpp
+```c++
 auto taskPrintHeap = TaskScheduler::make([](SchedulerTask& self, short t) {
   Serial.println(ESP.getFreeHeap());
 });
@@ -87,7 +87,7 @@ You can define your own [tasks](../advanced/uniot-core/scheduler/taskscheduler.m
 ### Setup
 
 {% code title="main.cpp" lineNumbers="true" %}
-```cpp
+```c++
 void setup() {
   Uniot.begin(); // required
 
@@ -124,7 +124,7 @@ This is a standard Arduino function that runs once when the device boots up. Her
 
 The following code initializes the core services by setting up task schedulers for event handling and date storage:
 
-```cpp
+```c++
 Uniot.begin();
 ```
 
@@ -132,7 +132,7 @@ Uniot.begin();
 
 The next code is the configuration of the network controller. Here we pass the LED pin and the button pin that will be used to indicate the network status and initiate actions such as reconnecting to the network or resetting the network configuration:
 
-```cpp
+```c++
 MainAppKit.configureNetworkController({
   .pinBtn = PIN_BUTTON,
   .activeLevelBtn = BTN_PIN_LEVEL,
@@ -146,7 +146,7 @@ MainAppKit.configureNetworkController({
 
 The next step is the GPIO pins configuration: Here you should configure digital and analog inputs and outputs. You should describe your own [primitives](../general-concepts/primitives.md) here if necessary.
 
-```cpp
+```c++
 PrimitiveExpeditor::getRegisterManager().setDigitalOutput(PIN_LED);
 ```
 
@@ -156,7 +156,7 @@ In this example, we set the LED as a digital output so that we can control its s
 
 Registers the [AppKit](../advanced/uniot-core/appkit/) with the [EventBus](../advanced/uniot-core/eventbus/):
 
-```cpp
+```c++
 Uniot.getEventBus().registerKit(MainAppKit);
 ```
 
@@ -164,7 +164,7 @@ Uniot.getEventBus().registerKit(MainAppKit);
 
 Pushes the AppKit and your tasks to the [Scheduler](../advanced/uniot-core/scheduler/):
 
-```cpp
+```c++
 Uniot.getScheduler()
   .push(MainAppKit)
   .push("print_time", taskPrintTime)
@@ -175,7 +175,7 @@ Uniot.getScheduler()
 
 Schedules a task to be executed with a certain frequency:
 
-```cpp
+```c++
 taskPrintHeap->attach(500);
 taskPrintTime->attach(500);
 ```
@@ -184,13 +184,13 @@ taskPrintTime->attach(500);
 
 Attaches the AppKit to the system by initializing [default primitives](../advanced/uniot-core/lispwrapper/defaultprimitives.md), attaching network and MQTT components, and running stored [UniotLisp](../advanced/uniot-lisp/) script:
 
-```cpp
+```c++
 MainAppKit.attach();
 ```
 
 ### Loop
 
-```cpp
+```c++
 void loop() {
   Uniot.loop();
 }
@@ -201,7 +201,7 @@ This is a standard Arduino function that continuously runs after `void setup()`
 ### Complete Example
 
 {% code title="main.cpp" overflow="wrap" lineNumbers="true" %}
-```cpp
+```c++
 #include <AppKit.h>
 #include <Uniot.h>
 #include <Date.h>

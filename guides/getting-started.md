@@ -80,7 +80,7 @@ build_flags =
 The following code demonstrates setting up Uniot Core to manage digital and analog inputs/outputs for this module:
 
 {% code title="main.cpp" lineNumbers="true" %}
-```cpp
+```c++
 #include <AppKit.h>
 #include <Uniot.h>
 
