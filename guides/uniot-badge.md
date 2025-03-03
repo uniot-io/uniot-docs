@@ -28,10 +28,6 @@ You can redeem the promo code by scanning the QR code on your badge. This promo 
 
 A script and a dashboard, both named 'Uniot Promo Badge,' will also be created on the platform for demonstration purposes. You can deploy the script to the badge and try it out in interaction with the dashboard.
 
-<div align="left"><figure><img src="../.gitbook/assets/uniot_badge_script_promo_preview.png" alt=""><figcaption><p>Promo Script</p></figcaption></figure></div>
-
-<div align="left"><figure><img src="../.gitbook/assets/uniot_badge_dashboard_promo_preview.png" alt=""><figcaption><p>Promo Dashboard</p></figcaption></figure></div>
-
 Learn more about this script below in the [Script Examples](uniot-badge.md#promo-badge) section. If you wish, you can delete these dashboard and script and create your own (the plan extension will remain).
 
 ## Functionality Overview
@@ -238,18 +234,18 @@ The visual script generates the following code:
 ;
 ;;; end-user-library
 
-(define water_frequency ())
+(define WATER_INTEVAL ())
 (define water_timer ())
-(define red ())
 (define current_reminder ())
-(define break_frequency ())
+(define red ())
+(define BREAK_INTERVAL ())
 (define break_timer ())
+(define TASK_INTERVAL ())
 (define green ())
-(define task_frequency ())
-(define stretch_frequency ())
+(define STRETCH_INTERVAL ())
+(define active ())
 (define stretch_timer ())
 (define blue ())
-(define active ())
 ; Describe this function...
 (defun process_reminder
  (type timer)
@@ -281,55 +277,55 @@ The visual script generates the following code:
  (if
   (= current_reminder 1)
   (list
-   (setq water_timer water_frequency)
+   (setq water_timer WATER_INTEVAL)
    (setq blue 0)))
  (if
   (= current_reminder 2)
   (list
-   (setq break_timer break_frequency)
+   (setq break_timer BREAK_INTERVAL)
    (setq red 0)))
  (if
   (= current_reminder 3)
   (list
-   (setq stretch_timer stretch_frequency)
+   (setq stretch_timer STRETCH_INTERVAL)
    (setq green 0)))
  (setq active ())
  (setq current_reminder 0)
  (pixel_clear)
  (pixel_show))
 
-(setq water_frequency
+(setq WATER_INTEVAL
  (* 60
   (* 60 1000)))
-(setq break_frequency
+(setq BREAK_INTERVAL
  (* 180
   (* 60 1000)))
-(setq stretch_frequency
+(setq STRETCH_INTERVAL
  (* 90
   (* 60 1000)))
 
-(setq water_timer water_frequency)
-(setq break_timer break_frequency)
-(setq stretch_timer stretch_frequency)
+(setq water_timer WATER_INTEVAL)
+(setq break_timer BREAK_INTERVAL)
+(setq stretch_timer STRETCH_INTERVAL)
 
 (setq current_reminder 0)
-(setq task_frequency 200)
+(setq TASK_INTERVAL 200)
 
 (setq red 0)
 (setq green 0)
 (setq blue 0)
 
-(task 0 task_frequency '
+(task 0 TASK_INTERVAL '
  (list
   (setq water_timer
    (+ water_timer
-    (- task_frequency)))
+    (- TASK_INTERVAL)))
   (setq break_timer
    (+ break_timer
-    (- task_frequency)))
+    (- TASK_INTERVAL)))
   (setq stretch_timer
    (+ stretch_timer
-    (- task_frequency)))
+    (- TASK_INTERVAL)))
   (if
    (not active)
    (list
@@ -352,10 +348,10 @@ The visual script generates the following code:
 Let's take a closer look at the individual parts of the script:
 
 * **Variables Initialization**
-  * **`task_frequency`**: The frequency of task execution (in **milliseconds**).
-  * **`water_frequency`**: How often you want to drink water (every 60 minutes, in **ms**).
-  * **`break_frequency`**: How often you want to take a break (every 180 minutes, in **ms**).
-  * **`stretch_frequency`**: How often you want to stretch (every 90 minutes, in **ms**).
+  * **`TASK_INTERVAL`**: The task execution interval (in **ms**).
+  * **`WATER_INTERVAL`**: How often you want to drink water (every 60 minutes, in **ms**).
+  * **`BREAK_INTERVAL`**: How often you want to take a break (every 180 minutes, in **ms**).
+  * **`STRETCH_INTEVAL`**: How often you want to stretch (every 90 minutes, in **ms**).
   * **`water_timer`**: The water timer, set to the corresponding frequency value.
   * **`break_timer`**: The break timer, set to the corresponding frequency value.
   * **`stretch_timer`**: The stretch timer, set to the corresponding frequency value.
@@ -363,12 +359,274 @@ Let's take a closer look at the individual parts of the script:
   * **`green`**: The brightness of the green color of the LEDs.
   * **`blue`**: The brightness of the blue color of the LEDs.
   * **`current_reminder`**: The numeric value of the reminder (`1` for water, `2` for break, `3` for stretch).
+* **Run Task Block**: Configured to run every `TASK_INTERVAL` milliseconds indefinitely (as the `times` parameter is set to `0`).
 * **Process Reminder Block**: The `process_reminder` function processes provided reminder type (numeric value of the reminder) and it's corresponding timer (`timer`). If the timer is expired:
   * **Set Info**: Sets variable `active` as `true` (an indicator that there is an active reminder). Sets variable `current_reminder` to the numeric value of the reminder (the `type` argument passed to the function).
   * **Set Color**: Sets color according to the `current_reminder`.
   * **Notification Block**: Runs vibration motor and turns LEDs on by calling the corresponding primitives.
 * **Reset Reminder Block**: The `reset_reminder` function, as the name implies, resets the current reminder.
-* **Run Task Block**: Configured to run every `task_frequency` milliseconds indefinitely (as the `times` parameter is set to `0`).
-* **Update Timers Block**: Reduces the value of the timers by `task_frequency` every task execution.
+* **Update Timers Block**: Reduces the value of the timers by `TASK_INTERVAL` every task execution.
 * **Check Reminders Block**: Checks each type of reminder by calling the `process_reminder` function if no reminder is active (do not processes new reminders until the current one is acknowledged).
 * **Button Check Block**: Monitors if the button is clicked. When clicked, resets current reminder by calling the `reset_reminder` function.
+
+### Gesture-Based Appliance Control
+
+With the following script the badge can act as as a control device for household appliances. There is a tap gesture (quick down-up motion) detection. The appliance state switched when tap is detected.
+
+<figure><img src="../.gitbook/assets/uniot_badge_script_appliance_control.png" alt=""><figcaption><p>The visual script</p></figcaption></figure>
+
+The visual script generates the following code:
+
+{% code lineNumbers="true" %}
+```lisp
+;;; begin-user-library
+;; This block describes the library of user functions.
+;; So the editor knows that your device implements it.
+;
+; (defjs pixel_clear ()) ;-> Bool
+; (defjs pixel_set (_0 _1 _2 _3)) ;-> Bool
+; (defjs pixel_show ()) ;-> Bool
+; (defjs tof_distance ()) ;-> Int
+;
+;;; end-user-library
+
+(define TAP_DURATION ())
+(define TASK_INTERVAL ())
+(define is_detector ())
+(define distance ())
+(define TAP_TRESH_MIN ())
+(define fixed_distance ())
+(define tap_timer ())
+(define TAP_TRESH_MAX ())
+(define state ())
+(define tap_state ())
+; Describe this function...
+(defun updateLEDs ()
+ (pixel_clear)
+ (if
+  (is_event 'appliance-state)
+  (list
+   (setq state
+    (=
+     (pop_event 'appliance-state) 1))))
+ (if state
+  (list
+   (while
+    (< #itr 10)
+    (pixel_set #itr 0 5 0))))
+ (pixel_show))
+; Describe this function...
+(defun trackGesture ()
+ (if
+  (= tap_state 0)
+  (list
+   (if
+    (and
+     (>= distance TAP_TRESH_MIN)
+     (<= distance TAP_TRESH_MAX))
+    (list
+     (setq tap_state 1)
+     (setq tap_timer TAP_DURATION))))
+  (list
+   (setq tap_timer
+    (+ tap_timer
+     (- TASK_INTERVAL)))
+   (if
+    (<= tap_timer 0)
+    (list
+     (setq tap_state 0)
+     (setq tap_timer 0))
+    (if
+     (and
+      (= tap_state 1)
+      (< distance TAP_TRESH_MIN))
+     (list
+      (setq tap_state 2))
+     (if
+      (and
+       (= tap_state 2)
+       (and
+        (>= distance TAP_TRESH_MIN)
+        (< distance TAP_TRESH_MAX)))
+      (list
+       (push_event 'appliance-state
+        (not state))
+       (setq tap_state 0)
+       (setq tap_timer 0))))))))
+
+(setq TAP_DURATION 400)
+(setq TAP_TRESH_MIN 150)
+(setq TAP_TRESH_MAX 500)
+(setq tap_state 0)
+(setq tap_timer 0)
+
+(setq TASK_INTERVAL 30)
+(setq distance 0)
+(setq state ())
+
+(task 0 TASK_INTERVAL '
+ (list
+  (setq distance
+   (tof_distance))
+  (trackGesture)
+  (updateLEDs)))
+```
+{% endcode %}
+
+The script consist of the following parts:
+
+* **Variables Initialization**
+  * **`TASK_INTERVAL`**: The frequency of task execution (in **ms**).
+  * **`distance`**: The current value of the distance sensor.
+  * **`state`**: The apliance state (switched by a tap).
+  * **`tap_state`**: The current gesture state:
+    * **`0`**: No tap in progress.
+    * **`1`**: Hand started moving within the thresholds.
+    * **`2`**: Hand detected below minimum threshold.
+    * **`3`**: Hand is back within the thresholds.
+  * **`TAP_DURATION`**: The maximum allowed time (in **ms**) for a valid tap.
+  * **`TAP_TRESH_MAX`**: The sensor distance below which gesture detecion starts.
+  * **`TAP_TRESH_MIN`**: The sensor distance below which a tap state is considered as **`2`**.
+  * **`tap_timer`**: The timer to track a tap validity.
+* **Run Task Block**: Configured to run every `TASK_INTERVAL` milliseconds indefinitely (as the `times` parameter is set to `0`).
+* **Distance Sensor Reading**: Calls the `tof_distance` primitive and sets the value of the sensor to the `distance` variable.
+* **Gesture Recognition Block**: The `trackGesture` function determines whether a tap has been performed and emits a global event if it has.
+* **Update LEDs Block**: Listens to a global event, changes the local state and updates LEDs according to this state.
+
+### Appliance Control and Security Alarm
+
+With a few additions to the previous script, the device can turn into a motion detector with just one event (this event can be generated by a widget on the dashboard or by another device).
+
+<figure><img src="../.gitbook/assets/uniot_badge_script_appliance_control.png" alt=""><figcaption><p>The visual script</p></figcaption></figure>
+
+The visual script generates the following code:
+
+{% code lineNumbers="true" %}
+```lisp
+;;; begin-user-library
+;; This block describes the library of user functions.
+;; So the editor knows that your device implements it.
+;
+; (defjs pixel_clear ()) ;-> Bool
+; (defjs pixel_set (_0 _1 _2 _3)) ;-> Bool
+; (defjs pixel_show ()) ;-> Bool
+; (defjs tof_distance ()) ;-> Int
+;
+;;; end-user-library
+
+(define TAP_DURATION ())
+(define TASK_INTERVAL ())
+(define TAP_TRESH_MIN ())
+(define distance ())
+(define TAP_TRESH_MAX ())
+(define state ())
+(define tap_timer ())
+(define is_detector ())
+(define tap_state ())
+(define fixed_distance ())
+; Describe this function...
+(defun updateLEDs ()
+ (pixel_clear)
+ (if
+  (is_event 'appliance-state)
+  (list
+   (setq state
+    (=
+     (pop_event 'appliance-state) 1))))
+ (if state
+  (list
+   (while
+    (< #itr 10)
+    (pixel_set #itr 0 5 0))))
+ (pixel_show))
+; Describe this function...
+(defun guardCheck ()
+ (if
+  (is_event 'protection)
+  (list
+   (setq is_detector
+    (=
+     (pop_event 'protection) 1))
+   (if is_detector
+    (list
+     (setq fixed_distance distance))
+    (list
+     (push_event 'alarm 0))))))
+; Describe this function...
+(defun trackIntrusion ()
+ (if
+  (not
+   (= distance fixed_distance))
+  (list
+   (push_event 'alarm 1))))
+; Describe this function...
+(defun trackGesture ()
+ (if
+  (= tap_state 0)
+  (list
+   (if
+    (and
+     (>= distance TAP_TRESH_MIN)
+     (<= distance TAP_TRESH_MAX))
+    (list
+     (setq tap_state 1)
+     (setq tap_timer TAP_DURATION))))
+  (list
+   (setq tap_timer
+    (+ tap_timer
+     (- TASK_INTERVAL)))
+   (if
+    (<= tap_timer 0)
+    (list
+     (setq tap_state 0)
+     (setq tap_timer 0))
+    (if
+     (and
+      (= tap_state 1)
+      (< distance TAP_TRESH_MIN))
+     (list
+      (setq tap_state 2))
+     (if
+      (and
+       (= tap_state 2)
+       (and
+        (>= distance TAP_TRESH_MIN)
+        (< distance TAP_TRESH_MAX)))
+      (list
+       (push_event 'appliance-state
+        (not state))
+       (setq tap_state 0)
+       (setq tap_timer 0))))))))
+
+(setq TASK_INTERVAL 30)
+(setq distance 0)
+(setq state ())
+(setq is_detector ())
+(setq fixed_distance 0)
+
+(setq TAP_DURATION 400)
+(setq TAP_TRESH_MIN 150)
+(setq TAP_TRESH_MAX 500)
+(setq tap_state 0)
+(setq tap_timer 0)
+
+(task 0 TASK_INTERVAL '
+ (list
+  (setq distance
+   (tof_distance))
+  (guardCheck)
+  (if is_detector
+   (list
+    (trackIntrusion))
+   (list
+    (trackGesture)
+    (updateLEDs)))))
+```
+
+This script has everything from the previous script and the following additions:
+
+* **Variables Initialization**
+  * **`is_detector`**: Indicates that the device is operating as a motion detector.
+  * **`fixed_distance`**: Stores the value from the distance sensor at the time of arming
+* **Intrusion Recognition Block**: The `trackIntrusion` function checks whether the value from the distance sensor has changed after arming, and if so, generates a global event `alarm` with value `1`.
+* **Check Guard Block**: Responds to the `protection` event by updating the `is_detector` variable to the event's value. Fixes the current value of the distance sensor if the device is in armed mode, or generates an `alarm` event with a value of `0` if the device is in the switch mode.
