@@ -622,6 +622,7 @@ The visual script generates the following code:
     (trackGesture)
     (updateLEDs)))))
 ```
+{% endcode %}
 
 This script has everything from the previous script and the following additions:
 
