@@ -4,8 +4,9 @@
 * [Getting Started](getting-started/README.md)
   * [Firmware](getting-started/firmware.md)
   * [Connect Device](getting-started/connect-device.md)
-  * [Troubleshooting](getting-started/troubleshooting.md)\
+  * [Troubleshooting](getting-started/troubleshooting.md)
 * [Guides](guides/README.md)
+  * [Getting Started](guides/getting-started.md)
   * [Development Board](guides/development-board.md)
   * [Device Network](guides/device-network.md)
 * [Uniot Badge](uniot-badge.md)
@@ -25,7 +26,6 @@
     * [Math](platform/sandbox/visual-editor/math.md)
     * [Loops](platform/sandbox/visual-editor/loops.md)
     * [Text](platform/sandbox/visual-editor/text.md)
-    <!-- * [Lists](platform/sandbox/visual-editor/lists.md) -->
     * [Variables](platform/sandbox/visual-editor/variables.md)
     * [Functions](platform/sandbox/visual-editor/functions.md)
     * [Primitives](platform/sandbox/visual-editor/primitives.md)
