@@ -30,6 +30,7 @@ Before you begin, ensure you have the following:
 
 By carefully customizing these parameters, you can ensure that your development environment is optimized for Uniot Core.
 
+{% code title="platformio.ini" lineNumbers="true" %}
 ```ini
 [platformio]
 
@@ -70,6 +71,7 @@ build_flags =
     -D SERIALCONS=USBSerial
     -D ARDUINO_USB_CDC_ON_BOOT=1
 ```
+{% endcode %}
 
 4. As an example, we will use the ESP8266 Witty Cloud module. The module’s compact design and onboard LED's and sensors make it ideal for small IoT applications.
 
@@ -77,6 +79,7 @@ build_flags =
 
 The following code demonstrates setting up Uniot Core to manage digital and analog inputs/outputs for this module:
 
+{% code title="main.cpp" lineNumbers="true" %}
 ```cpp
 #include <AppKit.h>
 #include <Uniot.h>
@@ -112,6 +115,7 @@ void loop() {
   Uniot.loop();
 }
 ```
+{% endcode %}
 
 This example showcases how to utilize Uniot Core features like managing digital/analog IOs and attaching a network controller. The Witty Cloud module’s capabilities, including onboard LEDs and a button, allow for a seamless testing environment.
 

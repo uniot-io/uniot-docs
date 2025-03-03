@@ -2,14 +2,12 @@
 
 With Uniot Core, you don't have to worry about complexity anymore. Task scheduling, networking, storage management, and more - Uniot Core takes care of it all. You just need to describe the functionality of your specific device to unlock its full potential within the Uniot Platform.
 
-We have a [library](https://github.com/uniot-io/uniot-library) of ready-made templates. Any member of the community can submit their own solution, and we will be happy to review and add it to the library. If there is a ready-made firmware for your device, you can go straight to [flashing a device](#flashing-a-device).
+We have a [library](https://github.com/uniot-io/uniot-library) of ready-made templates. Any member of the community can submit their own solution, and we will be happy to review and add it to the library. If there is a ready-made firmware for your device, you can go straight to [flashing a device](firmware.md#flashing-a-device).
 
 ## Customizing a firmware
 
 {% hint style="info" %}
-
-For a better understanding of how Uniot Core works, we recommend that you read the related documentation [here](../advanced/uniot-core/README.md)
-
+For a better understanding of how Uniot Core works, we recommend that you read the related documentation [here](../advanced/uniot-core/)
 {% endhint %}
 
 Integrating Uniot Core requires only a handful of lines of code, allowing you to focus on your device's unique features without getting bogged down by low-level firmware development.
@@ -19,7 +17,6 @@ Integrating Uniot Core requires only a handful of lines of code, allowing you to
 Uniot Core employs [PlatformIO](https://platformio.org/), an open source ecosystem for IoT development, to manage the project's environment. This includes dependency management, streamlined build processes, and integration with various IDEs, ensuring a smooth development experience. Below is an example of PlatformIO configuration file with two environments (ESP8266 and ESP32):
 
 {% code title="platformio.ini" overflow="wrap" lineNumbers="true" %}
-
 ```ini
 [platformio]
 default_envs = ESP12E
@@ -51,12 +48,11 @@ framework = arduino
 board = esp32doit-devkit-v1
 monitor_filters = default, esp32_exception_decoder
 ```
-
 {% endcode %}
 
 ### Hardware common
 
-```c++
+```cpp
 #include <AppKit.h>
 #include <Uniot.h>
 ```
@@ -65,7 +61,7 @@ These modules are required for any device. Include them to utilize Uniot Core.
 
 ### Definitions
 
-```c++
+```cpp
 #define PIN_LED 2
 #define PIN_BUTTON 0
 #define LED_PIN_LEVEL LOW
@@ -76,7 +72,7 @@ Here you should define all pins used by peripherals. In this example a LED conne
 
 ### Tasks
 
-```c++
+```cpp
 auto taskPrintHeap = TaskScheduler::make([](SchedulerTask& self, short t) {
   Serial.println(ESP.getFreeHeap());
 });
@@ -90,7 +86,8 @@ You can define your own [tasks](../advanced/uniot-core/scheduler/taskscheduler.m
 
 ### Setup
 
-```c++
+{% code title="main.cpp" lineNumbers="true" %}
+```cpp
 void setup() {
   Uniot.begin(); // required
 
@@ -119,22 +116,23 @@ void setup() {
   MainAppKit.attach(); // required
 }
 ```
+{% endcode %}
 
 This is a standard Arduino function that runs once when the device boots up. Here we initialize the core services, configure the [network controller](../advanced/uniot-core/network/networkcontroller.md), configure digital and analog inputs and outputs, and describe your own [primitives](../general-concepts/primitives.md) if necessary. Let's dive deeper into each part.
 
----
+***
 
 The following code initializes the core services by setting up task schedulers for event handling and date storage:
 
-```c++
+```cpp
 Uniot.begin();
 ```
 
----
+***
 
 The next code is the configuration of the network controller. Here we pass the LED pin and the button pin that will be used to indicate the network status and initiate actions such as reconnecting to the network or resetting the network configuration:
 
-```c++
+```cpp
 MainAppKit.configureNetworkController({
   .pinBtn = PIN_BUTTON,
   .activeLevelBtn = BTN_PIN_LEVEL,
@@ -144,67 +142,66 @@ MainAppKit.configureNetworkController({
 });
 ```
 
----
+***
 
-The next step is the GPIO pins configuration:
-Here you should configure digital and analog inputs and outputs. You should describe your own [primitives](../general-concepts/primitives.md) here if necessary.
+The next step is the GPIO pins configuration: Here you should configure digital and analog inputs and outputs. You should describe your own [primitives](../general-concepts/primitives.md) here if necessary.
 
-```c++
+```cpp
 PrimitiveExpeditor::getRegisterManager().setDigitalOutput(PIN_LED);
 ```
-In this example, we set the LED as a digital output so that we can control its state later in the [Visual Editor](../platform/sandbox/visual-editor/README.md) or in [UniotLisp](../advanced/uniot-lisp/README.md) code.
 
----
+In this example, we set the LED as a digital output so that we can control its state later in the [Visual Editor](../platform/sandbox/visual-editor/) or in [UniotLisp](../advanced/uniot-lisp/) code.
 
-Registers the [AppKit](../advanced/uniot-core/appkit/README.md) with the [EventBus](../advanced/uniot-core/eventbus/README.md):
+***
 
-```c++
+Registers the [AppKit](../advanced/uniot-core/appkit/) with the [EventBus](../advanced/uniot-core/eventbus/):
+
+```cpp
 Uniot.getEventBus().registerKit(MainAppKit);
 ```
 
----
+***
 
-Pushes the AppKit and your tasks to the [Scheduler](../advanced/uniot-core/scheduler/README.md):
+Pushes the AppKit and your tasks to the [Scheduler](../advanced/uniot-core/scheduler/):
 
-```c++
+```cpp
 Uniot.getScheduler()
   .push(MainAppKit)
   .push("print_time", taskPrintTime)
   .push("print_heap", taskPrintHeap);
 ```
 
----
+***
 
 Schedules a task to be executed with a certain frequency:
 
-```c++
+```cpp
 taskPrintHeap->attach(500);
 taskPrintTime->attach(500);
 ```
 
----
+***
 
-Attaches the AppKit to the system by initializing [default primitives](../advanced/uniot-core/lispwrapper/defaultprimitives.md), attaching network and MQTT components, and running stored [UniotLisp](../advanced/uniot-lisp/README.md) script:
+Attaches the AppKit to the system by initializing [default primitives](../advanced/uniot-core/lispwrapper/defaultprimitives.md), attaching network and MQTT components, and running stored [UniotLisp](../advanced/uniot-lisp/) script:
 
-```c++
+```cpp
 MainAppKit.attach();
 ```
 
 ### Loop
 
-```c++
+```cpp
 void loop() {
   Uniot.loop();
 }
 ```
 
-This is a standard Arduino function that continuously runs after ``` void setup()```
+This is a standard Arduino function that continuously runs after `void setup()`
 
 ### Complete Example
 
 {% code title="main.cpp" overflow="wrap" lineNumbers="true" %}
-
-```c++
+```cpp
 #include <AppKit.h>
 #include <Uniot.h>
 #include <Date.h>
@@ -256,11 +253,10 @@ void loop() {
   Uniot.loop();
 }
 ```
-
 {% endcode %}
 
 ## Flashing a device
 
 Once the code is ready, you can build it and flash the device using PlatformIO. You can simply do this with the VSCode extension as shown in the screenshot:
 
-<div><figure><img src="../.gitbook/assets/platformio_upload.png" alt=""><figcaption></figcaption></figure></div>
+<figure><img src="../.gitbook/assets/platformio_upload.png" alt=""><figcaption></figcaption></figure>
