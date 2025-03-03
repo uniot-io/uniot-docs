@@ -11,6 +11,10 @@
   * [Uniot Badge](guides/uniot-badge.md)
   * [Device Network](guides/device-network.md)
 
+## Foundations
+
+* [Edge Logic Deployment](foundations/edge-logic-deployment.md)
+
 ## General Concepts
 
 * [Primitives](general-concepts/primitives.md)
