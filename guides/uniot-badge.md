@@ -478,7 +478,7 @@ The script consist of the following parts:
 * **Variables Initialization**
   * **`TASK_INTERVAL`**: The frequency of task execution (in **ms**).
   * **`distance`**: The current value of the distance sensor.
-  * **`state`**: The apliance state (switched by a tap).
+  * **`state`**: The appliance state (switched by a tap).
   * **`tap_state`**: The current gesture state:
     * **`0`**: No tap in progress.
     * **`1`**: Hand started moving within the thresholds.
