@@ -1,13 +1,12 @@
 # Table of contents
 
 * [Introduction](README.md)
-* [Getting Started](getting-started/README.md)
+<!-- * [Getting Started](getting-started/README.md)
   * [Firmware](getting-started/firmware.md)
   * [Connect Device](getting-started/connect-device.md)
-  * [Troubleshooting](getting-started/troubleshooting.md)
+  * [Troubleshooting](getting-started/troubleshooting.md) -->
 * [Guides](guides/README.md)
   * [Getting Started](guides/getting-started.md)
-  * [Development Board](guides/development-board.md)
   * [Uniot Badge](guides/uniot-badge.md)
   * [Device Network](guides/device-network.md)
 

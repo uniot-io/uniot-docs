@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Firmware
 
 With Uniot Core, you don't have to worry about complexity anymore. Task scheduling, networking, storage management, and more - Uniot Core takes care of it all. You just need to describe the functionality of your specific device to unlock its full potential within the Uniot Platform.

@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Development Board
 
 This guide walks you through connecting and using an ESP development board with Uniot. While we use the ESP8266 Witty Cloud board as an example, the principles apply to other ESP boards with minor adjustments.

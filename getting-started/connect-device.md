@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Connect Device
 
 To connect your device to the Uniot Platform, you need to have:

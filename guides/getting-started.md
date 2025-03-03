@@ -18,6 +18,7 @@ Before you begin, ensure you have the following:
      * `-D UNIOT_USE_LITTLEFS` to specify the file system (e.g., LittleFS or SPIFFS by default).
      * `-D UNIOT_CREATOR_ID` for identifying the firmware creator.
      * `-D MQTT_MAX_PACKET_SIZE` to adjust MQTT buffer size if necessary.
+     * `-D UNIOT_LISP_HEAP` to adjust the memory size of UniotLisp environment
      * `-D UNIOT_LOG_ENABLED` and `-D UNIOT_LOG_LEVEL` for enabling and configuring logging levels.
    * **Microcontroller Selection**: Define separate environments for each supported microcontroller model. For example:
      * `ESP12E` for ESP8266-based boards.
@@ -73,7 +74,7 @@ build_flags =
 ```
 {% endcode %}
 
-4. As an example, we will use the ESP8266 Witty Cloud module. The module’s compact design and onboard LED's and sensors make it ideal for small IoT applications.
+1. As an example, we will use the ESP8266 Witty Cloud module. The module’s compact design and onboard LED's and sensors make it ideal for small IoT applications.
 
 <div align="left"><figure><img src="../.gitbook/assets/guides_witty_cloud.png" alt=""><figcaption></figcaption></figure></div>
 
@@ -134,9 +135,13 @@ This example showcases how to utilize Uniot Core features like managing digital/
     * Power on your device.
     * Connect your computer or smartphone to the device’s WiFi network named “UNIOT-xxxxxxxx.”
     * Refresh the page to proceed with configuration steps.
+      > Note: If you are using an Apple computer or smartphone, you will not be able to use this page after connecting to your device's WiFi. Manually copy your account ID and use it in the captive portal.
 4. When connected to the device’s WiFi, the captive portal should automatically open. If not, you can access it manually via [http://settings.uniot.io/](http://settings.uniot.io/) or the IP address [1.1.1.1](http://1.1.1.1).
 5. Use the portal to select the target WiFi network for the device.
-6. After a successful connection, rejoin your original WiFi network and locate the new device in the **“Unauthorized”** tab under [Devices](https://app.uniot.io/devices).
+6. After a successful connection, rejoin your original WiFi network and locate the new device in the **“Unauthorized”** tab under [Devices](https://app.uniot.io/devices).\
+  {% hint style="info" %}
+  It may take up to 10 seconds for the device to connect to the network and register in the Uniot. During this time, there will be no visual changes on the captive portal page. We will add visualization of the connection process in the next releases.
+  {% endhint %}
 7. Authorize the device, assign it a recognizable name, and complete the setup.
 
 Congratulations, your new uniot-device is now added to the platform!

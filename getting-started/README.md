@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Getting Started
 
 This guide will help you get started quickly on your Uniot journey. Let's connect your device to the Uniot Platform and make this device truly smart!

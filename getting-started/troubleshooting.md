@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Troubleshooting
 
 ### I can not see the device's WiFi network
