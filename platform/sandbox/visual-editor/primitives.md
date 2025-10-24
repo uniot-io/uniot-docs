@@ -1,125 +1,122 @@
 # Primitives
 
-Primitives provide direct access to your device's hardware capabilities. These fundamental blocks enable you to:
+Primitive blocks provide direct access to device hardware. Use these blocks to read sensors, control digital and analog outputs, handle button inputs, and create custom hardware interactions.
 
-- Read sensor values
-- Control digital outputs
-- Manage analog signals
-- Create custom hardware interactions
+## Understanding Registers
 
-When using primitives, you'll work with [register](../../../general-concepts/primitives.md#registers) indices rather than direct pin numbers. The register system organizes pins into categories (digital input/output, analog input/output) and assigns each pin an index. You can view the mapping between physical pins and register indices in your device's Registers tab on the Uniot Platform.
+Primitives use [register](../../../general-concepts/primitives.md#registers) indices instead of physical pin numbers. The register system organizes pins into categories (digital input/output, analog input/output) and assigns each an index. View your device's pin-to-register mapping in the Registers tab on the Uniot Platform.
 
 ## analog read
 
 <div align="left"><figure><img src="../../../.gitbook/assets/primitives_analog_read.png" alt=""><figcaption></figcaption></figure></div>
 
-Reads an analog value from a specified pin (range: **0-1023**).
+Reads an analog value from the specified register. Use this for sensors that output variable voltage levels.
 
 **Parameters:**
 
-- **Pin** (Number): The analog pin to read from
+- **Register** (Number): The analog input register index
 
 **Returns:**
 
-- **Number**: Value between **0-1023**
+- **Number**: Value between 0-1023 (10-bit ADC resolution)
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/primitives_analog_read_example.png" alt=""><figcaption>Check light level and push event if it's too low.</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/primitives_analog_read_example.png" alt=""><figcaption>Check light level and push event if it's too low</figcaption></figure></div>
 
 ## analog write
 
 <div align="left"><figure><img src="../../../.gitbook/assets/primitives_analog_write.png" alt=""><figcaption></figcaption></figure></div>
 
-Sets an analog (PWM) value on a pin (range: **0-1023**).
+Writes an analog (PWM) value to the specified register. Use this to control LED brightness, motor speed, or other variable outputs.
 
 **Parameters:**
 
-- **Pin** (Number): The PWM-capable pin
-- **Value** (Number): Value between **0-1023**
+- **Register** (Number): The analog output register index
+- **Value** (Number): Value between 0-1023 (PWM duty cycle)
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/primitives_analog_write_example.png" alt=""><figcaption>Receives brightness value from the dashboard (or another device) and sets it to the LED.</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/primitives_analog_write_example.png" alt=""><figcaption>Receive brightness value from dashboard and set LED accordingly</figcaption></figure></div>
 
 ## digital read
 
 <div align="left"><figure><img src="../../../.gitbook/assets/primitives_digital_read.png" alt=""><figcaption></figcaption></figure></div>
 
-Reads a digital value from a pin (HIGH or LOW).
+Reads the digital state from the specified register (HIGH or LOW).
 
 **Parameters:**
 
-- **Pin** (Number): The digital pin to read from
+- **Register** (Number): The digital input register index
 
 **Returns:**
 
-- **Boolean**: `#t` for high, `()` for low
+- **Boolean**: `#t` for HIGH, `()` for LOW
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/primitives_digital_read_example.png" alt=""><figcaption>Read switch state and push event when it is changed.</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/primitives_digital_read_example.png" alt=""><figcaption>Read switch state and push event when changed</figcaption></figure></div>
 
 ## digital write
 
 <div align="left"><figure><img src="../../../.gitbook/assets/primitives_digital_write.png" alt=""><figcaption></figcaption></figure></div>
 
-Sets a digital pin to high or low.
+Sets a digital register to HIGH or LOW. Use this to control LEDs, relays, or other on/off outputs.
 
 **Parameters:**
 
-- **Pin** (Number): The digital pin
-- **Value** (Boolean): `#t` for high, `()` for low
+- **Register** (Number): The digital output register index
+- **Value** (Boolean): `#t` for HIGH, `()` for LOW
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/primitives_digital_write_example.png" alt=""><figcaption>Checks if an event was received and sets the LED accordingly.</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/primitives_digital_write_example.png" alt=""><figcaption>Check for event and control LED state</figcaption></figure></div>
 
 ## button clicked
 
 <div align="left"><figure><img src="../../../.gitbook/assets/primitives_button_clicked.png" alt=""><figcaption></figcaption></figure></div>
 
-Checks if a button on a specified pin was clicked since the last check.
+Detects button press events on the specified register. Returns true when a press-and-release cycle is detected, then resets until the next click.
 
 **Parameters:**
 
-- **Pin** (Number): The digital pin
+- **Register** (Number): The digital input register index
 
 **Returns:**
 
-- **Boolean**: `#t` if the button was clicked, `()` otherwise
+- **Boolean**: `#t` if clicked since last check, `()` otherwise
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/primitives_button_clicked_example.png" alt=""><figcaption>Checks if a button was clicked, change the state, and sets the LED accordingly.</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/primitives_button_clicked_example.png" alt=""><figcaption>Toggle LED state on button click</figcaption></figure></div>
 
 ## user primitive (template)
 
 <div align="left"><figure><img src="../../../.gitbook/assets/primitives_user_primitive.png" alt=""><figcaption></figcaption></figure></div>
 
-A template for defining custom primitives with configurable parameters and return values. The user primitive returns a boolean value by default. If you need to perform only some actions and do not expect any data in response, you need to customize the block by clicking on the gear icon.
+Creates a custom primitive definition that you'll implement in your firmware. Click the gear icon to configure parameters and return type.
 
-**Parameters:**
+**Configuration:**
 
-- **Parameters** (As defined by the user)
+- **Primitive Name**: Unique identifier for your custom primitive
+- **Parameters**: Define input values the primitive accepts
+- **Return Type**: Configure what type of value it returns (boolean by default, or none for action-only primitives)
 
-**Returns:**
-
-- **Any type** (As defined by the user)
+**Use cases**: Creating custom sensor drivers, protocol handlers, complex hardware control, or specialized operations not covered by standard primitives.
 
 ## user primitive (autogenerated)
 
 <div align="left"><figure><img src="../../../.gitbook/assets/primitives_user_primitive_auto.png" alt=""><figcaption></figcaption></figure></div>
 
-Accesses custom primitives defined in firmware. The primitive returns a boolean value by default. If you need to perform only some actions and do not expect any data in response, you need to customize the block by clicking on the gear icon.
+Calls a custom primitive already defined in your device firmware. These blocks are automatically generated based on primitives registered in your firmware code.
 
 **Parameters:**
 
-- **Parameters** (As defined by the user)
+- **Arguments**: Values matching the primitive's defined parameters
 
 **Returns:**
 
-- **Any type** (As defined by the user)
+- **Type varies**: Depends on how the primitive was defined in firmware
 
 **Example:**
 

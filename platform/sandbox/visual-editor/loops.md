@@ -1,35 +1,30 @@
 # Loops
 
-Loops provides blocks that enable you to repeatedly execute a set of instructions, making your programs more efficient and powerful. Instead of manually duplicating code for each iteration, you can use loops to:
-
-- Process multiple sensor readings
-- Generate patterns for LED displays
-- Handle collections of data
-- Create sequences of operations
+Loop blocks repeatedly execute code, eliminating the need to duplicate instructions. Use loops to process multiple sensor readings, generate patterns, handle collections of data, or create sequences of operations.
 
 ## repeat
 
 <div align="left"><figure><img src="../../../.gitbook/assets/loops_repeat.png" alt=""><figcaption></figcaption></figure></div>
 
-Executes code a specific number of times.
+Executes the enclosed code a fixed number of times. Use this when you know exactly how many iterations you need.
 
 **Parameters:**
 
-- **Count** (Number): How many times to repeat
+- **Count** (Number): Number of times to repeat
 
 **Example:**
 
-<div align="left"><figure><img src="../../../.gitbook/assets/loops_repeat_example.png" alt=""><figcaption>Avarage sensor reading</figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/loops_repeat_example.png" alt=""><figcaption>Average sensor reading</figcaption></figure></div>
 
 ## repeat while
 
 <div align="left"><figure><img src="../../../.gitbook/assets/loops_repeat_while.png" alt=""><figcaption></figcaption></figure></div>
 
-Repeats code as long as a condition is true.
+Repeats code as long as the condition remains true. The condition is checked before each iteration.
 
 **Parameters:**
 
-- **Condition** (Boolean): The condition to check
+- **Condition** (Boolean): The condition to evaluate before each iteration
 
 **Example:**
 
@@ -39,11 +34,11 @@ Repeats code as long as a condition is true.
 
 <div align="left"><figure><img src="../../../.gitbook/assets/loops_repeat_until.png" alt=""><figcaption></figcaption></figure></div>
 
-Repeats code until a condition becomes true.
+Repeats code until the condition becomes true. The condition is checked after each iteration, so the loop always executes at least once.
 
 **Parameters:**
 
-- **Condition** (Boolean): The condition to check
+- **Condition** (Boolean): The condition to evaluate after each iteration
 
 **Example:**
 
@@ -53,11 +48,11 @@ Repeats code until a condition becomes true.
 
 <div align="left"><figure><img src="../../../.gitbook/assets/loops_iterator.png" alt=""><figcaption></figcaption></figure></div>
 
-Returns the current loop iteration number (0-based).
+Returns the current iteration counter for the loop, starting from 0. Use this to create indexed operations or patterns.
 
 **Returns:**
 
-- **Iterator** (Number): The current loop iteration number
+- **Number**: The current loop iteration (0, 1, 2, ...)
 
 **Example:**
 
@@ -65,7 +60,7 @@ Returns the current loop iteration number (0-based).
 
 {% hint style="warning" %}
 
-An iterator can not be used outside the loop.
+This block only works inside a loop block. Using it elsewhere will cause an error.
 
 <img src="../../../.gitbook/assets/loops_iterator_outside.png" alt="" data-size="original">
 

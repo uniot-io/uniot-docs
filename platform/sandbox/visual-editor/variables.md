@@ -1,10 +1,10 @@
 # Variables
 
-Variables allow you to store, retrieve, and manipulate data within the script. They are essential for keeping track of changing values, such as sensor readings, user inputs, or counters.
+Variables store and manage data in your scripts. Use variables to track changing values like sensor readings, counters, states, or calculated results.
 
 {% hint style="info" %}
 
-Note: Before using a variable, you typically create it through a corresponding section in the toolbox. Once created, it can be used and modified throughout your program. Variables are case-sensitive and should have meaningful names to make your code easier to understand.
+Create variables through the Variables section in the toolbox before using them. Variable names are case-sensitive - choose meaningful names to make your code easier to understand.
 
 {% endhint %}
 
@@ -12,12 +12,12 @@ Note: Before using a variable, you typically create it through a corresponding s
 
 <div align="left"><figure><img src="../../../.gitbook/assets/variables_set.png" alt=""><figcaption></figcaption></figure></div>
 
-Creates a new variable or changes an existing variable's value.
+Assigns a value to a variable. If the variable doesn't exist, it's created automatically.
 
 **Parameters:**
 
-- **Variable Name** (String): The name of the variable to set.
-- **Value** (Any type): The value to store in the variable.
+- **Variable**: Select from the dropdown or create a new variable
+- **Value** (Any): The value to store
 
 **Example:**
 
@@ -27,15 +27,15 @@ Creates a new variable or changes an existing variable's value.
 
 <div align="left"><figure><img src="../../../.gitbook/assets/variables_get.png" alt=""><figcaption></figcaption></figure></div>
 
-Retrieves the current value of a variable.
+Retrieves the current value stored in a variable.
 
 **Parameters:**
 
-- **Variable Name** (String): The name of the variable whose value you want to access.
+- **Variable**: Select which variable to read
 
 **Returns:**
 
-- **Any type**: The current value of the specified variable.
+- **Any**: The current value of the variable
 
 **Example:**
 
@@ -45,29 +45,29 @@ Retrieves the current value of a variable.
 
 <div align="left"><figure><img src="../../../.gitbook/assets/variables_change.png" alt=""><figcaption></figcaption></figure></div>
 
-Modifies a numeric variable by adding a value to it.
+Increments or decrements a numeric variable by adding a value to it. Use negative values to subtract.
 
 **Parameters:**
 
-- **Variable Name** (String): The name of the variable to modify.
-- **Value** (Number): The amount to add to the variable.
+- **Variable**: Select which variable to modify
+- **Value** (Number): The amount to add (use negative for subtraction)
 
 **Example:**
 
 <div><figure><img src="../../../.gitbook/assets/variables_change_example.png" alt=""><figcaption>Modifying variables</figcaption></figure></div>
 
-## Dropdown Menu
+## Managing Variables
 
 <div align="left"><figure><img src="../../../.gitbook/assets/variables_dropdown.png" alt=""><figcaption></figcaption></figure></div>
 
-The variable dropdown menu provides options to:
+The variable dropdown menu in each block provides options to:
 
-- Select existing variables
-- Rename selected variable
-- Delete selected variable
+- **Select** existing variables from your script
+- **Rename** the selected variable (updates all references)
+- **Delete** the selected variable (removes from all blocks)
 
 {% hint style="warning" %}
 
-Renaming or deleting a variable affects all blocks that use that variable.
+Renaming or deleting a variable affects **all blocks** that use it. Be careful when modifying variables used in multiple places.
 
 {% endhint %}

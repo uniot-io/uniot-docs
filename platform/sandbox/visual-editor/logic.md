@@ -1,25 +1,20 @@
 # Logic
 
-Logic blocks help you make decisions in your scripts based on conditions. Use logic to:
-
-- Compare values
-- Create conditional behaviors
-- Combine multiple conditions
-- Control program flow based on states
+Logic blocks enable decision-making in your scripts. Use these blocks to compare values, create conditional behaviors, combine multiple conditions, and control program flow based on device states.
 
 ## value
 
 <div align="left"><figure><img src="../../../.gitbook/assets/logic_value.png" alt=""><figcaption></figcaption></figure></div>
 
-Represents a boolean value (`#t` for true or `()` for false).
+A boolean constant that represents true or false. Use this block to provide boolean values to conditions, comparisons, or variables.
 
 **Parameters:**
 
-- **Value** (Boolean): Boolean value to set.
+- **Value** (Boolean): Select `true` or `false`
 
 **Returns:**
 
-- **Boolean**: The selected Boolean value.
+- **Boolean**: `#t` for true, `()` for false (Lisp values)
 
 **Example:**
 
@@ -29,43 +24,41 @@ Represents a boolean value (`#t` for true or `()` for false).
 
 <div align="left"><figure><img src="../../../.gitbook/assets/logic_if.png" alt=""><figcaption></figcaption></figure></div>
 
-Executes enclosed blocks if the condition is true.
+Executes code conditionally based on whether a condition is true. This is the fundamental building block for creating decision-based behavior in your scripts.
 
 **Parameters:**
 
-- **Condition** (Boolean): The condition to check
+- **Condition** (Boolean): The condition to evaluate
 
 **Example:**
 
 <div align="left"><figure><img src="../../../.gitbook/assets/logic_if_example.png" alt=""><figcaption>Send event if button was clicked</figcaption></figure></div>
 
-### Block Modification
+### Adding else if and else Clauses
 
-Only the plain `if` block appears in the toolbox. To add `else if` and `else` clauses, click on the gear icon, which opens a new window:
+The basic `if` block can be extended with additional conditions and fallback logic. Click the gear icon to open the configuration panel:
 
 <div align="left"><figure><img src="../../../.gitbook/assets/logic_if_settings.png" alt=""><figcaption></figcaption></figure></div>
 
-You can drag `else if` and `else` clauses under the `if` block, reorder them, and remove them as needed. When finished, click on the gear icon to close the window, as shown here:
+Drag `else if` and `else` blocks from the left panel to build your conditional logic. You can add multiple `else if` clauses but only one `else` clause. Reorder or remove clauses as needed, then click the gear icon to close:
 
 <div align="left"><figure><img src="../../../.gitbook/assets/logic_if_settings2.gif" alt=""><figcaption></figcaption></figure></div>
-
-Note that the shape of the blocks allows any number of `else if` subblocks to be added but only up to one `else` block.
 
 ## comparison
 
 <div align="left"><figure><img src="../../../.gitbook/assets/logic_comparison.png" alt=""><figcaption></figcaption></figure></div>
 
-Compares two values using operators: `=`, `≠`, `<`, `>`, `≤`, `≥`
+Compares two values using mathematical or equality operators. Use this to check sensor thresholds, compare states, or validate ranges.
 
 **Parameters:**
 
-- **Left Value** (Number or comparable type): The first value to compare.
-- **Right Value** (Number or comparable type): The second value to compare.
-- **Operator** (Enum): The operator to use for the comparison.
+- **Left Value** (Number): The first value to compare
+- **Operator**: Choose from `=` (equal), `≠` (not equal), `<` (less than), `>` (greater than), `≤` (less or equal), `≥` (greater or equal)
+- **Right Value** (Number): The second value to compare
 
 **Returns:**
 
-- **Boolean**: true if the comparison is satisfied, otherwise false.
+- **Boolean**: `#t` (true) if the comparison is satisfied, `()` (false) otherwise
 
 **Example:**
 
@@ -75,16 +68,16 @@ Compares two values using operators: `=`, `≠`, `<`, `>`, `≤`, `≥`
 
 <div align="left"><figure><img src="../../../.gitbook/assets/logic_operation_and.png" alt=""><figcaption></figcaption></figure></div>
 
-Returns true only if all conditions are true.
+Returns true only if both conditions are true. Use this to combine multiple requirements that must all be satisfied.
 
 **Parameters:**
 
-- **Input A** (Boolean): The first condition to check.
-- **Input B** (Boolean): The second condition to check.
+- **Input A** (Boolean): The first condition
+- **Input B** (Boolean): The second condition
 
 **Returns:**
 
-- **Boolean**: true if both inputs are true, otherwise false.
+- **Boolean**: `#t` (true) if both inputs are true, `()` (false) otherwise
 
 **Example:**
 
@@ -94,16 +87,16 @@ Returns true only if all conditions are true.
 
 <div align="left"><figure><img src="../../../.gitbook/assets/logic_operation_or.png" alt=""><figcaption></figcaption></figure></div>
 
-Returns true if any condition is true.
+Returns true if at least one condition is true. Use this when any of several conditions should trigger an action.
 
 **Parameters:**
 
-- **Input A** (Boolean): The first condition to check.
-- **Input B** (Boolean): The second condition to check.
+- **Input A** (Boolean): The first condition
+- **Input B** (Boolean): The second condition
 
 **Returns:**
 
-- **Boolean**: true if at least one input is true, otherwise false.
+- **Boolean**: `#t` (true) if at least one input is true, `()` (false) otherwise
 
 **Example:**
 
@@ -113,15 +106,15 @@ Returns true if any condition is true.
 
 <div align="left"><figure><img src="../../../.gitbook/assets/logic_not.png" alt=""><figcaption></figcaption></figure></div>
 
-Inverts a boolean value. If no input is provided, a value of true is assumed. Leaving an input empty is not recommended, however.
+Inverts a boolean value, turning true into false and false into true. Use this to reverse conditions or check for the opposite of a state.
 
 **Parameters:**
 
-- **Input** (Boolean): The boolean value to invert.
+- **Input** (Boolean): The boolean value to invert
 
 **Returns:**
 
-- **Boolean**: The inverted boolean value.
+- **Boolean**: `#t` (true) becomes `()` (false), and vice versa
 
 **Example:**
 

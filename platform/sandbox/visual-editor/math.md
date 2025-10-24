@@ -1,22 +1,16 @@
 # Math
 
-The Math section provides a range of blocks that enable you to perform numerical operations and transformations within your script. Whether you are adding two values, generating random numbers, or applying advanced mathematical functions like trigonometry or square roots, these blocks help bring numeric logic and computation into your IoT projects.
-
-Using these blocks, you can:
-
-- Perform basic arithmetic (addition, subtraction, multiplication, division).
-- Apply mathematical functions (absolute value, negotiation, checking value for compliance with different conditions).
-- Combine numeric operations with logic and loops to create complex, dynamic scripts.
+Math blocks provide numerical operations and calculations for your scripts. Use these blocks to perform arithmetic, apply mathematical functions, and manipulate numeric values from sensors or variables.
 
 ## value
 
 <div align="left"><figure><img src="../../../.gitbook/assets/math_value.png" alt=""><figcaption></figcaption></figure></div>
 
-Represents a fixed numeric value.
+A numeric constant. Use this block to provide fixed numbers for calculations, comparisons, or as parameters to other blocks.
 
 **Parameters:**
 
-- **Input Value** (Number): The numeric value to represent.
+- **Value** (Number): Enter any numeric value (integers or decimals)
 
 **Example:**
 
@@ -26,11 +20,16 @@ Represents a fixed numeric value.
 
 <div align="left"><figure><img src="../../../.gitbook/assets/math_operation.png" alt=""><figcaption></figcaption></figure></div>
 
-Performs operations like absolute value or negation.
+Applies a single-value mathematical operation. Choose from absolute value (removes sign) or negation (flips positive to negative and vice versa).
 
 **Parameters:**
 
-- **Input Value** (Number): The numeric value to operate on.
+- **Operation**: Select `abs` (absolute value) or `-` (negate)
+- **Value** (Number): The number to operate on
+
+**Returns:**
+
+- **Number**: The result of the operation
 
 **Example:**
 
@@ -40,16 +39,17 @@ Performs operations like absolute value or negation.
 
 <div align="left"><figure><img src="../../../.gitbook/assets/math_arithmetic.png" alt=""><figcaption></figcaption></figure></div>
 
-Performs basic arithmetic: add (+), subtract (-), multiply (*), divide (/).
+Performs basic arithmetic operations between two numbers.
 
 **Parameters:**
 
-- **Left Value** (Number): The first numeric value.
-- **Right Value** (Number): The second numeric value.
+- **Left Value** (Number): The first number
+- **Operator**: Choose `+` (add), `-` (subtract), `×` (multiply), `÷` (divide), `^` (power)
+- **Right Value** (Number): The second number
 
 **Returns:**
 
-- **Number** (Number): The result of the arithmetic operation.
+- **Number**: The result of the calculation
 
 **Example:**
 
@@ -59,34 +59,35 @@ Performs basic arithmetic: add (+), subtract (-), multiply (*), divide (/).
 
 <div align="left"><figure><img src="../../../.gitbook/assets/math_number_condition.png" alt=""><figcaption></figcaption></figure></div>
 
-Checks numeric properties: even, odd, positive, negative, divisible by.
+Checks whether a number meets a specific condition. Use this for pattern detection or periodic actions.
 
 **Parameters:**
 
-- **Input Value** (Number): The numeric value to check.
+- **Value** (Number): The number to check
+- **Condition**: Select `even`, `odd`, `positive`, `negative`, `whole`, `divisible by`
 
 **Returns:**
 
-- **Boolean** (Boolean): True if the condition is met, false otherwise.
+- **Boolean**: `#t` (true) if the condition is met, `()` (false) otherwise
 
 **Example:**
 
 <div><figure><img src="../../../.gitbook/assets/math_number_condition_example.png" alt=""><figcaption>Read sensor value every 5th script execution</figcaption></figure></div>
 
-## remainder check
+## remainder
 
 <div align="left"><figure><img src="../../../.gitbook/assets/math_remainder.png" alt=""><figcaption></figcaption></figure></div>
 
-Calculates the remainder after division.
+Calculates the remainder after dividing one number by another (modulo operation). Useful for creating repeating patterns or detecting multiples.
 
 **Parameters:**
 
-- **Left Value** (Number): The first numeric value.
-- **Right Value** (Number): The second numeric value.
+- **Dividend** (Number): The number to be divided
+- **Divisor** (Number): The number to divide by
 
 **Returns:**
 
-- **Number** (Number): The remainder of the division.
+- **Number**: The remainder of the division
 
 **Example:**
 

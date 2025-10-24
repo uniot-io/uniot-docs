@@ -1,25 +1,20 @@
 # Text
 
-Text section provides blocks designed to handle and transform textual data, as well as integrate text-based input and output into your scripts. This section empowers you to:
-
-- Represent fixed pieces of text for use in messages, labels, or conditional checks.
-- Convert numbers into strings, making it easier to display values or store them as text.
-- Evaluate text-based expressions, bridging the gap between string manipulation and numeric calculations.
-- Print logs and messages to the MQTT broker, simplifying the debugging and monitoring of your device’s behavior.
+Text blocks handle string operations and text-based data. Use these blocks to create text values, convert between strings and numbers, evaluate expressions, and send log messages.
 
 ## value
 
 <div align="left"><figure><img src="../../../.gitbook/assets/text_value.png" alt=""><figcaption></figcaption></figure></div>
 
-Creates a text string that can be used in your program.
+A text string constant. Use this block to create fixed text values for labels, messages, or event names.
 
 **Parameters:**
 
-- **Text Value** (string)
+- **Value** (String): Enter any text
 
 **Returns:**
 
-- **String**: The provided text.
+- **String**: The text value
 
 **Example:**
 
@@ -29,39 +24,39 @@ Creates a text string that can be used in your program.
 
 <div align="left"><figure><img src="../../../.gitbook/assets/text_quote.png" alt=""><figcaption></figcaption></figure></div>
 
-Takes an expression (or value) and converts it into a text string.
+Converts an expression or value into a string representation without evaluating it. Useful for capturing code as text.
 
 **Parameters:**
 
-- **Expression**: A value or a mathematical expression that will be evaluated and converted into a string.
+- **Expression**: The value or expression to convert
 
 **Returns:**
 
-- **String**: The expression, converted to a text format.
+- **String**: The expression as text
 
 ## eval
 
 <div align="left"><figure><img src="../../../.gitbook/assets/text_eval.png" alt=""><figcaption></figcaption></figure></div>
 
-Evaluates an expression from text.
+Evaluates a text string as UniotLisp code and returns the result. Use this to execute dynamic code or parse text-based expressions.
 
 **Parameters:**
 
-- **Expression**: A text string that contains an expression or a value.
+- **Expression** (String): Text containing UniotLisp code to evaluate
 
 **Returns:**
 
-- **Any**: The result of the evaluated expression.
+- **Any**: The result of evaluating the expression
 
 ## print
 
 <div align="left"><figure><img src="../../../.gitbook/assets/text_print.png" alt=""><figcaption></figcaption></figure></div>
 
-Sends a log to the MQTT broker. Logs appear on the device details page.
+Sends a log message to the MQTT broker. Messages appear on the device details page for monitoring and debugging.
 
 **Parameters:**
 
-- **Message**: A text string that will be sent to the MQTT broker.
+- **Message** (String): The text to log
 
 **Example:**
 

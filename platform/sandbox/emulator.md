@@ -1,117 +1,89 @@
 # Emulator
 
-The emulator is a debugging tool that provides a virtual simulation of the primitives in your script. It allows you to test and verify the behavior of your script before deploying it to a physical device. You can select a device, then the emulator will simulate a specific device, or if no device is selected, the emulator will use the primitives defined in the script.
+The Emulator is a virtual testing environment that simulates device hardware behavior, allowing you to validate scripts before deploying to physical devices. Test your logic, verify pin interactions, and debug issues in a safe, controlled environment where mistakes don't risk damaging hardware.
 
-By interacting with the emulator, you can simulate input and output, and test user-defined primitives with ease. This ensures your script behaves as expected in a controlled environment.
+## How It Works
+
+When you run a script in the Emulator, it creates virtual representations of all primitives used in your code. These components mirror real hardware behavior - digital pins, analog sensors, buttons, and custom primitives - letting you interact with them as if working with actual devices.
+
+You can optionally select a specific device to emulate. When a device is selected, the Emulator configures itself to match that device's hardware profile. Without a device selection, it generates components based on the primitives defined in your script.
+
+## Using the Emulator
+
+1. **Write or load your script** in the Sandbox
+2. **Start the emulator** - it analyzes your script and generates the necessary components
+3. **Interact with the components** - toggle switches, adjust knobs, click buttons
+4. **Monitor the logger** to see how your script responds
+5. **Iterate and refine** until behavior matches your expectations
+
+The Emulator updates in real-time, immediately reflecting changes in both your interactions and your script's output.
+
+## Emulator Components
+
+Each component in the Emulator represents a specific type of hardware primitive. Below are the available components and how to use them.
 
 ### Digital Read
 
 <div align="left"><figure><img src="../../.gitbook/assets/digital_read.png" alt=""><figcaption></figcaption></figure></div>
 
-The Digital Read component simulates the digital state of a specific pin. It acts as a toggle switch, allowing you to change the state manually and observe how the script reacts.
+Simulates a digital input pin that can be in either HIGH (1) or LOW (0) state. Click the toggle to switch between states and observe how your script responds to digital input changes.
 
-> [A block in the visual editor](visual-editor/primitives.md#digital-read)
+**Use cases**: Testing button inputs, digital sensors, limit switches, or any script logic that reads digital pin states.
 
-**Features**:
-
-* Toggle between 0 and 1 to simulate the state of a digital pin.
-* Real-time updates reflect the state change in your script.
-
-**Usage**:
-
-* Use this component to test scripts that rely on digital input (e.g., buttons, sensors).
-
-### DigitalWrite
+### Digital Write
 
 <div align="left"><figure><img src="../../.gitbook/assets/digital_write.png" alt=""><figcaption></figcaption></figure></div>
 
-The Digital Write component displays the current state of a digital pin as set by your script. It provides visual feedback to verify that your script correctly controls the pin.
+Displays the current state of a digital output pin controlled by your script. Shows HIGH (1) or LOW (0) state, updating in real-time as your script executes digital write commands.
 
-> [A block in the visual editor](visual-editor/primitives.md#digital-write)
+**Use cases**: Verifying LED control, relay switching, motor enable/disable signals, or any digital output behavior.
 
-**Features**:
-
-* Displays the state of the pin as 0 or 1.
-* Updates dynamically based on your script's output.
-
-**Usage**:
-
-* Use this component to confirm that digital outputs (e.g., LEDs, relays) are correctly controlled by your script.
-
-### AnalogRead
+### Analog Read
 
 <div align="left"><figure><img src="../../.gitbook/assets/analog_read.png" alt=""><figcaption></figcaption></figure></div>
 
-The Analog Read component is a knob that simulates a range of analog values for a specific pin. By rotating the knob, you can set the input value dynamically.
+Simulates an analog input pin with a rotatable knob. Adjust the knob to generate values between 0 and 1023, mimicking real analog sensors that output variable voltage levels.
 
-> [A block in the visual editor](visual-editor/primitives.md#analog-read)
+**Use cases**: Testing temperature sensors, light sensors, potentiometers, pressure sensors, or any analog input processing logic.
 
-**Features**:
-
-* Range: Simulates values between 0 and 1023.
-* Updates your script in real-time as the knob position changes.
-
-**Usage**:
-
-* Use this component to test scripts that depend on analog inputs, such as sensors (e.g., temperature, light, potentiometers).
-
-### AnalogWrite
+### Analog Write
 
 <div align="left"><figure><img src="../../.gitbook/assets/analog_write.png" alt=""><figcaption></figcaption></figure></div>
 
-The Analog Write component displays the current analog output value of a specific pin as controlled by your script. This is commonly used to simulate devices or systems that require fine control over output levels, such as adjusting the intensity of an LED or controlling the position of a servo motor.
+Displays the current analog output value (0-1023) being sent to a pin by your script. Shows PWM duty cycle or DAC output levels in real-time as your script executes.
 
-> [A block in the visual editor](visual-editor/primitives.md#analog-write)
+**Use cases**: Verifying LED brightness control, motor speed regulation, servo positioning, or any PWM-based output control.
 
-**Features**:
-
-* Displays the output value as a range between 0 and 1023.
-* Updates dynamically to reflect the script's output.
-
-**Usage**:
-
-* Use this component to verify analog outputs.
-
-### ButtonClicked
+### Button Clicked
 
 <div align="left"><figure><img src="../../.gitbook/assets/button_clicked.png" alt=""><figcaption></figcaption></figure></div>
 
-The Button Clicked component simulates a physical button connected to a specific pin. Clicking the button toggles its state, which is reflected in the script.
+Simulates a physical pushbutton with press-and-release behavior. Click to trigger a button press event in your script, testing event-driven logic without physical hardware.
 
-> [A block in the visual editor](visual-editor/primitives.md#button-clicked)
-
-**Features**:
-
-* Simulates a button press with a click.
-* Toggles between 0 (not clicked) and 1 (clicked).
-
-**Usage**:
-
-* Use this component to test scripts that rely on button inputs for triggering events.
+**Use cases**: Testing user interface interactions, event handlers, menu navigation, emergency stops, or any button-triggered functionality.
 
 ### User Primitive
 
 <div align="left"><figure><img src="../../.gitbook/assets/user_primitive.png" alt=""><figcaption></figcaption></figure></div>
 
-User-defined primitives provide a way to create custom interactions and behaviors. This component is dynamically generated based on the parameters defined in your script. It displays the parameters provided by the script and allows you to configure the return value interactively.
+Custom primitives you define in your script are automatically generated as interactive components in the Emulator. Each user primitive displays its input parameters with current values and types, and allows you to configure what it returns to your script.
 
-> [A block in the visual editor](visual-editor/primitives.md#user-primitive)
+**Use cases**: Testing custom sensor drivers, protocol handlers, communication interfaces, or any custom functionality you've implemented as a primitive.
 
-**Features**:
+#### Configuring Return Values
 
-* All input parameters specified in the script are displayed with their current values and types.
-* You can interact with the primitive's return value configuration by clicking the gear icon, which opens a modal window for further customization.
+Click the gear icon on a user primitive to open the configuration modal. Here you can control what the primitive returns when called by your script:
 
-**Configuring Return Values**:
+**Return Value Options:**
 
-The configuration modal enables you to:
+- **Enable/Disable** - Toggle whether the primitive returns a value
+- **Return Type** - Select from Bool, Int, Symbol, or other supported types
+- **Value Definition**:
+  - **Static value** - Enter a fixed return value for predictable testing
+  - **Dynamic function** - Write a JavaScript function that computes the return value based on parameters or logic
 
-* Enable or disable a return value for the primitive.
-* Specify the return type, such as Bool, Int, Symbol, or others.
-* Define the return value:
-  * Manually: Input a fixed value.
-  * Dynamically: Write a JavaScript function that calculates the return value in real-time.
-
-The JavaScript function executes in a secure, sandboxed environment. This ensures safe and isolated execution of user-provided code.
+The JavaScript function runs in a secure sandbox, protecting your environment while giving you flexibility to simulate complex behavior. For example, you could create a function that returns different values based on how many times it's been called, or combines input parameters in specific ways.
 
 <div align="left"><figure><img src="../../.gitbook/assets/user_primitive_settings.gif" alt=""><figcaption></figcaption></figure></div>
+
+This powerful feature lets you simulate real-world hardware complexity, testing edge cases and dynamic scenarios before deploying to actual devices.

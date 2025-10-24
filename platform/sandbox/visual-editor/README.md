@@ -1,17 +1,26 @@
 # Visual Editor
 
-The Visual Editor is a powerful tool that lets you create scripts using a drag-and-drop interface. Based on [Blockly](https://developers.google.com/blockly), it provides an intuitive way to create scripts without writing code directly. The editor automatically translates visual blocks into [UniotLisp](../../../advanced/uniot-lisp/README.md) code under the hood, making IoT development accessible to beginners while remaining efficient for experienced developers. This visual programming approach allows you to focus on your application logic rather than syntax details.
+The Visual Editor is a drag-and-drop interface for building device logic without writing code. Built on [Blockly](https://developers.google.com/blockly), it provides an intuitive way to create scripts by connecting visual blocks that represent programming concepts.
+
+Behind the scenes, the Visual Editor automatically translates your block arrangements into [UniotLisp](../../../advanced/uniot-lisp/README.md) code. This approach makes IoT development accessible to beginners while remaining efficient for experienced developers who want to prototype quickly. Focus on application logic instead of syntax details.
 
 ## How It Works
 
-- **Arrange Blocks**: Drag and drop visual blocks to build your logic.
-- **Interact with hardware**: Handle hardware I/O, read data, and manipulate state with Primitives
-- **Interact with MQTT**: Handle events, push and pop event payloads.
-- **Generate LISP**: Compile your script to get UniotLisp code.
+1. **Drag blocks** from the toolbox into your workspace
+2. **Connect blocks** together to build logic - blocks snap together when they're compatible
+3. **Configure blocks** by filling in values, selecting options, or creating variables
+4. **Test in the emulator** to verify behavior
+5. **Compile to UniotLisp** when ready to deploy or view the generated code
 
-## Components
+The Visual Editor handles:
 
-All blocks are organized into intuitive sections. Each section corresponds to a set of blocks designed for specific purposes, from performing basic arithmetic to handling hardware I/O and MQTT events.
+- **Hardware interactions** - Read sensors, control actuators, and manage device I/O with Primitive blocks
+- **MQTT communications** - Handle events, access payloads, and publish messages
+- **Program logic** - Conditions, loops, variables, functions, and data manipulation
+
+## Block Categories
+
+The Visual Editor organizes blocks into categories by function. Each category contains blocks designed for specific purposes:
 
 - **[Special](special.md)**: Provides blocks for controlling the script execution flow and interacting with external MQTT events.
 - **[Logic](logic.md)**: Includes blocks for boolean operations, comparisons, and conditional statements to control the flow of your scripts.

@@ -1,33 +1,32 @@
 # Functions
 
-Functions enable you to organize and streamline your code by encapsulating repetitive or complex logic into reusable components. You can create your own functions with optional parameters and a return value, making it simple to break down larger tasks into smaller, more manageable parts.
+Functions let you organize code into reusable blocks. Create custom functions with parameters and return values to break down complex logic into manageable, reusable components.
 
 ## function definition
 
 <div align="left"><figure><img src="../../../.gitbook/assets/functions_template.png" alt=""><figcaption></figcaption></figure></div>
 
-Creates a new reusable function that can be called from anywhere in your program.
+Defines a new function that can be called from anywhere in your script. Click the gear icon to add parameters and configure the return value.
 
-**Parameters:**
+**Configuration:**
 
-- **Function Name** (String): A unique name for your function
-- **Parameters** (Optional): Input values your function needs
-- **Return** (Optional): The type of value your function will give back
+- **Function Name**: A unique identifier for your function
+- **Parameters** (Optional): Input values the function accepts
+- **Return** (Optional): Enable to make the function return a value
+
+**Example uses**: Calculating averages, converting units, validating sensor ranges, or any logic you use multiple times.
 
 ## function call
 
 <div align="left"><figure><img src="../../../.gitbook/assets/functions_call.png" alt=""><figcaption></figcaption></figure></div>
 
-Executes a previously defined function with the specified parameters.
+Executes a previously defined function. Provide values for any parameters the function expects.
 
 **Parameters:**
 
-- **Function Name** (String): The name of the function to call
-- **Input(s)**: Values that match the function's parameters
+- **Function**: Select which function to call
+- **Arguments**: Values matching the function's parameter list
 
 **Returns:**
 
-- Depends on Function Definition:
-
-  - If the function includes a return statement, this block will return the calculated result.
-  - If the function has no return value, it performs the actions defined in the function without returning anything.
+- **Any**: The function's return value if configured, otherwise performs actions without returning a value
