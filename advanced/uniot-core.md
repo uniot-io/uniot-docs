@@ -1,12 +1,12 @@
 # Uniot Core
 
-Uniot Core is a lightweight, open-source framework for building IoT devices on ESP8266 and ESP32 microcontrollers. It handles the heavy lifting of task scheduling, network management, and device communication, letting you focus on what makes your device unique. With an embedded Lisp interpreter for runtime scripting and a developer-friendly API, Uniot Core gives you both flexibility and control.
+[Uniot Core](https://github.com/uniot-io/uniot-core) is a lightweight, open-source framework for building IoT devices on ESP8266 and ESP32 microcontrollers. It handles the heavy lifting of task scheduling, network management, and device communication, letting you focus on what makes your device unique. With an embedded Lisp interpreter for runtime scripting and a developer-friendly API, Uniot Core gives you both flexibility and control.
 
 From home automation to custom devices and prototypes, Uniot Core simplifies the development process while providing the power and reliability needed for production deployments.
 
 ## Key Features
 
-### 🚀 **Core Capabilities**
+### **Core Capabilities**
 
 - **Non-blocking Task Scheduler**: Execute periodic and one-shot tasks efficiently without blocking
 - **Event-Driven Architecture**: Decoupled communication between components via publish-subscribe pattern
@@ -15,27 +15,27 @@ From home automation to custom devices and prototypes, Uniot Core simplifies the
 - **MQTT Integration**: Full-featured MQTT client for cloud connectivity
 - **Hardware Abstraction**: Unified GPIO management and peripheral control
 
-### 🔒 **Security**
+### **Security**
 
 - **COSE Message Signing**: Support for CBOR Object Signing and Encryption (COSE) standard
 - **Script Verification**: Cryptographic signature verification for remote scripts
 - **Secure Storage**: Protected credential management for WiFi and user authentication
 - **Sandboxed Execution**: Isolated Lisp interpreter environment for safe script execution
 
-### 💾 **Storage & Persistence**
+### **Storage & Persistence**
 
 - **CBOR-based Storage**: Efficient binary serialization for configuration and data
 - **Crash Recovery**: Automatic crash detection and reporting
 - **LittleFS Support**: Modern filesystem for reliable flash storage
 - **WiFi Credentials Storage**: Secure credential management
 
-### 🕐 **Time Management**
+### **Time Management**
 
 - **NTP Synchronization**: Automatic time synchronization
 - **Persistent Date/Time**: Maintain time across reboots
 - **Event-based Time Tracking**: Time-aware event processing
 
-### 🔧 **Developer Experience**
+### **Developer Experience**
 
 - **Web-Familiar API**: Timer functions (`setTimeout`, `setInterval`, `setImmediate`) inspired by JavaScript
 - **Comprehensive Logging**: Multi-level logging system for debugging
@@ -169,7 +169,7 @@ void loop() {
 
 ## Core Components
 
-### 1. Task Scheduler
+### Task Scheduler
 
 The task scheduler provides non-blocking execution of periodic and one-shot tasks:
 
@@ -200,7 +200,7 @@ auto task = Uniot.createTask("my_task", [](SchedulerTask& self, short remaining)
 task->attach(1000); // Attach with 1 second period
 ```
 
-### 2. Event System
+### Event System
 
 The event bus enables decoupled communication between components:
 
@@ -226,7 +226,7 @@ Uniot.addWifiStatusLedListener([](bool state) {
 });
 ```
 
-### 3. WiFi Management
+### WiFi Management
 
 Uniot Core provides two ways to connect your device to WiFi:
 
@@ -271,7 +271,7 @@ To clear current WiFi settings and switch to Access Point mode:
 2. Then **hold** for **3-5 seconds**
 3. The device will clear WiFi configuration and start the captive portal
 
-### 4. Lisp Scripting
+### Lisp Scripting
 
 Uniot Core includes an embedded Lisp interpreter for dynamic runtime scripting. Scripts can be sent via MQTT and executed on the device without reflashing firmware.
 
@@ -352,7 +352,7 @@ For more complex primitives that interact with hardware or access device state, 
 Uniot.registerLispObject("my-object", myObjectPointer, FOURCC(myid));
 ```
 
-### 5. Storage Management
+### Storage Management
 
 Uniot Core uses CBOR (Concise Binary Object Representation) for efficient data serialization and persistent storage:
 
@@ -380,7 +380,7 @@ if (storage.restore()) {
 }
 ```
 
-### 6. Time Management
+### Time Management
 
 NTP synchronization and time persistence:
 
@@ -462,9 +462,9 @@ The `Uniot` global instance provides the main API:
 
 ## Examples
 
-The repository includes several working examples demonstrating different features of Uniot Core:
+The [repository](https://github.com/uniot-io/uniot-core) includes several working examples demonstrating different features of Uniot Core:
 
-### 1. WittyCloud
+### WittyCloud
 
 RGB LED controller with light sensor for WittyCloud development board.
 
@@ -489,7 +489,7 @@ Uniot.registerLispAnalogOutput(PIN_RED, PIN_GREEN, PIN_BLUE);
 Uniot.registerLispAnalogInput(PIN_LDR);
 ```
 
-### 2. My9231Lamp
+### My9231Lamp
 
 Smart RGB+WW+CW lamp controller with custom Lisp primitives.
 
@@ -516,7 +516,7 @@ Object lamp_update(Root root, VarObject env, VarObject list) {
 }
 ```
 
-### 3. S20Socket
+### S20Socket
 
 Smart socket/relay controller with Lisp scriptable GPIO.
 
@@ -595,7 +595,7 @@ Complete API documentation is generated with Doxygen and available at:
 
 ## Best Practices
 
-### 1. Memory Management
+### Memory Management
 
 ```cpp
 // Prefer stack allocation for small objects
@@ -606,7 +606,7 @@ auto task = uniot::MakeShared<MyTask>();
 auto buffer = uniot::MakeUnique<uint8_t[]>(1024);
 ```
 
-### 2. Task Scheduling
+### Task Scheduling
 
 ```cpp
 // Keep task execution time short
@@ -626,7 +626,7 @@ Uniot.createTask("long_task", [](SchedulerTask& self, short remaining) {
 });
 ```
 
-### 3. Event Handling
+### Event Handling
 
 ```cpp
 // Remove listeners when no longer needed
@@ -641,7 +641,7 @@ Uniot.addSystemListener(handler,
 );
 ```
 
-### 4. Error Handling
+### Error Handling
 
 ```cpp
 // Always check return values
