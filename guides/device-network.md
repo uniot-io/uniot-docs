@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Device Network
 
 Your Uniot device needs an Internet connection to communicate with the platform. The [Network](../advanced/uniot-core/network/README.md) module handles all network connectivity.
@@ -32,11 +36,11 @@ See [NetworkController](../advanced/uniot-core/network/networkcontroller.md) for
 
 If your device has an LED, you can use LED indication to define different network states through blink patterns:
 
-| Pattern | Meaning | Description |
-|---------|---------|-------------|
-| 1 blink/sec | Standby | Access Point mode, waiting for WiFi setup |
-| 2 blinks/sec | Connecting | Attempting to connect to configured WiFi |
-| 5 blinks/sec | Error | Connection failed or other error |
+| Pattern      | Meaning    | Description                               |
+| ------------ | ---------- | ----------------------------------------- |
+| 1 blink/sec  | Standby    | Access Point mode, waiting for WiFi setup |
+| 2 blinks/sec | Connecting | Attempting to connect to configured WiFi  |
+| 5 blinks/sec | Error      | Connection failed or other error          |
 
 ## Network Control
 
@@ -57,11 +61,13 @@ If your device has a button, you can use it to manage the network:
 ## Common Issues
 
 1. **Device Won't Connect**
+
    - Verify WiFi credentials
    - Check signal strength
    - Ensure network compatibility
 
 2. **Frequent Disconnections**
+
    - Improve signal strength
    - Check power supply stability
    - Verify network stability

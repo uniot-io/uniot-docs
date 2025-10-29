@@ -8,7 +8,7 @@
 - [Guides](guides/README.md)
   - [Getting Started](guides/getting-started.md)
   - [Uniot Badge](guides/uniot-badge.md)
-  - [Device Network](guides/device-network.md)
+  <!-- - [Device Network](guides/device-network.md) -->
 
 ## Foundations
 
