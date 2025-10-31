@@ -42,11 +42,11 @@ Primitives use a simple type system for argument validation:
 
 ### User Library Block
 
-> **Note for Visual Editor Users**: If you create scripts using the visual editor, this block is automatically generated for you. You can skip this section unless you're writing scripts manually.
+{% hint style="info" %}
+If you create scripts using the visual editor, this block is automatically generated for you. You can skip this section unless you're writing scripts manually.
+{% endhint %}
 
 Every script must begin with a special metadata block that describes the primitives available to the script. The UniotLisp interpreter uses this block to understand which primitives are available, enabling the interpreter to properly validate and execute primitive calls.
-
-**This section is primarily for developers who write scripts manually.** When using the visual editor, the user library block is automatically included at the beginning of your script, so you don't need to manually create or maintain it.
 
 **Structure**
 
