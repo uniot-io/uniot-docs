@@ -6,10 +6,10 @@ hidden: true
 
 To connect your device to the Uniot Platform, you need to have:
 
-1. Registered account in [Uniot App](https://app.uniot.io/)
+1. Registered account in Uniot App ([Get Early Access](https://forms.fillout.com/t/k1LDnvkgvPus))
 2. Device with a [firmware](./firmware.md) based on Uniot Core
 
-To add a device, visit the [devices](https://app.uniot.io/devices) page on the Platform, where you can initiate the addition of a device. You will be redirected to the settings page, follow the instructions.
+To add a device, visit the devices page on the Platform, where you can initiate the addition of a device. You will be redirected to the settings page, follow the instructions.
 
 <div><figure><img src="../.gitbook/assets/device_settings.png" alt=""><figcaption></figcaption></figure></div>
 
@@ -18,7 +18,7 @@ Note: If you are using an Apple device (iPhone, MacBook, etc.) you will not be a
 {% endhint %}
 
 {% hint style="info" %}
-Note: If you do not see your account ID on the settings page, you can get it on your [profile](https://app.uniot.io/profile) page.
+Note: If you do not see your account ID on the settings page, you can get it on your profile page.
 {% endhint %}
 
 You will see the Captive Portal after connecting to the device's WiFi. Enter your account ID and your WiFi network credentials so that the device can connect to the Internet:

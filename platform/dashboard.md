@@ -1,6 +1,6 @@
 # Dashboard
 
-The [Dashboard](https://app.uniot.io/dashboard) is your central hub for interacting with connected devices. Build custom interfaces with drag-and-drop widgets that let you monitor sensor data, control actuators, and visualize device behavior in real-time. Whether you're managing a single prototype or a fleet of production devices, the dashboard adapts to your workflow.
+The Dashboard is your central hub for interacting with connected devices. Build custom interfaces with drag-and-drop widgets that let you monitor sensor data, control actuators, and visualize device behavior in real-time. Whether you're managing a single prototype or a fleet of production devices, the dashboard adapts to your workflow.
 
 ## Overview
 

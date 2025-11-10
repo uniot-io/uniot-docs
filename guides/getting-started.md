@@ -129,14 +129,14 @@ This example showcases how to utilize Uniot Core features like managing digital/
 
 ## **Adding Devices to the Platform**
 
-1. Open the [Uniot Platform](https://app.uniot.io) on your browser.
+1. Open the Uniot Platform ([Get Early Access](https://forms.fillout.com/t/k1LDnvkgvPus)) on your browser.
 2. Create an account or log in if you already have one.
-3. To add a new device to the Uniot Platform, navigate to the [Devices](https://app.uniot.io/devices) page, click the **“Add new device”** button, and follow instructions.
+3. To add a new device to the Uniot Platform, navigate to the Devices page, click the **“Add new device”** button, and follow instructions.
 4. After adding and authorising the device, you can deploy an automation script on it.
 
 ## **Your First Automation Script**
 
-1. For an easy start, navigate to the [Sandbox](https://app.uniot.io/sandbox) page and locate the welcome script titled **“My First Script”**.&#x20;
+1. For an easy start, navigate to the Sandbox page and locate the welcome script titled **“My First Script”**.&#x20;
 
 <div align="left"><figure><img src="../.gitbook/assets/guides_first_script.png" alt=""><figcaption></figcaption></figure></div>
 
@@ -181,5 +181,5 @@ This script uses several blocks to demonstrate key concepts of automation:
 
 - **State Variable Initialization**: The block initializes a `state` variable as `false`. This variable tracks the LED's on/off status.
 - **Run Task Block**: Configured to run every 50 milliseconds indefinitely (as the `times` parameter is set to `0`), ensuring the script continuously checks button activity and event triggers.
-- **Button Check Block**: Monitors if the button (that occupies the register with index `0`, for details check the list of registers, which can be found in the device information on the [Devices](https://app.uniot.io/devices) page) is clicked. When clicked, a global event named `led` is generated. This event can be heard by other devices in the network as well as by the dashboard, emitted with the toggled state value (`not state`).
+- **Button Check Block**: Monitors if the button (that occupies the register with index `0`, for details check the list of registers, which can be found in the device information on the Devices page) is clicked. When clicked, a global event named `led` is generated. This event can be heard by other devices in the network as well as by the dashboard, emitted with the toggled state value (`not state`).
 - **Event Trigger Block**: Responds to the `led` event by updating the `state` variable to the event's value and writing the new state to pin with registered index `0`, controlling the LED.
