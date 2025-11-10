@@ -138,7 +138,7 @@ The Register system maps logical pin indices (used in scripts) to physical GPIO 
 
 Before using built-in primitives, you must register GPIO pins:
 
-```cpp
+```c++
 void setup() {
   // Register digital output pins (GPIO 12, 13, 14)
   Uniot.registerLispDigitalOutput(12, 13, 14);
@@ -185,7 +185,7 @@ Writes a digital value (HIGH/LOW) to a registered output pin.
 
 **C++ Registration**:
 
-```cpp
+```c++
 Uniot.registerLispDigitalOutput(12, 13, 14);
 ```
 
@@ -205,7 +205,7 @@ Reads a digital value (HIGH/LOW) from a registered input pin.
 
 **C++ Registration**:
 
-```cpp
+```c++
 Uniot.registerLispDigitalInput(0, 4);
 ```
 
@@ -224,7 +224,7 @@ Writes an analog value (PWM) to a registered output pin.
 
 **C++ Registration**:
 
-```cpp
+```c++
 Uniot.registerLispAnalogOutput(12, 13, 14);
 ```
 
@@ -244,7 +244,7 @@ Reads an analog value from a registered input pin.
 
 **C++ Registration**:
 
-```cpp
+```c++
 Uniot.registerLispAnalogInput(A0);
 ```
 
@@ -264,7 +264,7 @@ Checks if a registered button was clicked (and resets the click state).
 
 **C++ Registration**:
 
-```cpp
+```c++
 auto button = new uniot::Button(0, LOW, 30);
 Uniot.registerLispButton(button, FOURCC(_btn));
 ```
@@ -277,7 +277,7 @@ Uniot.registerLispButton(button, FOURCC(_btn));
 
 **C++ Code**:
 
-```cpp
+```c++
 #include <Uniot.h>
 
 #define PIN_LED_R 15
@@ -344,7 +344,7 @@ Manages object references (like Button instances):
 
 Built-in primitives access the Register system through `PrimitiveExpeditor`:
 
-```cpp
+```c++
 Object dwrite(Root root, VarObject env, VarObject list) {
   auto expeditor = PrimitiveExpeditor::describe(name::dwrite, Lisp::Bool, 2, Lisp::Int, Lisp::BoolInt)
                        .init(root, env, list);
@@ -371,7 +371,7 @@ Object dwrite(Root root, VarObject env, VarObject list) {
 
 A primitive is a C++ function with a specific signature:
 
-```cpp
+```c++
 Object primitive_name(Root root, VarObject env, VarObject list)
 ```
 
@@ -397,7 +397,7 @@ Let's create a primitive that controls an LED based on brightness:
 
 **1. Declare the Primitive**
 
-```cpp
+```c++
 #include <Uniot.h>
 
 using namespace uniot;
@@ -407,7 +407,7 @@ Object set_led_brightness(Root root, VarObject env, VarObject list);
 
 **2. Implement the Primitive**
 
-```cpp
+```c++
 Object set_led_brightness(Root root, VarObject env, VarObject list) {
   // Describe the primitive: name, return type, arg count, arg types
   auto expeditor = PrimitiveExpeditor::describe(
@@ -438,7 +438,7 @@ Object set_led_brightness(Root root, VarObject env, VarObject list) {
 
 **3. Register the Primitive**
 
-```cpp
+```c++
 void setup() {
   // ... other setup code ...
 
@@ -459,7 +459,7 @@ void setup() {
 
 Use clear, descriptive names that indicate what the primitive does:
 
-```cpp
+```c++
 // Good
 Object turn_relay_on(...)
 Object read_temperature_sensor(...)
@@ -475,7 +475,7 @@ Object go(...)     // Unclear
 
 Always validate arguments to prevent undefined behavior:
 
-```cpp
+```c++
 Object set_pwm(Root root, VarObject env, VarObject list) {
   auto expeditor = PrimitiveExpeditor::describe("set_pwm", Lisp::Bool, 2, Lisp::Int, Lisp::Int)
                      .init(root, env, list);
@@ -502,7 +502,7 @@ Object set_pwm(Root root, VarObject env, VarObject list) {
 
 Log operations for debugging and monitoring:
 
-```cpp
+```c++
 Object important_operation(Root root, VarObject env, VarObject list) {
   auto expeditor = PrimitiveExpeditor::describe("important_operation", Lisp::Bool, 1, Lisp::Int)
                      .init(root, env, list);
@@ -528,7 +528,7 @@ Object important_operation(Root root, VarObject env, VarObject list) {
 
 Each primitive should do one thing well:
 
-```cpp
+```c++
 // Good - focused primitives
 Object read_sensor(...);
 Object calculate_average(...);
@@ -542,7 +542,7 @@ Object read_sensor_calculate_and_notify(...);  // Too complex
 
 Choose return types that provide useful information:
 
-```cpp
+```c++
 // Return bool for success/failure
 Object write_config(...) -> Bool
 

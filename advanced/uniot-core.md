@@ -129,7 +129,7 @@ The decision to base Uniot Core on the Arduino framework and implement it in C++
 
 Here's a minimal example to get you started with Uniot Core:
 
-```cpp
+```c++
 #include <Uniot.h>
 
 void setup() {
@@ -173,7 +173,7 @@ void loop() {
 
 The task scheduler provides non-blocking execution of periodic and one-shot tasks:
 
-```cpp
+```c++
 // Create a one-shot timer (like JavaScript's setTimeout)
 Uniot.setTimeout([]() {
   Serial.println("This runs once after 5 seconds");
@@ -204,7 +204,7 @@ task->attach(1000); // Attach with 1 second period
 
 The event bus enables decoupled communication between components:
 
-```cpp
+```c++
 // Add an event listener
 auto listenerId = Uniot.addSystemListener(
   [](unsigned int topic, int message) {
@@ -232,7 +232,7 @@ Uniot Core provides two ways to connect your device to WiFi:
 
 **1. Hardcoded Credentials** (programmatic setup):
 
-```cpp
+```c++
 // Configure WiFi credentials
 Uniot.configWiFiCredentials("MyNetwork", "password123");
 
@@ -277,7 +277,7 @@ Uniot Core includes an embedded Lisp interpreter for dynamic runtime scripting. 
 
 **Register Hardware for Lisp Access:**
 
-```cpp
+```c++
 // Register GPIO pins for Lisp access
 Uniot.registerLispDigitalOutput(LED_BUILTIN, 12, 13);
 Uniot.registerLispDigitalInput(0, 4);
@@ -291,7 +291,7 @@ Uniot.registerLispButton(button);
 
 **Event Communication:**
 
-```cpp
+```c++
 // Publish events from C++ to Lisp scripts
 Uniot.publishLispEvent("sensor_reading", 42);
 
@@ -309,7 +309,7 @@ Uniot.setLispEventInterceptor([](const uniot::LispEvent& event) {
 
 Custom primitives extend the Lisp interpreter with your own functions. A primitive is a C++ function that can be called from Lisp scripts.
 
-```cpp
+```c++
 Object my_add(Root root, VarObject env, VarObject list) {
   // Describe the primitive: name, return type, number of args, arg types
   auto expeditor = PrimitiveExpeditor::describe("my_add", Lisp::Int, 2, Lisp::Int, Lisp::Int)
@@ -347,7 +347,7 @@ Uniot.addLispPrimitive(my_add);
 
 For more complex primitives that interact with hardware or access device state, you can use the `RegisterManager` to link objects:
 
-```cpp
+```c++
 // Register a custom object that can be accessed by primitives
 Uniot.registerLispObject("my-object", myObjectPointer, FOURCC(myid));
 ```
@@ -356,7 +356,7 @@ Uniot.registerLispObject("my-object", myObjectPointer, FOURCC(myid));
 
 Uniot Core uses CBOR (Concise Binary Object Representation) for efficient data serialization and persistent storage:
 
-```cpp
+```c++
 // WiFi credentials and user ID are automatically stored
 Uniot.configWiFiCredentials("SSID", "Password");
 Uniot.configUser("your_account_id");
@@ -384,7 +384,7 @@ if (storage.restore()) {
 
 NTP synchronization and time persistence:
 
-```cpp
+```c++
 // Enable periodic date saving (survives reboots)
 Uniot.enablePeriodicDateSave(300); // Save every 5 minutes
 
@@ -482,7 +482,7 @@ RGB LED controller with light sensor for WittyCloud development board.
 
 **Key Code**:
 
-```cpp
+```c++
 // Register all I/O for Lisp access
 Uniot.registerLispDigitalOutput(PIN_RED, PIN_GREEN, PIN_BLUE);
 Uniot.registerLispAnalogOutput(PIN_RED, PIN_GREEN, PIN_BLUE);
@@ -506,7 +506,7 @@ Smart RGB+WW+CW lamp controller with custom Lisp primitives.
 
 **Key Code**:
 
-```cpp
+```c++
 // Custom primitive for Lisp-based control
 Object lamp_update(Root root, VarObject env, VarObject list) {
   auto expeditor = PrimitiveExpeditor::describe("lamp_update", Lisp::Bool, 5,
@@ -552,7 +552,7 @@ build_flags =
 
 ### Log Levels
 
-```cpp
+```c++
 UNIOT_LOG_LEVEL_NONE     // No logging
 UNIOT_LOG_LEVEL_ERROR    // Errors only
 UNIOT_LOG_LEVEL_WARN     // Warnings and errors
@@ -565,7 +565,7 @@ UNIOT_LOG_LEVEL_TRACE    // All messages including trace
 
 Uniot Core includes a comprehensive logging system:
 
-```cpp
+```c++
 UNIOT_LOG_ERROR("Error occurred: %d", errorCode);
 UNIOT_LOG_WARN("Warning: %s", message);
 UNIOT_LOG_INFO("Device connected: %s", deviceId);
@@ -597,7 +597,7 @@ Complete API documentation is generated with Doxygen and available at:
 
 ### Memory Management
 
-```cpp
+```c++
 // Prefer stack allocation for small objects
 uniot::Bytes data(64);
 
@@ -608,7 +608,7 @@ auto buffer = uniot::MakeUnique<uint8_t[]>(1024);
 
 ### Task Scheduling
 
-```cpp
+```c++
 // Keep task execution time short
 Uniot.setInterval([]() {
   // Quick operation
@@ -628,7 +628,7 @@ Uniot.createTask("long_task", [](SchedulerTask& self, short remaining) {
 
 ### Event Handling
 
-```cpp
+```c++
 // Remove listeners when no longer needed
 void cleanup() {
   Uniot.removeSystemListener(myListenerId);
@@ -643,7 +643,7 @@ Uniot.addSystemListener(handler,
 
 ### Error Handling
 
-```cpp
+```c++
 // Always check return values
 if (!Uniot.cancelTimer(timerId)) {
   UNIOT_LOG_WARN("Timer %u not found", timerId);
@@ -668,7 +668,7 @@ UNIOT_LOG_ERROR_IF(!success, "Invalid WiFi credentials");
 1. **Reduce Lisp heap size**: `UNIOT_LISP_HEAP=5000`
 2. **Limit timer count**: Remove unused timers with `cancelTimer()`
 3. **Monitor free heap**:
-   ```cpp
+   ```c++
    UNIOT_LOG_INFO("Free heap: %u", ESP.getFreeHeap());
    ```
 
