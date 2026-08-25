@@ -112,7 +112,7 @@ The decision to base Uniot Core on the Arduino framework and implement it in C++
    **Build Flags**:
 
    - `-std=gnu++17`: Required C++17 standard
-   - `UNIOT_CREATOR_ID`: Device creator identifier (default: "UNIOT")
+   - `UNIOT_CREATOR_ID`: Device creator identifier (**required** — the build fails without it)
    - `UNIOT_LOG_ENABLED`: Enable/disable logging (1 or 0)
    - `UNIOT_USE_LITTLEFS`: Use LittleFS filesystem (1 or 0)
    - `UNIOT_LOG_LEVEL`: Logging verbosity (see [Configuration](#configuration) section)
@@ -124,6 +124,69 @@ The decision to base Uniot Core on the Arduino framework and implement it in C++
    ```bash
    pio run --target upload
    ```
+
+### Multi-Environment Configuration
+
+To target several boards from one project, define an environment per board and share common settings in `[env]`:
+
+{% code title="platformio.ini" lineNumbers="true" %}
+
+```ini
+[platformio]
+
+; Default environment — set this to the environment matching your primary microcontroller.
+default_envs = ESP12E
+
+[env]
+monitor_speed = 115200
+framework = arduino
+
+; Filesystem type supported by Uniot Core. Use `littlefs` when UNIOT_USE_LITTLEFS=1.
+board_build.filesystem = littlefs
+
+; Uniot Core dependency. Pin the version explicitly (uniot-io/uniot-core@x.x.x) to maintain compatibility.
+lib_deps =
+    uniot-io/uniot-core@^0.8.1
+
+; Build flags customize firmware behavior.
+; See the full list in the Build Flags section below.
+build_flags =
+    -std=gnu++17
+    -D UNIOT_USE_LITTLEFS=1
+    -D UNIOT_CREATOR_ID=\"UNIOT\"
+    -D MQTT_MAX_PACKET_SIZE=2048
+    -D UNIOT_LOG_ENABLED=1
+    -D UNIOT_LOG_LEVEL=4
+build_unflags =
+    -std=gnu++11
+
+; Microcontroller selection — define a separate environment for each supported model.
+; `platform` and `board` must match the microcontroller
+; (e.g., `espressif8266` for ESP8266 or `espressif32` for ESP32).
+
+; ESP12E — for ESP8266-based boards.
+[env:ESP12E]
+platform = espressif8266
+board = esp12e
+
+; ESP32 — for ESP32 boards.
+[env:ESP32]
+platform = espressif32
+board = esp32doit-devkit-v1
+
+; ESP32C3 — for ESP32-C3 boards with USB-specific configuration.
+[env:ESP32C3]
+platform = espressif32
+board = esp32-c3-devkitm-1
+; USB and debug settings (optional) — extra USB-specific flags required by devices like the ESP32C3.
+build_flags =
+    ${env.build_flags}
+    -D ARDUINO_USB_MODE=1
+    -D SERIALCONS=USBSerial
+    -D ARDUINO_USB_CDC_ON_BOOT=1
+```
+
+{% endcode %}
 
 ## Quick Start
 
