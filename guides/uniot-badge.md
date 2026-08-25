@@ -8,7 +8,7 @@ The Uniot Badge is a mini IoT development board. Made in the size of a credit ca
 
 The Uniot Badge is equipped with the following hardware components:
 
-* **ESP32-C3 Dev Board**: The main microcontroller board that runs on the [Uniot Core](../advanced/uniot-core/).
+* **ESP32-C3 Dev Board**: The main microcontroller board that runs on the [Uniot Core](../advanced/uniot-core.md).
 * **VL53L0X ToF Sensor**: A time-of-flight sensor for distance measurement.
 * **Button**: A button for user interaction.
 * **Vibration Motor**: A small motor that can vibrate to provide haptic feedback.
@@ -85,7 +85,7 @@ Turns on the set LEDs.
 
 ## Firmware
 
-The Uniot Badge is powered by firmware based on [Uniot Core](../advanced/uniot-core/). You can find the source code of the firmware [here](https://github.com/uniot-io/uniot-promo-badge-firmware).
+The Uniot Badge is powered by firmware based on [Uniot Core](../advanced/uniot-core.md). You can find the source code of the firmware [here](https://github.com/uniot-io/uniot-promo-badge-firmware).
 
 ## Script Examples
 

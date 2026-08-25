@@ -332,7 +332,7 @@ The device doesn't treat the dashboard as anything special — everything simply
 
 **Upload fails or no serial port appears.** Hold the BOOT/FLASH button while PlatformIO prints "Connecting…"; make sure the CH340/CP2102 USB driver is installed; try adding `upload_speed = 115200` to `platformio.ini`.
 
-**I don't see the `UNIOT-xxxxxx` network.** The device already has stored WiFi credentials, so it skips Access Point mode. Clear them: quick-press the button 5–8 times, then hold it for 3–5 seconds — or power-cycle the device 5 times in quick succession (a built-in recovery mechanism, active by default).
+**I don't see the `UNIOT-xxxxxx` network.** The device already has stored WiFi credentials, so it skips Access Point mode. Clear them: quick-press the button 4+ times, then hold it for ~3 seconds (all within ~5 seconds) — or power-cycle the device 5 times in quick succession (a built-in recovery mechanism, active by default).
 
 **I can't join the device's network.** Forget the `UNIOT-xxxxxx` network on your phone or laptop and connect to it again.
 
