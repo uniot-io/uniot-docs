@@ -224,7 +224,7 @@ You already provided everything before flashing. The device connects on boot —
 {% endtab %}
 
 {% tab title="Option B: Captive portal" %}
-**Start the wizard.** Open the **Devices** page on the platform and click **Add new device**. The screen shows step-by-step instructions along with your account ID.
+**Start the wizard.** Open the **Devices** page on the platform and click **Add new device** — or switch back to that screen if you already have it open. It shows these same steps along with your account ID.
 
 {% hint style="info" %}
 On an iPhone or Mac, copy your account ID **before** joining the device's WiFi — the captive portal opens in a separate window, and this page won't be reachable until you disconnect. (Your account ID is also available on your profile page.)
@@ -235,7 +235,7 @@ On an iPhone or Mac, copy your account ID **before** joining the device's WiFi �
 **Provision it.** In the portal that opens, enter your account ID, pick your home WiFi (**Scan Networks**), type its password, and press **Connect**.
 
 {% hint style="info" %}
-Your WiFi credentials are used only on the device itself, only to connect it to the Internet. After pressing **Connect**, allow up to 15 seconds — the portal shows no progress while the device connects and registers.
+Your WiFi credentials are used only on the device itself, only to connect it to the Internet.
 {% endhint %}
 {% endtab %}
 {% endtabs %}
@@ -243,8 +243,6 @@ Your WiFi credentials are used only on the device itself, only to connect it to 
 ### Authorize the Device
 
 New devices are not trusted automatically. Open the **Devices** page, switch to the **Unauthorized** tab, select your device, and click **Authorize** to bind it to your account.
-
-<!-- AUTHOR: verify the exact button label on the Devices page -->
 
 {% hint style="success" %}
 **Checkpoint** — your device appears on the Devices page with the status **Online**. If it doesn't, see [Troubleshooting](#troubleshooting).
@@ -336,7 +334,7 @@ The device doesn't treat the dashboard as anything special — everything simply
 
 **I can't join the device's network.** Forget the `UNIOT-xxxxxx` network on your phone or laptop and connect to it again.
 
-**The device never appears under Unauthorized.** Usually a wrong or missing account ID (Option A: `configUser()`; Option B: the portal field) or wrong WiFi credentials. Watch the serial monitor for connection errors, and allow up to 15 seconds after the portal's **Connect**.
+**The device never appears under Unauthorized.** Usually a wrong or missing account ID (Option A: `configUser()`; Option B: the portal field) or wrong WiFi credentials. Watch the serial monitor for connection errors.
 
 **The LED keeps blinking.** A medium or fast blink that never stops means wrong credentials or a router out of range. Hold the button for 3–5 seconds to force a reconnect attempt, or clear the WiFi config (see above) and redo Step 2.
 
