@@ -306,7 +306,8 @@ Use the `print` statement (the corresponding [visual block](../platform/sandbox/
 Printed messages are published to:
 
 - MQTT topic: `<domain>/users/<userId>/devices/<deviceId>/debug/log`
-- Visible under the “Logs” tab on the device page
+- Visible under the “Logs” tab on the device page for deployed script
+- Visible in [the emulator logs](../platform/sandbox/emulator.md#logs)
 
 ### Errors
 

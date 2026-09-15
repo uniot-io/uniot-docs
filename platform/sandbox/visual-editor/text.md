@@ -52,7 +52,7 @@ Evaluates a text string as UniotLisp code and returns the result. Use this to ex
 
 <div align="left"><figure><img src="../../../.gitbook/assets/text_print.png" alt=""><figcaption></figcaption></figure></div>
 
-Sends a log message to the MQTT broker. Messages appear on the device details page for monitoring and debugging.
+Sends a log message to the MQTT broker. Messages appear on the device details page for monitoring and debugging, and in the Emulator's logs panel when the script runs in the [Emulator](../emulator.md#logs).
 
 **Parameters:**
 
