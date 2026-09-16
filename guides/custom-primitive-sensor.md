@@ -1,0 +1,169 @@
+---
+hidden: true
+---
+
+# Add a Real Sensor with a Custom Primitive
+
+<!-- AUTHOR: Skeleton, outline only (guide 5 of 6). Expand into full prose, verify the DHT library id and the primitive on a board, then remove `hidden: true` and add to SUMMARY.md after Two Devices, One Event. -->
+
+The built-in primitives cover pins. For anything else, you teach the script vocabulary a new word in C++. Here that word is `get_temp`, backed by a DHT22, and the script is the thermostat from the Edge Logic Deployment page, now real. You mock the sensor in the Emulator before the wiring is even done. About 40 minutes.
+
+## What You'll Build
+
+- A `get_temp` primitive in `main.cpp` that returns tenths of a degree as an integer.
+- An Emulator mock for it, written as a small JavaScript function.
+- A thermostat script that drives an LED as the "AC", publishes `temperature` on change, and takes a `setpoint` from a slider.
+- A dashboard with the temperature, the setpoint, and the AC state.
+
+Why it matters: primitives are the bridge between scripts and the hardware you actually have ([Creating Custom Primitives](../general-concepts/primitives.md#creating-custom-primitives)).
+
+## Prerequisites
+
+- The board from the previous guides, with the LED on digital output `0`.
+- A DHT22 (DHT11 works) with a 10 kΩ pull-up on its data line. <!-- AUTHOR: data pin per board. -->
+- PlatformIO, since this guide reflashes.
+
+## Step 1: Write the Primitive
+
+### Add the Library
+
+<!-- AUTHOR: exact `lib_deps` id, e.g. adafruit/DHT sensor library plus Adafruit Unified Sensor, or an ESP-specific DHT library. -->
+
+### Implement get_temp
+
+{% code title="main.cpp (excerpt)" lineNumbers="true" %}
+
+```c++
+#include <Uniot.h>
+#include <DHT.h>
+
+using namespace uniot;
+
+#define PIN_DHT 4  // AUTHOR: per-board value
+DHT dht(PIN_DHT, DHT22);
+
+// (get_temp) -> temperature in tenths of a degree, or -1000 on a failed read
+Object get_temp(Root root, VarObject env, VarObject list) {
+  auto expeditor = PrimitiveExpeditor::describe("get_temp", Lisp::Int, 0)
+                       .init(root, env, list);
+  expeditor.assertDescribedArgs();
+
+  float t = dht.readTemperature();
+  if (isnan(t)) {
+    return expeditor.makeInt(-1000);
+  }
+  return expeditor.makeInt((int)(t * 10));
+}
+
+void setup() {
+  // ... everything from the previous guides ...
+  dht.begin();
+  Uniot.addLispPrimitive(get_temp);
+  Uniot.begin();
+}
+```
+
+{% endcode %}
+
+- Walk through `describe` (name, return type, argument count), `init`, `assertDescribedArgs`, and `makeInt`, pointing to [Using PrimitiveExpeditor](../general-concepts/primitives.md#using-primitiveexpeditor).
+- Two rules worth a hint: UniotLisp has no floats, so scale to integers; and every primitive returns something, so pick a sentinel for failure.
+- Reflash.
+
+{% hint style="success" %}
+**Checkpoint** — the device page lists `get_temp` among the device's primitives. <!-- AUTHOR: where exactly the primitive list is shown. -->
+{% endhint %}
+
+## Step 2: Mock It in the Emulator
+
+- In the Sandbox, select the device and open the Emulator with any script that calls `get_temp`. A **User Primitive** card appears with its return type fixed to Int ([User Primitive](../platform/sandbox/emulator.md#user-primitive)).
+- Click the gear, choose **Use Function**, and paste a mock that drifts instead of jumping ([Configuring Return Values](../platform/sandbox/emulator.md#configuring-return-values)):
+
+{% code title="Emulator mock for get_temp" %}
+
+```javascript
+() => {
+  const t = (state.get("t") ?? 220) + Math.round(Math.random() * 6 - 3);
+  state.set("t", t);
+  return t;
+};
+```
+
+{% endcode %}
+
+- Mention the sandbox rules in one sentence: synchronous, `Math` and `Date.now()` only, `state` survives between calls, 500 ms per call.
+
+{% hint style="success" %}
+**Checkpoint** — the card shows a value near 220 that wanders on every call.
+{% endhint %}
+
+## Step 3: The Thermostat Script
+
+{% code title="thermostat.lisp" lineNumbers="true" %}
+
+```lisp
+;;; begin-user-library
+; (defjs get_temp ()) ;-> Int
+; (defjs dwrite (pin state)) ;-> Bool
+;;; end-user-library
+
+(define setpoint 240)
+(define temp 0)
+(define last_sent -1000)
+
+(task 0 2000 '
+ (list
+  (setq temp (get_temp))
+  (if (> temp -1000)
+   (list
+    (dwrite 0 (> temp setpoint))
+    (if (not (= temp last_sent))
+     (list
+      (setq last_sent temp)
+      (push_event 'temperature temp)))))
+  (if (is_event 'setpoint)
+   (setq setpoint (pop_event 'setpoint)))))
+```
+
+{% endcode %}
+
+What the script does:
+
+- Reads the sensor every 2 s and ignores failed reads.
+- Turns the "AC" LED on above the setpoint, decided on the device.
+- Publishes `temperature` only when it changes; accepts `setpoint` from the dashboard.
+- The `defjs get_temp` line is required; without it the Emulator reports "Undefined symbol". The Visual Editor writes it for you from the device's primitive list. <!-- AUTHOR: confirm the autogenerated block for a connected device's primitive. -->
+
+Link the original sketch of this idea in [Edge Logic Deployment](../foundations/edge-logic-deployment.md).
+
+## Step 4: Dashboard, Then Deploy
+
+- Widgets: a temperature display bound to `temperature`, a **Slider** bound to `setpoint` with **Retain**, an **LED** widget bound to... <!-- AUTHOR: the AC state needs its own event (e.g. `ac`) pushed on transitions; add it to the listing or drop the LED widget. -->
+- Run against the Emulator with the mock, move the setpoint across the mocked value, watch the Digital Write card.
+- **Deploy** from the Emulator header. Compare the real reading with the mock; warm the sensor with a finger.
+
+{% hint style="success" %}
+**Checkpoint** — the dashboard shows the room temperature in tenths and the LED follows the setpoint.
+{% endhint %}
+
+## Troubleshooting
+
+<!-- AUTHOR: bold-symptom paragraphs. Planned entries: -->
+
+- Always `-1000`: wiring or pull-up, or reading too soon after boot; the DHT22 needs about 2 s between reads.
+- Build error about `Object` or `Root`: missing `using namespace uniot;` or `<Uniot.h>`.
+- The Emulator card shows `ERR`: the function threw or returned a non-number.
+- "User function error" stops the run: read the cause in the Logs panel.
+
+## What's Next
+
+{% content-ref url="schedule-on-the-device.md" %}
+[Schedule on the Device](schedule-on-the-device.md)
+{% endcontent-ref %}
+
+{% content-ref url="../general-concepts/primitives.md" %}
+[Primitives](../general-concepts/primitives.md)
+{% endcontent-ref %}
+
+{% content-ref url="../platform/sandbox/emulator.md" %}
+[Emulator](../platform/sandbox/emulator.md)
+{% endcontent-ref %}
