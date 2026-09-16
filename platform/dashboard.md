@@ -1,90 +1,81 @@
 # Dashboard
 
-The Dashboard is your central hub for interacting with connected devices. Build custom interfaces with drag-and-drop widgets that let you monitor sensor data, control actuators, and visualize device behavior in real-time. Whether you're managing a single prototype or a fleet of production devices, the dashboard adapts to your workflow.
+A dashboard is a grid of widgets, each bound to an Event. Every dashboard, device, and the Emulator in your account share one event bus, so what you do on a widget reaches your devices, and what a device pushes shows up on the widget. You switch between viewing a dashboard and editing it, and each dashboard keeps a desktop and a mobile layout.
 
-## Overview
+<div><figure><img src="../.gitbook/assets/dashboard_main.png" alt=""><figcaption>A dashboard in view mode</figcaption></figure></div>
 
-The dashboard interface provides a flexible workspace where you can organize widgets to match your specific needs. Each dashboard supports both desktop and mobile layouts, ensuring your device interfaces work seamlessly across all screen sizes.
+## Quick Start
 
-The main dashboard view displays your configured widgets arranged in a grid layout. From here, you can quickly switch between view and edit modes and access all device interactions in one place. The interface is designed to be intuitive - focus on your devices, not on learning complex UI patterns.
-
-<div><figure><img src="../.gitbook/assets/dashboard_main.png" alt=""><figcaption></figcaption></figure></div>
-
-## Edit/View Modes
-
-The dashboard operates in two distinct modes:
-
-- **View Mode** - Your default working state for monitoring and controlling devices. Interact with widgets, view real-time data, and manage your devices without accidentally modifying the layout.
-- **Edit Mode** - The configuration state where you can add, remove, rearrange, and configure widgets to build your ideal dashboard interface.
-
-### Layout Types
-
-Each dashboard supports two independent layout types: **desktop** and **mobile**. This means you can arrange widgets differently for each screen size, optimizing the experience for both laptop/desktop and mobile device.
-
-When in edit mode, switch between layouts to customize each one separately. Changes made to the desktop layout won't affect the mobile layout, and vice versa. This gives you complete control over how your dashboard appears on different devices.
-
-<div><figure><img src="../.gitbook/assets/dashboard_view_modes.png" alt=""><figcaption></figcaption></figure></div>
-
-### Working in Edit Mode
-
-In edit mode, you have full control over your dashboard structure:
-
-- **Add widgets** from the widget dropdown menu
-- **Drag and drop** widgets to reposition them in the grid
-- **Resize widgets** by dragging their corners or edges
-- **Configure widget settings** by clicking on the widget's settings icon
-- **Delete widgets** that are no longer needed
-
-Remember to switch between desktop and mobile layouts while editing to ensure both versions of your dashboard provide a great user experience.
-
-### Dashboard Thumbnails
-
-When you switch from edit mode to view mode, the platform automatically captures a screenshot of your dashboard. This screenshot is used as a thumbnail preview in your dashboard list, making it easy to identify and navigate between multiple dashboards at a glance.
-
-The screenshot captures the currently active layout - if you're viewing the desktop layout when you save, the thumbnail will show the desktop version. If you're in the mobile layout, the thumbnail will display the mobile version. To update a dashboard's thumbnail, simply switch to the desired layout in edit mode and then save by switching back to view mode.
-
-## Widgets
-
-Widgets are the building blocks of your dashboard. Each widget serves as an interface component that either displays data from your devices (like charts, gauges, or indicators) or sends commands to them (like buttons, switches, or sliders). Think of widgets as the bridge between your physical hardware and your dashboard interface.
-
-### Adding Widgets
-
-To add a widget to your dashboard:
-
-1. Switch to **edit mode**
-2. Click the **widget dropdown menu** to see all available widget types
-3. Select the widget that matches your needs
-
-<div><figure><img src="../.gitbook/assets/dashboard_widget_select.png" alt=""><figcaption></figcaption></figure></div>
+1. **Open** a dashboard from **Dashboards** in the sidebar. A new account already has one.
+2. **Edit** with the button in the header.
+3. **Add Widget** and pick a type.
+4. **Name it and bind it** to an event in the widget settings, then **Save** the settings.
+5. **Arrange** the widgets by dragging and resizing, then press **Save** in the header.
+6. **Use it** in view mode, with a script on the device that uses the same event name.
 
 {% hint style="info" %}
 
-The widget library is continuously expanding. New widgets are added regularly based on user needs and common IoT use cases. If you need a specific widget type, share your request on our [community forum](https://community.uniot.io/) - we actively consider user feedback when planning new features.
+**New account?** "My First Dashboard" comes with a Switch and an LED, both bound to the event `led`, and a script that ties them to a pin. [Getting Started](../guides/getting-started.md#step-4-control-it-from-the-dashboard) walks through it.
 
 {% endhint %}
 
-### Widget Configuration
+## View and Edit Mode
 
-Every widget requires two essential settings:
+One button in the header switches between using a dashboard and building it: **Edit** enters edit mode, **Save** leaves it and stores the layout. There is no cancel. A dashboard with no widgets opens in edit mode so you can start adding right away.
 
-- **Name** - A descriptive label that appears on the dashboard. Choose names that clearly indicate the widget's purpose (e.g., "Temperature Sensor", "Living Room Light", "Motor Speed").
-- **Event** - The device event this widget subscribes to or publishes. This links the widget to specific data streams or control channels on your device.
+<div><figure><img src="../.gitbook/assets/dashboard_view_modes.png" alt=""><figcaption>Switch layout and Edit in the dashboard header</figcaption></figure></div>
 
-<div><figure><img src="../.gitbook/assets/dashboard_widget_settings.png" alt=""><figcaption></figcaption></figure></div>
+A dashboard has a desktop and a mobile layout. They share the same widgets and settings; only where each widget sits and how big it is are stored per layout. The one you see is chosen by your screen size, and **Switch layout** flips it at any time, in either mode.
 
-### Additional Settings
+In edit mode, **Add Widget** adds a widget, and hovering a widget shows a gear that opens its settings and a trash icon that removes it immediately. Drag a widget to move it and use the handle in its bottom-right corner to resize it; widgets never overlap. Positions and sizes are stored when you press **Save**, which also refreshes the dashboard's thumbnail from the layout on screen.
 
-Beyond the basic configuration, widgets offer type-specific settings:
+<div><figure><img src="../.gitbook/assets/dashboard_widget_select.png" alt=""><figcaption>The Add Widget dropdown in edit mode</figcaption></figure></div>
 
-**Control Widgets** (Push Button, Switch, Slider):
+## Widgets
 
-- **Retain parameter** - When enabled, the broker stores the last message and automatically sends it to devices that connect later. This ensures devices receive the most recent command even if they were offline. [Learn more about retained messages](../api-reference/mqtt-convention.md#retained-messages).
+Every widget except Deploy Script is bound to an Event: the widget publishes to it when you use it and reacts when a device/emulator/another widget publishes it. The widget's header shows its name and the footer shows the event name.
 
-**Display Widgets** may include:
+Missing a widget type? Tell us on the [community forum](https://community.uniot.io).
 
-- Visual customization (colors, themes, ranges)
-- Data formatting options
-- Update intervals
-- Historical data settings
+## Widget Configuration
 
-Each widget type has settings tailored to its specific function - explore them to create the most effective interface for your devices.
+The gear on a widget, or picking a type in **Add Widget**, opens its settings with a live preview on the right. **Save** applies, **Close** discards.
+
+<div><figure><img src="../.gitbook/assets/dashboard_widget_settings.png" alt=""><figcaption>Widget settings: Name, Event and Retain, with a live preview</figcaption></figure></div>
+
+- **Name** - shown in the widget header.
+- **Event** - letters, digits, and underscore only. It must match the event name your script uses.
+- **Retain** - for Switch, Push Button, and Slider. Keeps the last value on the broker, see [Retain](#retain).
+
+Deploy Script has its own fields instead of Event and Retain.
+
+## Widget Types
+
+| Widget        | What it does                                                     | Settings                                                   |
+| ------------- | ---------------------------------------------------------------- | ---------------------------------------------------------- |
+| Switch        | Sends 1 when on and 0 when off, and flips when the event changes | None                                                       |
+| Push Button   | Sends 1 on press and 0 on release                                | None                                                       |
+| Slider        | Sends the number you drag to, and moves when the event changes   | Min and Max                                                |
+| LED           | Lights when the event value is not 0                             | Colour: red, green, or blue                                |
+| Value         | Shows the latest event value                                     | Decimal digits, round or truncate, a divider or multiplier |
+| Deploy Script | Sends a script to a device after a confirmation                  | Script, device, store the script on the device             |
+
+Deploy Script always sends the latest saved version of the script. The confirmation warns when the device is offline (the script is applied when it reconnects) and when the device lacks a primitive the script uses. **Store script on the device** keeps the script across power cycles.
+
+## Events
+
+Every dashboard, device, and the Emulator in your account share one event bus. A widget publishes under its event name and every device of the account receives it; a device publishes the same way with `push event`, and every widget bound to that name updates. The name must be spelled exactly as in the script's [push event](sandbox/visual-editor/special.md#push-event), [is event](sandbox/visual-editor/special.md#is-event), and [pop event](sandbox/visual-editor/special.md#pop-event) blocks. Values are numbers; booleans become 1 and 0.
+
+The [Emulator](sandbox/emulator.md#events) is on the same bus: widgets react to an emulated script, and the emulated script sees what you press on the dashboard.
+
+### Retain
+
+With **Retain** on, the broker keeps the last value a widget published and replays it to a device when it connects and to the dashboard when it loads, so a switch position or a slider level survives a reboot or a page refresh. With it off, values reach whoever is listening at that moment and are then forgotten. Turning Retain off on a widget also clears the value the broker kept. See [Retained Messages](../api-reference/mqtt-convention.md#retained-messages) for the protocol side.
+
+{% hint style="warning" %}
+
+**Old retained values come back.** A retained event from an earlier project is replayed to any new widget or device that uses the same name. Use fresh event names, or clear the old value: bind a widget to the name with Retain on, save, then turn Retain off and save again.
+
+{% endhint %}
+
+See [Getting Started](../guides/getting-started.md#step-4-control-it-from-the-dashboard) for the seeded Switch and LED in action, and the [MQTT convention](../api-reference/mqtt-convention.md#event-communication) for the topics involved.
