@@ -16,7 +16,7 @@ None of this logic is compiled into the firmware. You flash generic firmware onc
 - A supported board. This guide provides ready-to-use configurations for **NodeMCU-class ESP8266** and **ESP32 DevKit** boards; any other ESP8266/ESP32 board works with minor pin tweaks.
 - A USB **data** cable (some charging cables carry no data).
 - [PlatformIO](https://platformio.org/) installed — either the VSCode extension or the CLI.
-- A Uniot account — [Get Early Access](https://forms.fillout.com/t/k1LDnvkgvPus). Once you are in, copy your **account ID** from your profile page (it is also shown on the Add-new-device screen). You will need it in Step 1 or Step 2, depending on the path you choose.
+- A Uniot account — [Get Early Access](https://forms.fillout.com/t/k1LDnvkgvPus). Once you are in, copy your **account ID** from your profile page (it is also shown on the Add-new-device screen). You will need it in Step 1.
 
 ## Step 1: Flash the Firmware
 
@@ -94,7 +94,7 @@ Using a different ESP32 board? Change `board` accordingly (e.g. `esp32dev`).
 
 ### Write main.cpp
 
-Both files below are complete — pick your board's tab and copy it as is.
+Both files below are complete — pick your board's tab, copy it, and fill in your WiFi credentials and account ID at the top of `setup()`.
 
 {% tabs %}
 {% tab title="ESP8266 (NodeMCU)" %}
@@ -112,10 +112,11 @@ Both files below are complete — pick your board's tab and copy it as is.
 #define LED_ACTIVE_LEVEL LOW
 
 void setup() {
-  // Option A: hardcoded credentials - uncomment and fill in:
-  // Uniot.configWiFiCredentials("YourSSID", "YourPassword");
-  // Uniot.configUser("your_account_id");
-  // Option B: captive portal - leave them commented.
+  // Fill in your WiFi network and Uniot account ID.
+  // To provision from your phone instead (captive portal),
+  // comment out both lines - see Step 2.
+  Uniot.configWiFiCredentials("YourSSID", "YourPassword");
+  Uniot.configUser("your_account_id");
 
   // Blink connection status on the onboard LED.
   Uniot.configWiFiStatusLed(PIN_LED, LED_ACTIVE_LEVEL);
@@ -125,6 +126,9 @@ void setup() {
 
   // Let scripts drive the LED as digital output 0: (dwrite 0 ...).
   Uniot.registerLispDigitalOutput(PIN_LED);
+
+  // Let scripts read the LED pin level back as digital input 0: (dread 0).
+  Uniot.registerLispDigitalInput(PIN_LED);
 
   Uniot.begin();
 }
@@ -156,10 +160,11 @@ The onboard LED on GPIO2 is inverted: when a script or the dashboard turns it "o
 #define LED_ACTIVE_LEVEL HIGH
 
 void setup() {
-  // Option A: hardcoded credentials - uncomment and fill in:
-  // Uniot.configWiFiCredentials("YourSSID", "YourPassword");
-  // Uniot.configUser("your_account_id");
-  // Option B: captive portal - leave them commented.
+  // Fill in your WiFi network and Uniot account ID.
+  // To provision from your phone instead (captive portal),
+  // comment out both lines - see Step 2.
+  Uniot.configWiFiCredentials("YourSSID", "YourPassword");
+  Uniot.configUser("your_account_id");
 
   // Blink connection status on the onboard LED.
   Uniot.configWiFiStatusLed(PIN_LED, LED_ACTIVE_LEVEL);
@@ -169,6 +174,9 @@ void setup() {
 
   // Let scripts drive the LED as digital output 0: (dwrite 0 ...).
   Uniot.registerLispDigitalOutput(PIN_LED);
+
+  // Let scripts read the LED pin level back as digital input 0: (dread 0).
+  Uniot.registerLispDigitalInput(PIN_LED);
 
   Uniot.begin();
 }
@@ -187,13 +195,12 @@ Some ESP32 boards (e.g. the official ESP32-DevKitC) have no onboard user LED. If
 {% endtabs %}
 
 {% hint style="warning" %}
-**Decide how the device will get your WiFi credentials before uploading:**
+**Before uploading**, replace `YourSSID`, `YourPassword`, and `your_account_id` in the two config lines at the top of `setup()` with your WiFi credentials and Uniot account ID.
 
-- **Option A: Hardcoded credentials** — uncomment the two config lines in `setup()` and fill in your WiFi SSID, password, and Uniot account ID.
-- **Option B: Captive portal** — leave them commented; you will provision the device from your phone in Step 2.
+Prefer not to put credentials in code? Comment out both lines. The device will then open a captive portal on boot, and you will provision it from your phone in Step 2.
 {% endhint %}
 
-While connecting, Uniot Core blinks the connection status on the LED; once connected, the LED goes dark and your scripts own it (if WiFi drops, the core temporarily takes it back). Note that scripts address hardware by logical index, not GPIO number: the button is exposed as `(bclicked 0)` and the LED as digital output `0` — see [the register system](../general-concepts/primitives.md#the-register-system) for how indices work and [WiFi Management](../advanced/uniot-core.md#wifi-management) for details on the WiFi subsystem.
+While connecting, Uniot Core blinks the connection status on the LED; once connected, the LED goes dark and your scripts own it (if WiFi drops, the core temporarily takes it back). Note that scripts address hardware by logical index, not GPIO number: the button is exposed as `(bclicked 0)`, and the LED as digital output `0` for `(dwrite 0 ...)` and as digital input `0` for `(dread 0)`, which returns the current level of the LED pin — see [the register system](../general-concepts/primitives.md#the-register-system) for how indices work and [WiFi Management](../advanced/uniot-core.md#wifi-management) for details on the WiFi subsystem.
 
 ### Upload
 
@@ -208,22 +215,20 @@ Or press the upload arrow in the PlatformIO toolbar of VSCode.
 {% hint style="success" %}
 **Checkpoint** — run `pio device monitor`: you should see Uniot Core log lines. The onboard LED shows the connection state:
 
-- **Slow blink** — setup (Access Point) mode, waiting to be provisioned (Option B continues in Step 2)
+- **Brief flash, then dark** — connected (this is what you should see)
 - **Medium blink** — connecting to your WiFi
+- **Slow blink** — setup (Access Point) mode, waiting to be provisioned (only if you commented out the credentials; continue in Step 2)
 - **Fast blink** — error
-- **Brief flash, then dark** — connected (what you should see with Option A)
-{% endhint %}
+  {% endhint %}
 
 ## Step 2: Connect the Device to Your Account
 
-Both options end in the same place: the device is online under your account and appears on the **Devices** page. (If you mix them, hardcoded values win — `configWiFiCredentials()` overwrites stored values on every boot.)
+You already provided everything the device needs before flashing. On boot it joins your WiFi — the status LED goes dark — and registers under your account ID. Skip ahead to [Authorize the Device](#authorize-the-device).
 
-{% tabs %}
-{% tab title="Option A: Hardcoded credentials" %}
-You already provided everything before flashing. The device connects on boot — the status LED goes dark — and registers with your account ID. Continue to authorization below.
-{% endtab %}
+### Using the Captive Portal Instead
 
-{% tab title="Option B: Captive portal" %}
+If you commented out `configWiFiCredentials()` and `configUser()` in `setup()`, the device has no credentials yet and opens its own WiFi network with a setup page. Provision it from your phone or laptop:
+
 **Start the wizard.** Open the **Devices** page on the platform and click **Add new device** — or switch back to that screen if you already have it open. It shows these same steps along with your account ID.
 
 {% hint style="info" %}
@@ -232,13 +237,13 @@ On an iPhone or Mac, copy your account ID **before** joining the device's WiFi �
 
 **Join the device's network.** Power the device and connect your phone or laptop to the WiFi network named `UNIOT-xxxxxx`.
 
-**Provision it.** In the portal that opens, enter your account ID, pick your home WiFi (**Scan Networks**), type its password, and press **Connect**.
+**Provision it.** In the portal that opens, enter your account ID, pick your home WiFi, type its password, and press **Connect**.
 
 {% hint style="info" %}
 Your WiFi credentials are used only on the device itself, only to connect it to the Internet.
 {% endhint %}
-{% endtab %}
-{% endtabs %}
+
+Keep both config lines commented out from now on. `configWiFiCredentials()` stores its values on every boot, so if it comes back into `setup()`, it overwrites whatever you entered through the portal.
 
 ### Authorize the Device
 
@@ -251,6 +256,15 @@ New devices are not trusted automatically. Open the **Devices** page, switch to 
 ## Step 3: Deploy Your First Script
 
 Open the **Sandbox** page. Every new account comes with a welcome script called **"My First Script"** — open it. The script is built from visual blocks, which compile to this UniotLisp code, executed directly on the device:
+
+{% tabs %}
+{% tab title="Visual Editor" %}
+
+<div><figure><img src="../.gitbook/assets/welcome_script.png" alt=""><figcaption></figcaption></figure></div>
+{% endtab %}
+
+{% tab title="UniotLisp" %}
+{% code title="My First Script" lineNumbers="true" %}
 
 ```lisp
 ;;; begin-user-library
@@ -287,6 +301,10 @@ Open the **Sandbox** page. Every new account comes with a welcome script called 
     (dwrite 0 state)))))
 ```
 
+{% endcode %}
+{% endtab %}
+{% endtabs %}
+
 What the script does:
 
 - **State variable** — `state` starts as `false` and tracks whether the LED is on.
@@ -294,15 +312,13 @@ What the script does:
 - **Button check** — when `(bclicked 0)` reports a click, the script publishes the `led` event with the toggled value. Events travel through MQTT, so the dashboard (and other devices) hear them too.
 - **Event handler** — when a `led` event arrives, the script saves its value into `state` and writes it to digital output `0` via `dwrite`. Indices like `0` refer to [registered pins](../general-concepts/primitives.md#the-register-system), not raw GPIO numbers.
 
-The firmware from Step 1 already provides both indices: `bclicked 0` is your BOOT/FLASH button, and digital output `0` is the onboard LED.
+The firmware from Step 1 already provides these indices: `bclicked 0` is your BOOT/FLASH button, and the onboard LED is both digital output `0` (`dwrite`) and digital input `0` (`dread`, which reads the pin level back).
 
 {% hint style="info" %}
 No hardware at hand? You can run this script in the [Emulator](../platform/sandbox/emulator.md) and interact with virtual components instead.
 {% endhint %}
 
 To deploy: with the script open, press **Deploy**, select the device you authorized in Step 2, and confirm. The [Sandbox](../platform/sandbox/README.md) page describes the full development workflow.
-
-<!-- AUTHOR: verify the exact deploy control labels in the Sandbox UI -->
 
 {% hint style="success" %}
 **Checkpoint** — press the **BOOT/FLASH** button on the board: the onboard LED toggles with each press (remember, inverted on ESP8266). Nothing happens? Open your device's page, check the **Logs** tab, and see [Debugging Scripts](../general-concepts/scripting.md#debugging-scripts).
@@ -330,13 +346,13 @@ The device doesn't treat the dashboard as anything special — everything simply
 
 **Upload fails or no serial port appears.** Hold the BOOT/FLASH button while PlatformIO prints "Connecting…"; make sure the CH340/CP2102 USB driver is installed; try adding `upload_speed = 115200` to `platformio.ini`.
 
-**I don't see the `UNIOT-xxxxxx` network.** The device already has stored WiFi credentials, so it skips Access Point mode. Clear them: quick-press the button 4+ times, then hold it for ~3 seconds (all within ~5 seconds) — or power-cycle the device 5 times in quick succession (a built-in recovery mechanism, active by default).
+**I don't see the `UNIOT-xxxxxx` network.** The device has WiFi credentials, so it skips Access Point mode. If `configWiFiCredentials()` is still active in `setup()`, comment it out along with `configUser()` and upload again. Otherwise, clear the stored credentials: quick-press the button 4+ times, then hold it for ~3 seconds (all within ~5 seconds) — or power-cycle the device 5 times in quick succession (a built-in recovery mechanism, active by default).
 
 **I can't join the device's network.** Forget the `UNIOT-xxxxxx` network on your phone or laptop and connect to it again.
 
-**The device never appears under Unauthorized.** Usually a wrong or missing account ID (Option A: `configUser()`; Option B: the portal field) or wrong WiFi credentials. Watch the serial monitor for connection errors.
+**The device never appears under Unauthorized.** Usually a wrong or missing account ID (the `configUser()` argument, or the account ID field in the captive portal) or wrong WiFi credentials. Watch the serial monitor for connection errors.
 
-**The LED keeps blinking.** A medium or fast blink that never stops means wrong credentials or a router out of range. Hold the button for 3–5 seconds to force a reconnect attempt, or clear the WiFi config (see above) and redo Step 2.
+**The LED keeps blinking.** A medium or fast blink that never stops means wrong credentials or a router out of range. Hold the button for 3–5 seconds to force a reconnect attempt. If that doesn't help, fix the values in `setup()` and upload again — or, if you used the captive portal, clear the WiFi config (see above) and redo Step 2.
 
 **The script is deployed but nothing happens.** Open your device's page and check the **Logs** tab for script errors, the **Script** tab to confirm the deployment, and the **Registers** tab to confirm pin indices — then see [Debugging Scripts](../general-concepts/scripting.md#debugging-scripts).
 
