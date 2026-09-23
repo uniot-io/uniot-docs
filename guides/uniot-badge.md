@@ -203,7 +203,7 @@ To demonstrate the functionality of the badge, this script uses several blocks:
   * **`out_max`**: The maximum number of active LEDs.
 * **Run Task Block**: Configured to run every 80 milliseconds indefinitely (as the `times` parameter is set to `0`).
 * **Color Events Trigger Block**: Responds to the `red`/`green`/`blue` events by updating corresponding variables to the event's value.
-* **Button Check Block**: Monitors if the button (that occupies the register with index `0`, learn more about registers [here](../general-concepts/primitives.md#registers)) is clicked. When clicked, inverts the state of the `led_fill` variable and calls `vibro` primitive to provide a haptic feedback.
+* **Button Check Block**: Monitors if the button (that occupies the register with index `0`, learn more about registers [here](../general-concepts/primitives.md#the-register-system)) is clicked. When clicked, inverts the state of the `led_fill` variable and calls `vibro` primitive to provide a haptic feedback.
 * **Distance Sensor Reading**: Calls the `tof_distance` primitive and sets the value of the sensor to the `distance` variable.
 * **Determining Active LEDs**: Calls the `map` function to calculate the number of active LEDs relative to `distance`.
 * **Update LEDs Block**: Updates LEDs according to current data.

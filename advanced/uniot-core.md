@@ -141,7 +141,7 @@ Uniot.registerLispDigitalInput(0, 4);         // dread
 Uniot.registerLispAnalogInput(A0);            // aread
 ```
 
-**Pins are not addressed by GPIO number.** Each `registerLisp*` call assigns its pins a 0-based index in registration order, per primitive, and scripts use that index — so `(dwrite 0 #t)` drives whichever pin was registered first as a digital output. This is what lets one script run on boards with different pin maps. Registering again **replaces** the previous set rather than adding to it, so list every pin in a single call.
+**Pins are not addressed by GPIO number.** Each `registerLisp*` call assigns its pins a 0-based index in registration order, per primitive, and registering again **replaces** the previous set. See [The Register System](../general-concepts/primitives.md#the-register-system).
 
 - [Language description](uniot-lisp/language-description.md)
 - [Scripting guide](../general-concepts/scripting.md) and [primitives](../general-concepts/primitives.md)

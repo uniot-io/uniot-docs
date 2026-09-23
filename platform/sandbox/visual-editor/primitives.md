@@ -4,7 +4,7 @@ Primitive blocks provide direct access to device hardware. Use these blocks to r
 
 ## Understanding Registers
 
-Primitives use [register](../../../general-concepts/primitives.md#registers) indices instead of physical pin numbers. The register system organizes pins into categories (digital input/output, analog input/output) and assigns each an index. View your device's pin-to-register mapping in the Registers tab on the Uniot Platform.
+Primitives use [register](../../../general-concepts/primitives.md#the-register-system) indices instead of physical pin numbers. The register system organizes pins into categories (digital input/output, analog input/output) and assigns each an index. View your device's pin-to-register mapping in the Registers tab on the Uniot Platform.
 
 ## Return Values in Primitives
 
@@ -24,7 +24,7 @@ Reads an analog value from the specified register. Use this for sensors that out
 
 **Returns:**
 
-- **Number**: Value between 0-1023 (10-bit ADC resolution)
+- **Number**: Value between 0-1023 (10-bit ADC resolution, the same on every chip)
 
 **Example:**
 
@@ -40,6 +40,10 @@ Writes an analog (PWM) value to the specified register. Use this to control LED 
 
 - **Register** (Number): The analog output register index
 - **Value** (Number): Value between 0-1023 (PWM duty cycle)
+
+**Returns:**
+
+- **Number**: The value written
 
 **Example:**
 
@@ -86,7 +90,7 @@ Detects button press events on the specified register. Returns true when a press
 
 **Parameters:**
 
-- **Register** (Number): The digital input register index
+- **Register** (Number): The button's index in the `bclicked` register, in registration order. The WiFi reset button is usually `0`; see [Button Clicked](../../../general-concepts/primitives.md#available-built-in-primitives)
 
 **Returns:**
 
