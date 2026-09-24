@@ -19,7 +19,7 @@ Follow them in order. Every guide builds its script in the [Sandbox](../platform
 | 2   | [Dim an LED from a Slider](dim-an-led-from-a-slider.md)     | A dashboard slider driving PWM brightness              | Register indices, control widgets, retained events  | LED and resistor              |
 | 3   | [A Night Light That Thinks for Itself](night-light.md)      | Light sensor, threshold and LED, decided on the device | Edge logic, publishing only changes, works offline  | Potentiometer or LDR          |
 | 4   | [Two Devices, One Event](two-devices-one-event.md)          | Two peers toggling each other, then a doorbell         | Device-to-device events with no cloud code          | Second board, or the Emulator |
-| 5   | Add a Real Sensor with a Custom Primitive                   | A thermostat over a DHT22 exposed as `get_temp`        | Extending scripts from C++, mocking in the Emulator | DHT22                         |
+| 5   | [Add a Real Sensor with a Custom Primitive](custom-primitive-sensor.md) | A thermostat over a DHT22 exposed as `get_temp`        | Extending scripts from C++, mocking in the Emulator | DHT22                         |
 | 6   | Schedule on the Device                                      | A lamp that follows a daily schedule on its own        | Uniot Core time, autonomy, everything combined      | LED or relay                  |
 
 Guides 1 to 6 are coming soon. They will appear in the sidebar as each one is published.

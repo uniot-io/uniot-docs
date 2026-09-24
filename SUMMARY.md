@@ -13,8 +13,8 @@
   - [Dim an LED from a Slider](guides/dim-an-led-from-a-slider.md)
   - [A Night Light That Thinks for Itself](guides/night-light.md)
   - [Two Devices, One Event](guides/two-devices-one-event.md)
-  <!-- - [Add a Real Sensor with a Custom Primitive](guides/custom-primitive-sensor.md)
-  - [Schedule on the Device](guides/schedule-on-the-device.md) -->
+  - [Add a Real Sensor with a Custom Primitive](guides/custom-primitive-sensor.md)
+  <!-- - [Schedule on the Device](guides/schedule-on-the-device.md) -->
   - [Uniot Badge](guides/uniot-badge.md)
 
 ## General Concepts
