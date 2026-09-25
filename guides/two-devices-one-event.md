@@ -138,7 +138,7 @@ The doorbell needs two scripts. A becomes the button at the door: it announces a
 
 ### The Bell Button
 
-Create a script called `Bell Button`. Outside the task, **set hold to 0**. Inside a **run task** with interval `100`, place two **if** blocks. The first has **button clicked** register `0` as its condition; in its **do** slot, **push event** `ring` with value `1`, then **set hold to 5**. The second has the **comparison** **hold > 0**; in its **do** slot, **change hold by -1**, then an inner **if** with the comparison **hold = 0** and **push event** `ring` with value `0` in its **do** slot.
+Create a script called `Bell Button`. On a click it publishes `ring` with the value `1`, and about half a second later it publishes `ring` with the value `0`: a press and a release, like a real button. The half second is a countdown in a variable called `hold`. The blocks are **set hold to 0** outside a **run task** with interval `100`, and two **if** blocks inside it.
 
 {% tabs %}
 {% tab title="Visual Editor" %}
@@ -186,13 +186,14 @@ Create a script called `Bell Button`. Outside the task, **set hold to 0**. Insid
 
 What the script does:
 
-- **Press** — on a click, `(push_event 'ring 1)` publishes the press and `hold` starts a short countdown.
-- **Release** — five passes later, about half a second, `(push_event 'ring 0)` publishes the release. A press followed by a release is exactly what a dashboard **Push Button** widget sends, and Step 4 uses that.
+- **Press** — the first **if** checks **is button 0 clicked**. On a click, **push event ring 1** publishes the press, `(push_event 'ring 1)`, and **set hold to 5** starts the countdown.
+- **Countdown** — the second **if** runs while **hold > 0**. **Change hold by -1** takes one off on every pass, so five passes at 100 ms are about half a second: `(setq hold (+ hold -1))`.
+- **Release** — an inner **if** with the comparison **hold = 0** publishes the release the moment the countdown ends: `(push_event 'ring 0)`. A press followed by a release is exactly what a dashboard **Push Button** widget sends, and Step 4 uses that.
 - **Nothing else** — the script never touches an LED. The button peer has no idea what a bell is.
 
 ### The Bell
 
-Create a second script called `Bell`. Outside the task, **set blinks to 0**. Inside a **run task** with interval `200`, place two **if** blocks. The first has **is event** `ring` as its condition; in its **do** slot, an inner **if** with the **comparison** **pop event `ring` = 1** and **set blinks to 6** in its **do** slot. The second has the comparison **blinks > 0**; in its **do** slot, **digital write** to register `0` with the comparison **remainder of blinks ÷ 2 = 0** as its value, then **change blinks by -1**.
+Create a second script called `Bell`. When a `ring` event with the value `1` arrives, it blinks the LED three times; a `ring` with any other value is taken off the queue and ignored. The blinking is a countdown too, in a variable called `blinks`. The blocks are **set blinks to 0** outside a **run task** with interval `200`, and two **if** blocks inside it.
 
 {% tabs %}
 {% tab title="Visual Editor" %}
@@ -242,9 +243,9 @@ Create a second script called `Bell`. Outside the task, **set blinks to 0**. Ins
 
 What the script does:
 
-- **Listen** — `(is_event 'ring)` is true while a `ring` event waits in the queue. The event is popped immediately, whatever its value, so it is handled once; without the pop it would stay in the queue and ring forever.
-- **Press only** — only a value of `1` starts the bell. The `0` that follows every press, from the Bell Button script or from a dashboard widget, is popped and ignored.
-- **Blink** — `blinks` counts down from `6`, one step per pass. The LED is on while the count is even and off while it is odd, so six half-periods of 200 ms play as three blinks over about a second. Then the count reaches `0` and the task idles until the next `ring`.
+- **Listen** — the first **if** checks **is event ring**, true while a `ring` event waits in the queue. Inside it, an inner **if** compares **pop event ring = 1**: the pop takes the event off the queue whatever its value, so each `ring` is handled once. Without the pop it would stay in the queue and ring forever.
+- **Press only** — only a value of `1` reaches **set blinks to 6**: `(if (eql (pop_event 'ring) 1) ...)`. The `0` that follows every press, from the Bell Button script or from a dashboard widget, is popped and ignored.
+- **Blink** — the second **if** runs while **blinks > 0**. **Digital write** to register `0` with **remainder of blinks ÷ 2 = 0** as its value lights the LED while the count is even, and **change blinks by -1** counts down: `(dwrite 0 (eql (% blinks 2) 0))`. Six half-periods of 200 ms play as three blinks over about a second; then the count reaches `0` and the task idles until the next `ring`.
 - **No sender check** — the bell does not care who rang. A board, the Emulator, or a widget: any `ring` with value `1` will do.
 
 {% hint style="info" %}
@@ -273,7 +274,7 @@ Press the **BOOT/FLASH** button on A. Its own LED does nothing. The **Digital Wr
 {% endtab %}
 {% endtabs %}
 
-Both boards still run the identical Getting Started firmware. Ten minutes ago they were interchangeable, and they still are: swap the two scripts and B becomes the button and A the bell, again with no upload. The roles came entirely from the scripts, and the link between them is one word, `ring`.
+Neither board was reflashed for this. B runs the plain Getting Started firmware and A still carries the extra registers from the earlier guides, but both scripts use only `bclicked 0` and `dwrite 0`, which every board in this series has. So the two are interchangeable: swap the scripts and B becomes the button and A the bell, again with no upload. The roles came entirely from the scripts, and the link between them is one word, `ring`.
 
 {% hint style="success" %}
 **Checkpoint** — a press on A makes B blink three times. A's own LED stays as it was.

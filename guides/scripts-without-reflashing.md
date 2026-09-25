@@ -25,7 +25,7 @@ On ESP8266 boards the onboard LED is inverted: `dwrite` writes raw pin levels, a
 
 Open the **Sandbox** page and create a new script; call it `Blink`.
 
-In the **Visual Editor**, assemble the blocks shown below. The **run task** block comes from **Special**, **set** and the `state` variable from **Variables**, **not** and **false** from **Logic**, and **digital write** from **Primitives**. Press **Compile** to turn the blocks into the UniotLisp code on the second tab; that code is what actually runs on the device.
+The script keeps one variable, `state`, flips it every half second, and writes it to the LED. In the **Visual Editor**, assemble the blocks shown below. Press **Compile** to turn the blocks into the UniotLisp code on the second tab; that code is what actually runs on the device.
 
 {% tabs %}
 {% tab title="Visual Editor" %}
@@ -96,7 +96,7 @@ Two Emulator details worth knowing: task intervals are waited in real time, and 
 
 ## Step 2: Count Button Presses
 
-The second script reacts to input and talks back. Create a script called `Counter`. The task polls every 50 ms, which is fast enough to never miss a press. Inside it, an **if** block checks **is button clicked** from **Primitives**; when it fires, a **change** block from **Variables** adds `1` to `count`, **digital write** lights the LED while the count is even, and **print** from **Text** reports the count.
+The second script reacts to input and talks back. Create a script called `Counter`. Every press of the button adds one to a counter; the LED is lit while the count is even, and the count is printed after each press.
 
 {% tabs %}
 {% tab title="Visual Editor" %}
@@ -145,7 +145,7 @@ What the script does:
 - **Button check** — the **if** block's condition is **is button 0 clicked**, which is true exactly once per press-and-release and then clears itself, so the **do** slot runs once per click no matter how long the button is held. Compiled: `(if (bclicked 0) (progn ...))`, with `progn` again grouping the blocks inside the **do** slot.
 - **Counter** — **change count by 1** adds one to the variable: `(setq count (+ count 1))`. The **change** block is a shortcut for "set to itself plus a number".
 - **Output** — **digital write** takes a **comparison** as its value: **remainder of count ÷ 2 = 0**, true while the count is even. The `=` in the comparison block compiles to `eql`, so the code reads `(dwrite 0 (eql (% count 2) 0))`. The LED turns off on the first press and on again on the second.
-- **Report** — the **print count** block from **Text** sends the value out of the script as a log line: `(print count)`. Where it lands depends on where the script runs, which is the point of the next section.
+- **Report** — the **print count** block sends the value out of the script as a log line: `(print count)`. Where it lands depends on where the script runs, which is the point of the next section.
 
 ### Read the Logs
 

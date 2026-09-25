@@ -33,21 +33,25 @@ With a potentiometer, connect the outer legs to **3V3** and **GND** and the wipe
 
 ### Edit main.cpp
 
-Open `src/main.cpp` and make two changes: register the sensor, and add GPIO13 to the digital output line from Getting Started so the LED can be switched on and off as well as dimmed.
+Open `src/main.cpp` and make two changes: register the sensor, and add GPIO13 to the digital output line from Getting Started so the LED can be switched on and off as well as dimmed. The analog output line from the previous guide stays.
 
 {% tabs %}
 {% tab title="ESP8266 (NodeMCU)" %}
 {% code title="main.cpp (excerpt)" lineNumbers="true" %}
 
 ```c++
-#define PIN_LED_PWM 13  // D7, the LED from the previous guide
+#define PIN_LED_PWM 13  // D7, already there since Dim an LED from a Slider
 #define PIN_LDR A0      // the divider's middle point
 
 void setup() {
-  // ... everything from Getting Started ...
+  // ... everything from Getting Started, except the line below ...
 
-  // Digital output 0 stays the onboard LED; GPIO13 becomes digital output 1.
+  // Was registerLispDigitalOutput(PIN_LED). Digital output 0 stays
+  // the onboard LED; GPIO13 becomes digital output 1.
   Uniot.registerLispDigitalOutput(PIN_LED, PIN_LED_PWM);
+
+  // Kept from Dim an LED from a Slider: GPIO13 is also analog output 0.
+  Uniot.registerLispAnalogOutput(PIN_LED_PWM);
 
   // Let scripts read the light sensor as analog input 0: (aread 0).
   Uniot.registerLispAnalogInput(PIN_LDR);
@@ -63,14 +67,18 @@ void setup() {
 {% code title="main.cpp (excerpt)" lineNumbers="true" %}
 
 ```c++
-#define PIN_LED_PWM 13  // GPIO13, the LED from the previous guide
+#define PIN_LED_PWM 13  // GPIO13, already there since Dim an LED from a Slider
 #define PIN_LDR 34      // GPIO34, the divider's middle point
 
 void setup() {
-  // ... everything from Getting Started ...
+  // ... everything from Getting Started, except the line below ...
 
-  // Digital output 0 stays the onboard LED; GPIO13 becomes digital output 1.
+  // Was registerLispDigitalOutput(PIN_LED). Digital output 0 stays
+  // the onboard LED; GPIO13 becomes digital output 1.
   Uniot.registerLispDigitalOutput(PIN_LED, PIN_LED_PWM);
+
+  // Kept from Dim an LED from a Slider: GPIO13 is also analog output 0.
+  Uniot.registerLispAnalogOutput(PIN_LED_PWM);
 
   // Let scripts read the light sensor as analog input 0: (aread 0).
   Uniot.registerLispAnalogInput(PIN_LDR);
@@ -83,7 +91,7 @@ void setup() {
 {% endtab %}
 {% endtabs %}
 
-Keep the `registerLispAnalogOutput` line from the previous guide. GPIO13 is now analog output `0` and digital output `1` at the same time; each primitive has its own index namespace. See [Registering GPIO Pins](../general-concepts/primitives.md#registering-gpio-pins). `aread` returns `0` to `1023` on both boards.
+GPIO13 is now analog output `0` and digital output `1` at the same time; each primitive has its own index namespace. See [Registering GPIO Pins](../general-concepts/primitives.md#registering-gpio-pins). `aread` returns `0` to `1023` on both boards.
 
 Upload with `pio run --target upload`. The device reconnects on its own and restarts the Dimmer script, which you replace in Step 2.
 
@@ -93,7 +101,7 @@ Upload with `pio run --target upload`. The device reconnects on its own and rest
 
 ## Step 2: Read and Log the Sensor
 
-Open the **Sandbox** page and create a script called `Night Light`. The task runs every 200 ms and holds a single **print** block from **Text** with **analog read** from **Primitives** set to register `0`.
+Open the **Sandbox** page and create a script called `Night Light`. The first version only prints the sensor: a task every 200 ms with one **print** block holding **analog read** register `0`.
 
 {% tabs %}
 {% tab title="Visual Editor" %}
@@ -137,7 +145,7 @@ The script grows in three edits, and the LED works from the first one on.
 
 ### Turn the LED On When It Gets Dark
 
-Outside the task, add **set threshold to** your number and **set light to 0**. Inside it, replace the print block with **set light to analog read 0**, then **digital write** to register `1` with a **comparison** from **Logic** as its value: **light < threshold**.
+The LED should be on whenever the reading is below a threshold. Outside the task, add **set light to 0** and **set threshold to** your number. Inside it, replace the print block with **set light to analog read 0**, then a **digital write** to register `1` whose value is the **comparison** **light < threshold**.
 
 {% tabs %}
 {% tab title="Visual Editor" %}
@@ -176,8 +184,8 @@ Outside the task, add **set threshold to** your number and **set light to 0**. I
 {% endtab %}
 {% endtabs %}
 
-- **Read** — `(setq light (aread 0))` stores the current reading. The `0` is the analog input index from Step 1.
-- **Decide and act** — `(dwrite 1 (< light threshold))` lights digital output `1` while the reading is below the threshold. The comparison happens in the device's own memory; no event, no broker.
+- **Read** — **set light to analog read 0** stores the current reading: `(setq light (aread 0))`. The `0` is the analog input index from Step 1.
+- **Decide and act** — **digital write light < threshold to pin 1** compiles to `(dwrite 1 (< light threshold))` and lights digital output `1` while the reading is below the threshold. The comparison happens in the device's own memory; no event, no broker.
 
 Compile and run. The **Digital Write** card now shows two registers; turn the knob below the threshold and register `1` lights. Deploy.
 
@@ -187,7 +195,7 @@ Compile and run. The **Digital Write** card now shows two registers; turn the kn
 
 ### Publish Only Changes
 
-Add **set last_sent to -100** outside the task. At the end of the task add an **if** whose condition compares a **math operation** (**abs**) of the **arithmetic** **light - last_sent** with **> 20**. In its **do** slot, **set last_sent to light** and **push event** `light` with the value **light**.
+The device should report the reading to the dashboard, but only when it has moved by more than `20` since the last report. Outside the task, add **set last_sent to -100**. At the end of the task, add an **if** whose condition is **absolute of light - last_sent > 20**: a **comparison** holding a **math operation** set to **absolute** and an **arithmetic** block. In its **do** slot, **push event** `light` with the value **light**, then **set last_sent to light**.
 
 {% tabs %}
 {% tab title="Visual Editor" %}
@@ -236,7 +244,7 @@ Add **set last_sent to -100** outside the task. At the end of the task add an **
 {% endtabs %}
 
 - **Distance** — `(abs (- light last_sent))` is how far the reading has drifted since the last publish. The **if** fires only when that exceeds `20`, about two percent of the range.
-- **Publish** — `(setq last_sent light)` remembers the value and `(push_event 'light light)` sends it. See [push event](../platform/sandbox/visual-editor/special.md#push-event).
+- **Publish** — `(push_event 'light light)` sends the reading and `(setq last_sent light)` remembers what was sent. See [push event](../platform/sandbox/visual-editor/special.md#push-event).
 - **Start** — `last_sent` begins at `-100`, further than `20` from any reading, so the first pass always publishes once.
 
 Why not publish every reading? Five messages a second from every device, forever, mostly saying that nothing changed: broker load and dashboard noise for no information. The device has the previous value in memory and can tell when a change matters. That filtering is the device thinking, the same as the LED decision; the network carries information, not samples. The `20` is a policy, and a different project may want `5` or `100`.
@@ -247,7 +255,7 @@ Why not publish every reading? Five messages a second from every device, forever
 
 ### Accept a Threshold from the Dashboard
 
-At the end of the task add a second **if** with **is event** `threshold` as its condition and **set threshold to pop event threshold** in its **do** slot.
+The dashboard should be able to move the threshold while the script runs. At the end of the task add a second **if** with **is event** `threshold` as its condition and **set threshold to pop event threshold** in its **do** slot.
 
 {% tabs %}
 {% tab title="Visual Editor" %}

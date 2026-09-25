@@ -1,6 +1,6 @@
 # Dim an LED from a Slider
 
-In [Scripts Without Reflashing](scripts-without-reflashing.md) the LED was either on or off. In this guide a dashboard slider sets its brightness through PWM. Along the way you make the one and only firmware change of this series, see how firmware exposes hardware to scripts, and watch the broker remember the slider position for a device that reboots. About 15 minutes.
+In [Scripts Without Reflashing](scripts-without-reflashing.md) the LED was either on or off. In this guide a dashboard slider sets its brightness through PWM. Along the way you make your first firmware change since Getting Started, a single line, see how firmware exposes hardware to scripts, and watch the broker remember the slider position for a device that reboots. About 15 minutes.
 
 ## What You'll Build
 
@@ -67,7 +67,7 @@ The device keeps its WiFi credentials and account binding, so it reconnects on i
 
 ## Step 2: Write the Script
 
-Open the **Sandbox** page and create a script called `Dimmer`. The task runs every 100 ms. Inside it, an **if** block checks **is event** `brightness` from **Special**; when it is true, a **set** block from **Variables** stores **pop event** `brightness` into the variable, and **analog write** from **Primitives** sends it to register `0`. A second **if** checks **is button clicked** from **Primitives** and, when it fires, a **push event** block publishes `brightness` with the value `0`.
+Open the **Sandbox** page and create a script called `Dimmer`. It has two jobs. Whenever a `brightness` event arrives, it writes the event's value to the LED. Whenever the button is clicked, it publishes `brightness` with the value `0`, so the LED goes dark and the slider follows.
 
 {% tabs %}
 {% tab title="Visual Editor" %}
@@ -170,7 +170,7 @@ To see the difference, open the slider's settings with the gear icon, untick **R
 
 Make the slider the last thing you touch before unplugging. Events pushed by a device are always retained, so a button press just before the power cycle would leave a retained `0` on the broker.
 
-Turn **Retain** back on when you are done; the next guide relies on it.
+Turn **Retain** back on when you are done; it is what a slider should normally do, and the sliders in the later guides all use it.
 
 {% hint style="success" %}
 **Checkpoint** — with Retain on, the LED comes back at the last slider level after a power cycle; with it off, it stays dark until the slider moves.

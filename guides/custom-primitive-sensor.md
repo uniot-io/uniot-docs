@@ -107,7 +107,7 @@ The first build downloads the two libraries. The device reconnects on its own an
 
 ## Step 2: Mock It in the Emulator
 
-Open the **Sandbox** page, select your device in the sidebar, and create a script called `Thermostat`. The **Primitives** category now has a **get_temp** block below the built-ins. It is generated from what the device reported, and it is there only while that device is selected. The task runs every 2000 ms and holds a single **print** block from **Text** with **get_temp** in it.
+Open the **Sandbox** page, select your device in the sidebar, and create a script called `Thermostat`. The **Primitives** category now has a **get_temp** block below the built-ins. It is generated from what the device reported, and it is there only while that device is selected. The first version only prints the reading: a task every 2000 ms with one **print** block holding **get_temp**.
 
 {% tabs %}
 {% tab title="Visual Editor" %}
@@ -179,7 +179,7 @@ Back in the Sandbox, the script grows in two edits. Stop the Emulator first if i
 
 ### Turn the AC On and Off
 
-Outside the task, add **set ac to false**, with the **false** value from **Logic**, then **set temp to 0** and **set setpoint to 240**. Inside the task, replace the print block with **set temp to get_temp**, then an **if** whose condition is the **comparison** **temp > -1000**; type the minus sign into the number block. Its **do** slot holds three blocks. The first is an **if** with an **and** from **Logic** joining the comparison **temp > setpoint** and **not ac**; in its **do** slot, **set ac to true** and **push event** `ac` with the value **true**. The second is an **if** with **and** joining the comparison **temp < setpoint - 5**, with an **arithmetic** block on the right, and **ac**; in its **do** slot, **set ac to false** and **push event** `ac` with the value **false**. The third is **digital write** to register `1` with the value **ac**.
+The AC should switch on when the temperature rises above a setpoint, switch off once it has fallen half a degree below it, and stay as it is in between. A failed read must change nothing. Outside the task, add three variables: **set ac to false**, **set temp to 0** and **set setpoint to 240**. Inside the task, replace the print block with **set temp to get_temp**, then an **if** whose condition is the **comparison** **temp > -1000**; type the minus sign into the number block. Everything else goes into that **if**'s **do** slot, as the walkthrough below describes.
 
 {% tabs %}
 {% tab title="Visual Editor" %}
@@ -238,16 +238,17 @@ Outside the task, add **set ac to false**, with the **false** value from **Logic
 {% endtab %}
 {% endtabs %}
 
-- **Read, then check** — `(setq temp (get_temp))` stores the reading. The outer `if` skips everything when it is the `-1000` sentinel, so a failed read changes nothing: the AC stays as it was and nothing is published.
-- **On above, off below** — the AC switches on when the reading rises above the setpoint, and off only when it falls under `setpoint - 5`, half a degree lower. Between the two lines the previous decision stands. That half degree is hysteresis, and it is the difference between a thermostat and a relay that chatters every time a noisy reading crosses one line. `ac` is the device's memory of its own decision.
+- **Read, then check** — **set temp to get_temp** stores the reading: `(setq temp (get_temp))`. The outer **if** skips everything when it is the `-1000` sentinel, so a failed read changes nothing: the AC stays as it was and nothing is published.
+- **On above the setpoint** — an **if** whose condition is an **and** joining the comparison **temp > setpoint** and **not ac**; in its **do** slot, **set ac to true** and **push event** `ac` with the value **true**. In code, `(and (> temp setpoint) (not (bool ac)))`: the AC switches on only when it is off and the reading has risen above the setpoint.
+- **Off below the margin** — a second **if** with **and** joining the comparison **temp < setpoint - 5**, with an **arithmetic** block on the right, and **ac**; in its **do** slot, **set ac to false** and **push event** `ac` with the value **false**. The AC switches off only once the reading is under `setpoint - 5`, half a degree lower than where it switched on. Between the two lines the previous decision stands. That half degree is hysteresis, and it is the difference between a thermostat and a relay that chatters every time a noisy reading crosses one line. `ac` is the device's memory of its own decision.
 - **Publish transitions only** — `(push_event 'ac #t)` and `(push_event 'ac ())` sit inside the two inner `if`s, so the event goes out once per switch, not once per pass. Event values are numbers: `#t` arrives as `1` and `()` as `0`. See [push event](../platform/sandbox/visual-editor/special.md#push-event).
-- **Drive the LED every pass** — `(dwrite 1 ac)` writes the current decision to digital output `1` on every valid reading. That is cheap, and it puts the LED right after a reboot as soon as the first reading is in.
+- **Drive the LED every pass** — **digital write ac to pin 1** is the last block inside the outer **if**: `(dwrite 1 ac)` writes the current decision to digital output `1` on every valid reading. That is cheap, and it puts the LED right after a reboot as soon as the first reading is in.
 
 Compile and run. Register `1` on the **Digital Write** card lights when the mocked temperature climbs past `240` and goes dark once it has dropped under `235`; in between it keeps its state. If you do not want to wait for the wave, the setpoint moves in Step 4.
 
 ### Publish and Listen
 
-Outside the task add **set last_sent to -1000**. Inside the outer **if**, after the digital write, add an **if** with the **comparison** **temp ≠ last_sent**; in its **do** slot, **set last_sent to temp** and **push event** `temperature` with the value **temp**. At the very end of the task add an **if** with **is event** `setpoint` as its condition and **set setpoint to pop event setpoint** in its **do** slot.
+Two more jobs: publish the temperature whenever it changes, and accept a new setpoint from the dashboard. Outside the task add **set last_sent to -1000**. Inside the outer **if**, after the digital write, add an **if** with the **comparison** **temp ≠ last_sent**; in its **do** slot, **set last_sent to temp** and **push event** `temperature` with the value **temp**. At the very end of the task, outside the outer **if**, add an **if** with **is event** `setpoint` as its condition and **set setpoint to pop event setpoint** in its **do** slot.
 
 {% tabs %}
 {% tab title="Visual Editor" %}
