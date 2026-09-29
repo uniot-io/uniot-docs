@@ -194,4 +194,4 @@ The [Logger](logger.md) pane in the Sandbox is a different view: the compiler's 
 | Logs                    | 500 lines                                                                                  |
 | Event queue             | 5 values per event name                                                                    |
 
-See [Debugging Scripts](../../general-concepts/scripting.md#debugging-scripts) for how logs and errors reach you from a deployed device, and the [MQTT convention](../../api-reference/mqtt-convention.md) for the event topics involved.
+See [Debugging Scripts](../../general-concepts/scripting.md#debugging-scripts) for how logs and errors reach you from a deployed device.

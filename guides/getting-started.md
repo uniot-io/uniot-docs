@@ -39,7 +39,7 @@ monitor_speed = 115200
 board_build.filesystem = littlefs
 
 lib_deps =
-    uniot-io/uniot-core@^0.8.1
+    uniot-io/uniot-core@^0.9.0
 
 build_unflags =
     -std=gnu++11
@@ -70,7 +70,7 @@ monitor_speed = 115200
 board_build.filesystem = littlefs
 
 lib_deps =
-    uniot-io/uniot-core@^0.8.1
+    uniot-io/uniot-core@^0.9.0
 
 build_unflags =
     -std=gnu++11
@@ -90,7 +90,7 @@ Using a different ESP32 board? Change `board` accordingly (e.g. `esp32dev`).
 {% endtab %}
 {% endtabs %}
 
-`UNIOT_CREATOR_ID` is **required** — the build fails without it. The full list of build flags is described in [Build Flags](../advanced/uniot-core.md#build-flags). For ESP32-C3 boards (extra USB flags) and projects targeting several boards at once, see [Multi-Environment Configuration](../advanced/uniot-core.md#multi-environment-configuration).
+`UNIOT_CREATOR_ID` is **required** — the build fails without it. The full list of build flags is described in [Build Flags](../advanced/uniot-core.md#build-flags). For ESP32-C3 boards (extra USB flags) and projects targeting several boards at once, see the ready-made environments in Uniot Core's [platformio.ini](https://github.com/uniot-io/uniot-core/blob/master/platformio.ini).
 
 ### Write main.cpp
 
@@ -200,7 +200,7 @@ Some ESP32 boards (e.g. the official ESP32-DevKitC) have no onboard user LED. If
 Prefer not to put credentials in code? Comment out both lines. The device will then open a captive portal on boot, and you will provision it from your phone in Step 2.
 {% endhint %}
 
-While connecting, Uniot Core blinks the connection status on the LED; once connected, the LED goes dark and your scripts own it (if WiFi drops, the core temporarily takes it back). Note that scripts address hardware by logical index, not GPIO number: the button is exposed as `(bclicked 0)`, and the LED as digital output `0` for `(dwrite 0 ...)` and as digital input `0` for `(dread 0)`, which returns the current level of the LED pin — see [the register system](../general-concepts/primitives.md#the-register-system) for how indices work and [WiFi Management](../advanced/uniot-core.md#wifi-management) for details on the WiFi subsystem.
+While connecting, Uniot Core blinks the connection status on the LED; once connected, the LED goes dark and your scripts own it (if WiFi drops, the core temporarily takes it back). Note that scripts address hardware by logical index, not GPIO number: the button is exposed as `(bclicked 0)`, and the LED as digital output `0` for `(dwrite 0 ...)` and as digital input `0` for `(dread 0)`, which returns the current level of the LED pin — see [the register system](../general-concepts/primitives.md#the-register-system) for how indices work and [WiFi Management](https://github.com/uniot-io/uniot-core/blob/master/docs/reference.md#3-wifi-management) for details on the WiFi subsystem.
 
 ### Upload
 

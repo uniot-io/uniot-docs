@@ -370,5 +370,4 @@ Whether you're building smart home automation, industrial monitoring, or custom 
 
 - [**Primitives**](./primitives.md): Understanding built-in and custom primitives
 - [**UniotLisp Reference**](../advanced/uniot-lisp/README.md): Complete language documentation
-- [**MQTT Protocol**](../api-reference/mqtt-convention.md): How scripts are delivered to devices
-- [**Uniot Platform Guide**](../platform/README.md): Using the visual editor and code editor
+- [**Sandbox**](../platform/sandbox/README.md): Using the visual editor and code editor

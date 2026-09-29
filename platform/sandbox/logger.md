@@ -1,10 +1,12 @@
 # Logger
 
-The Logger provides a centralized view of script execution, allowing you to monitor and debug your code in real time. The Logger captures output from the UniotLisp interpreter, including:
+The Logger is the Sandbox's output pane. It shows the interpreter's report on the last run of your script — when you compile it, or while it runs in the [Emulator](emulator.md) — with these parts:
 
-- **Primitive Logs** - Displays interactions with primitives, such as values read from or written to pins.
-- **Event Logs** - Shows triggered events and their associated values.
+- **`states`** - The run's timeline: every interaction with a primitive, such as a value read from or written to a pin, every event sent or received, and every line printed with the **print** block from the "Text" section, in the order they happened.
+- **`log`** - Only the lines the script printed.
+- **`out`** - The value the script finished with.
+- **`err`** - If the script stopped with an error, its message and where in the code it occurred.
 
-In future updates, the Logger will also include logs sent by the print block from the "Text" section, enabling detailed insights into MQTT communications and script outputs.
+While the Emulator runs, the Logger follows it. The Emulator also shows printed lines and errors on their own, in its Logs panel.
 
 The Logger is an essential tool for understanding the behavior of your script and ensuring its reliability before deployment.

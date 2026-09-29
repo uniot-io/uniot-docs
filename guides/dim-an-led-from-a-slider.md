@@ -160,7 +160,7 @@ Press **Deploy** in the Emulator's header. The script replaces the one from the 
 
 Set the slider to about half. Unplug the board and plug it back in. The onboard LED blinks while the device reconnects, and once it goes dark the breadboard LED comes back at half brightness. Nobody moved the slider.
 
-Two things made that happen. The persistent script was restored from flash, as in the previous guide. And because the widget has **Retain** on, the broker kept the last `brightness` value and replayed it to the device as soon as it subscribed, so the script's first **is event** check already found it. See [Retain](../platform/dashboard.md#retain) and [Retained Messages](../api-reference/mqtt-convention.md#retained-messages).
+Two things made that happen. The persistent script was restored from flash, as in the previous guide. And because the widget has **Retain** on, the broker kept the last `brightness` value and replayed it to the device as soon as it subscribed, so the script's first **is event** check already found it. See [Retain](../platform/dashboard.md#retain).
 
 The Emulator behaves the same way. Stop it, start a fresh run, and the **Analog Write** gauge jumps to the slider's level immediately: the retained value seeds the event queue on the first check.
 

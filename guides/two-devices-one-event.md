@@ -9,7 +9,7 @@ Two boards run the script from [Getting Started](getting-started.md). Press the 
 - A doorbell: one peer publishes `ring`, the other blinks three times when it hears it.
 - The dashboard as a third peer, with a **Push Button** that rings the bell and an **LED** that flashes with it.
 
-Every device, dashboard and Emulator in your account shares one event bus. A device knows nothing about the other devices; it only knows event names. Publish `ring`, and whoever listens for `ring` reacts, whether that is a board, a widget, or a browser tab. See [Event Communication](../api-reference/mqtt-convention.md#event-communication) for the topics underneath.
+Every device, dashboard and Emulator in your account shares one event bus. A device knows nothing about the other devices; it only knows event names. Publish `ring`, and whoever listens for `ring` reacts, whether that is a board, a widget, or a browser tab.
 
 ## Prerequisites
 
@@ -327,8 +327,4 @@ A third board with the Getting Started firmware joins the doorbell by having **B
 
 {% content-ref url="../platform/dashboard.md" %}
 [Dashboard](../platform/dashboard.md)
-{% endcontent-ref %}
-
-{% content-ref url="../api-reference/mqtt-convention.md" %}
-[MQTT Convention](../api-reference/mqtt-convention.md)
 {% endcontent-ref %}

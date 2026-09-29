@@ -23,7 +23,7 @@ To start working with the Uniot Badge, you need to flash the board and add it to
 You can redeem the promo code by scanning the QR code on your badge. This promo code will extend your plan by:
 
 * **Device: +1**
-* **Dashboard: 1**
+* **Dashboard: +1**
 * **Script: +1**
 
 A script and a dashboard, both named 'Uniot Promo Badge,' will also be created on the platform for demonstration purposes. You can deploy the script to the badge and try it out in interaction with the dashboard.

@@ -31,7 +31,7 @@ The Adafruit DHT library talks to the sensor, and it depends on Adafruit's Unifi
 
 ```ini
 lib_deps =
-    uniot-io/uniot-core@^0.8.1
+    uniot-io/uniot-core@^0.9.0
     adafruit/DHT sensor library@^1.4.6
     adafruit/Adafruit Unified Sensor@^1.1.14
 ```
@@ -380,8 +380,8 @@ The script's only hardware words are `get_temp` and `dwrite`. A board with a dif
 
 ## What's Next
 
-{% content-ref url="schedule-on-the-device.md" %}
-[Schedule on the Device](schedule-on-the-device.md)
+{% content-ref url="uniot-badge.md" %}
+[Uniot Badge](uniot-badge.md)
 {% endcontent-ref %}
 
 {% content-ref url="../general-concepts/primitives.md" %}
