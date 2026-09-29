@@ -1,516 +1,435 @@
 # Language Description
 
-This section serves as a comprehensive guide to the UniotLisp language itself. It is intended for users who want to learn how to write programs in UniotLisp, understand its syntax, semantics, and utilize its features effectively.
+This page describes the UniotLisp language itself: its values, its forms, and how they behave. It is for anyone writing UniotLisp by hand, or wanting to understand the code the [Visual Editor](../../platform/sandbox/visual-editor/) generates.
 
-## Language features
+What a script can do on a device — run tasks, exchange events, read and drive pins — comes from functions the device provides. Those are covered in [Scripting](../../general-concepts/scripting.md) and [Primitives](../../general-concepts/primitives.md).
 
-**UniotLisp** is a traditional Lisp interpreter. It reads one expression at a time from the standard input, evaluates it, and then prints out the return value of the expression. Here is an example of a valid input.
+## Reading the examples
+
+UniotLisp reads one expression at a time, evaluates it, and returns a value. In the examples, `; ->` shows what an expression evaluates to:
 
 ```lisp
-(+ 1 2)
+(+ 1 2)   ; -> 3
 ```
 
-The above expression prints "3".
-
-**UniotLisp** comes with a set of built-in primitives that provide essential functionalities. These primitives are the fundamental operations that can be used within Lisp code.
-
-#### Literals
-
-**UniotLisp** supports integer literals, `()`, `#t`, symbols, and list literals.
-
-*   **Integer Literals**: Positive or negative integers.
-
-    ```lisp
-    42
-    -7
-    ```
-*   **`()`**: Represents both the false value (`Nil`) and the empty list.
-
-    ```lisp
-    () ; Evaluates to false and an empty list
-    ```
-*   **`#t`**: Represents the true value (`True`). It's a preferred way to represent `true`, while any non-`()` value is considered true.
-
-    ```lisp
-    #t ; Evaluates to true
-    ```
-*   **Symbols**: Objects with unique names used to represent identifiers. Since **UniotLisp** does not have a string type, symbols are sometimes used as substitutes for strings.
-
-    ```lisp
-    x
-    my-function
-    ```
-*   **List Literals**: Constructed using cons cells. They can be regular lists (ending with `()`) or dotted lists (ending with any non-`()` value).
-
-    ```lisp
-    (a b c)        ; Regular list ending with ()
-    (a . b)        ; Dotted list ending with b
-    (a b . c)      ; Dotted list ending with c
-    ```
-
-### List Operators
-
-**UniotLisp** provides fundamental list manipulation operators: `cons`, `car`, `cdr`, and `setcar`.
-
-*   **`cons`**: Constructs a cons cell from two arguments, setting the first argument as the `car` and the second as the `cdr`.
-
-    ```lisp
-    (cons 'a 'b)   ; -> (a . b)
-    (cons 'a '(b)) ; -> (a b)
-    ```
-*   **`car`**: Retrieves the first element (`car`) of a cons cell.
-
-    ```lisp
-    (car '(a . b)) ; -> a
-    (car '(a b c)) ; -> a
-    ```
-*   **`cdr`**: Retrieves the second element (`cdr`) of a cons cell.
-
-    ```lisp
-    (cdr '(a . b)) ; -> b
-    (cdr '(a b c)) ; -> (b c)
-    ```
-*   **`setcar`**: Mutates the `car` of an existing cons cell. It takes two arguments: the cons cell to mutate and the new value for the `car`.
-
-    ```lisp
-    (define cell (cons 'a 'b))
-    cell          ; -> (a . b)
-    (setcar cell 'x)
-    cell          ; -> (x . b)
-    ```
-
-### Numeric Operators
-
-**UniotLisp** includes basic arithmetic and comparison operators: `+`, `-`, `*`, `/`, `%`, `<`, `<=`, `>`, `>=`, `=`, and `abs`.
-
-*   **`+`**: Returns the sum of its arguments.
-
-    ```lisp
-    (+ 1)      ; -> 1
-    (+ 1 2)    ; -> 3
-    (+ 1 2 3)  ; -> 6
-    ```
-*   **`-`**: Negates its argument if only one argument is provided; otherwise, subtracts each subsequent argument from the first.
-
-    ```lisp
-    (- 3)      ; -> -3
-    (- -5)     ; -> 5
-    (- 5 2)    ; -> 3
-    (- 5 2 7)  ; -> -4
-    ```
-*   **`*`**: Returns the product of its arguments.
-
-    ```lisp
-    (* 2 3 4)  ; -> 24
-    ```
-*   **`/`**: Divides the first argument by the subsequent arguments. Raises an error on division by zero.
-
-    ```lisp
-    (/ 20 4)  ; -> 5
-    (/ 10 0)  ; Error: Division by zero
-    ```
-*   **`%`**: Computes the modulo of the first argument by the second. Raises an error on division by zero.
-
-    ```lisp
-    (% 10 3) ; -> 1
-    (% 10 0) ; Error: Division by zero
-    ```
-*   **`<`**: Checks if the first argument is less than the second. Returns `#t` if true, otherwise `()`.
-
-    ```lisp
-    (< 2 3)    ; -> #t
-    (< 3 3)    ; -> ()
-    (< 4 3)    ; -> ()
-    ```
-*   **`<=`**: Checks if the first argument is less than or equal to the second. Returns `#t` if true, otherwise `()`.
-
-    ```lisp
-    (<= 2 3)   ; -> #t
-    (<= 3 3)   ; -> #t
-    (<= 4 3)   ; -> ()
-    ```
-*   **`>`**: Checks if the first argument is greater than the second. Returns `#t` if true, otherwise `()`.
-
-    ```lisp
-    (> 3 2)    ; -> #t
-    (> 3 3)    ; -> ()
-    (> 2 3)    ; -> ()
-    ```
-*   **`>=`**: Checks if the first argument is greater than or equal to the second. Returns `#t` if true, otherwise `()`.
-
-    ```lisp
-    (>= 3 2)   ; -> #t
-    (>= 3 3)   ; -> #t
-    (>= 2 3)   ; -> ()
-    ```
-*   **`=`**: Checks if two integers or boolean values are equal. Returns `#t` if both arguments are the same integer or both represent the same boolean value, otherwise returns `()`.
-
-    ```lisp
-    (= 11 11)  ; -> #t
-    (= 11 6)   ; -> ()
-    (= #t #t)  ; -> #t
-    (= #t ())  ; -> ()
-    (= #t 1)   ; -> #t
-    (= #t 0)   ; -> ()
-    (= () 0)   ; -> #t
-    (= () 1)   ; -> ()
-    ```
-*   **`abs`**: Computes the absolute value of an integer.
-
-    ```lisp
-    (abs -5) ; -> 5
-    ```
-
-### Logical Operations
-
-**UniotLisp** provides logical operations for boolean expressions: `and`, `or`, and `not`.
-
-*   **`and`**: Returns `#t` if all arguments are true; otherwise, returns `()`.
-
-    ```lisp
-    (and (> 5 3) (< 2 4)) ; -> #t
-    (and (> 5 3) (< 2 1)) ; -> ()
-    ```
-*   **`or`**: Returns `#t` if any argument is true; otherwise, returns `()`.
-
-    ```lisp
-    (or (> 5 3) (< 2 1))  ; -> #t
-    (or (< 5 3) (< 2 1))  ; -> ()
-    ```
-*   **`not`**: Returns `#t` if the argument is `()`, otherwise returns `()`.
-
-    ```lisp
-    (not #t) ; -> ()
-    (not ()) ; -> #t
-    ```
-
-### Conditionals
-
-**UniotLisp** provides the `if` special form for conditional execution and `eq` for testing equivalence between objects.
-
-* **`(if condition then-expr else-expr)`**:
-  * **Behavior**: Evaluates `condition`. If the result is a true value (`#t` or any non-`()` value), it evaluates and returns `then-expr`. Otherwise, it evaluates and returns `else-expr`.
-  *   **Examples**:
-
-      ```lisp
-      (if (> 3 2) 'yes 'no) ; -> yes
-      (if (< 1 0) 'positive 'negative) ; -> negative
-      ```
-* **`eq`**:
-  * **Behavior**: Performs a pointer comparison. Returns `#t` if both arguments reference the exact same object, otherwise returns `()`.
-  *   **Examples**:
-
-      ```lisp
-      (eq 'a 'a) ; -> #t
-      (eq '(1) '(1)) ; -> ()
-      (define x (cons 'a 'b))
-      (eq x x) ; -> #t
-      (eq (cons 'a 'b) x) ; -> ()
-      ```
-
-### Loops
-
-**UniotLisp** supports looping through the `while` special form.
-
-*   **Syntax**:
-
-    ```lisp
-    (while condition expr ...)
-    ```
-* **Behavior**: Continues to evaluate `expr ...` as long as `condition` evaluates to a true value (`#t` or any non-`()` value). The loop terminates when `condition` evaluates to `()`.
-*   **Example**:
-
-    ```lisp
-    (define counter 0)
-    (while (< counter 5)
-      (print counter)
-      (setq counter (+ counter 1)))
-    ```
-
-    **Output**:
-
-    ```
-    0
-    1
-    2
-    3
-    4
-    ```
-* **Note**: Unlike Scheme, **UniotLisp** does not support tail recursion for loops. Tail calls consume stack space, leading to memory exhaustion errors if used for looping.
-
-### Quoting and Evaluation
-
-**UniotLisp** provides mechanisms to control the evaluation of expressions and manipulate code as data. This section covers the `quote` special form, the shorthand single quote (`'`), the `eval` primitive, and the `list` primitive.
-
-* **`quote`**: The `quote` special form is used to prevent the evaluation of an expression. Instead of evaluating its argument, `quote` returns the expression itself as data.
-  *   **Syntax**:
-
-      ```lisp
-      (quote expression)
-      ```
-  * **Behavior**:
-    * Returns the `expression` without evaluating it.
-    * Useful for representing literal data structures or symbols.
-  *   **Examples**:
-
-      ```lisp
-      (quote (a b c)) ; -> (a b c)
-      (quote 42)      ; -> 42
-      (quote x)       ; -> x
-      ```
-* **`'`** (Single Quote): The single quote (`'`) is a shorthand notation for the `quote` special form, providing a more concise way to prevent evaluation of an expression.
-  *   **Syntax**:
-
-      ```lisp
-      'expression
-      ```
-  * **Behavior**:
-    * Equivalent to `(quote expression)`.
-    * Enhances readability and reduces verbosity in code.
-  *   **Examples**:
-
-      ```lisp
-      '(a b c) ; Equivalent to (quote (a b c))
-      '42      ; Equivalent to (quote 42)
-      'x       ; Equivalent to (quote x)
-      ```
-* **`eval`**: The `eval` primitive evaluates a given expression within the current environment. It takes a quoted expression and returns the result of its evaluation.
-  *   **Syntax**:
-
-      ```lisp
-      (eval expression)
-      ```
-  * **Behavior**:
-    * Evaluates the `expression` as if it were entered directly.
-    * Useful for dynamic code execution and metaprogramming.
-  *   **Examples**:
-
-      ```lisp
-      (eval '(+ 1 2)) ; -> 3
-      (eval '(* 3 4)) ; -> 12
-      (define a 10)
-      (eval '(+ a 5)) ; -> 15
-      ```
-  * **Notes**:
-    * The argument to `eval` must be a quoted expression; otherwise, it will be evaluated before being passed to `eval`.
-    * Use `eval` with caution, as it can execute arbitrary code, which may lead to security vulnerabilities if not managed properly.
-* **`list`**: The `list` primitive constructs a new list from its evaluated arguments. It takes any number of arguments, evaluates each one, and returns a list containing those values.
-  *   **Syntax**:
-
-      ```lisp
-      (list expr1 expr2 ...)
-      ```
-  * **Behavior**:
-    * Evaluates each `expr` and assembles them into a new list.
-    * Useful for creating dynamic lists based on runtime values.
-  *   **Examples**:
-
-      ```lisp
-      (list 1 2 3)          ; -> (1 2 3)
-      (list 'a 'b 'c)       ; -> (a b c)
-      (list (+ 1 2) (* 3 4)) ; -> (3 12)
-      ```
-  * **Notes**:
-    * Unlike `quote`, the arguments to `list` are evaluated before being included in the new list.
-    * Combining `list` with `quote` allows for flexible construction of complex data structures.
-
-### Output Operators
-
-**UniotLisp** provides the `print` primitive for outputting objects to the standard output.
-
-* **`print`**:
-  * **Purpose**: Prints the string representation of a given object.
-  *   **Usage**:
-
-      ```lisp
-      (print 3)               ; Prints "3"
-      (print '(hello world))  ; Prints "(hello world)"
-      (print #t)              ; Prints "#t"
-      (print ())              ; Prints "()"
-      ```
-  * **Behavior**: Outputs the evaluated object to the standard output. Does not return the printed object; instead, it returns `()`.
-
-### Definitions
-
-**UniotLisp** supports defining variables and functions using `define`, `setq`, `lambda`, and `defun`.
-
-* **Defining Variables**:
-  *   **Syntax**:
-
-      ```lisp
-      (define variable-name expression)
-      ```
-  * **Behavior**: Evaluates `expression` and binds the result to `variable-name` in the current environment.
-  *   **Example**:
-
-      ```lisp
-      (define a (+ 1 2)) ; a is now 3
-      (+ a a)             ; -> 6
-      ```
-* **Assigning Values to Variables**
-  *   **Syntax**:
-
-      ```lisp
-      (setq variable-name expression)
-      ```
-  * **Behavior**: Updates the binding of the variable with the evaluated expression. Raises an error if the variable is not defined.
-  *   **Example**:
-
-      ```lisp
-      (define val (+ 3 5))  ; val is now 8
-      (setq val (+ val 1))  ; val is now 9
-      ```
-*   **Defining Functions**:
-
-    There are two primary ways to define functions in **UniotLisp**: using `lambda` and `defun`.
-
-    * **Using `lambda`**:
-      *   **Syntax**:
-
-          ```lisp
-          (lambda (arg1 arg2 ...) body ...)
-          ```
-      * **Behavior**: Creates an anonymous function that can be assigned to a variable or used directly.
-      *   **Example**:
-
-          ```lisp
-          (define double (lambda (x) (+ x x))) ; Defines a function 'double'
-          (double 6)                           ; -> 12
-          ((lambda (x) (+ x x)) 6)             ; -> 12
-          ```
-    * **Using `defun`**:
-      *   **Syntax**:
-
-          ```lisp
-          (defun function-name (arg1 arg2 ...) body ...)
-          ```
-      * **Behavior**: Defines a named function, equivalent to using `define` with `lambda`.
-      *   **Example**:
-
-          ```lisp
-          (defun double (x) (+ x x))  ; Defines a function 'double'
-          (double 6)                  ; -> 12
-          ```
-      *   **Note**:
-
-          You can write a function that takes a variable number of arguments. If the parameter list is a dotted list, the remaining arguments are bound to the last parameter as a list.
-
-          ```lisp
-          (defun fn (expr . rest) rest)
-          (fn 1)     ; -> ()
-          (fn 1 2 3) ; -> (2 3)
-          ```
-*   **Variable Scope and Lexical Binding**:
-
-    Variables in **UniotLisp** are **lexically scoped** and have indefinite extent. This means that references to "outer" variables remain valid even after the function that created the variables returns.
-
-    **Example**:
-
-    ```lisp
-    ;; Define a function that creates a new counter
-    (define make-counter
-      (lambda ()
-        (define count 0)           ; Initialize 'count' to 0
-        (lambda ()
-          (setq count (+ count 1)) ; Increment 'count' by 1
-          count)))                 ; Return the updated 'count'
-
-    ;; Create two independent counters
-    (define counter-a (make-counter)) ; Counter A starts at 0
-    (define counter-b (make-counter)) ; Counter B starts at 0
-
-    ;; Using Counter A
-    (counter-a) ; -> 1
-    (counter-a) ; -> 2
-    (counter-a) ; -> 3
-
-    ;; Using Counter B
-    (counter-b) ; -> 1
-    (counter-b) ; -> 2
-
-    ;; Demonstrates lexical scoping
-    ;; Define a new scope with a local variable 'count'
-    (define manipulate-counter
-      (lambda ()
-        (define count 100)        ; Local 'count' in this scope
-        (counter-a)               ; Call Counter A
-        count))                   ; Return local 'count'
-
-    ;; Call manipulate-counter
-    ;; The returned value is 100, but the incremented value of
-    ;; Counter A is 4. The local 'count' does not interfere with
-    ;; Counter A's 'count'.
-    (manipulate-counter) ; -> 100
-    ;; Call Counter A again
-    (counter-a) ; -> 5
-    ;; Call Counter B again
-    (counter-b) ; -> 3
-    ```
-
-### Macros
-
-Macros in **UniotLisp** provide powerful metaprogramming capabilities by allowing code transformations before evaluation.
-
-* **Defining Macros (`defmacro`)**:
-  *   **Syntax**:
-
-      ```lisp
-      (defmacro macro-name (arg1 arg2 ...) body ...)
-      ```
-  * **Behavior**: Defines a macro that takes expressions as input and returns a new expression to be evaluated.
-  *   **Example**: Define an `unless` macro that acts as the opposite of `if`.
-
-      ```lisp
-      (defmacro unless (condition expr)
-        (list 'if condition () expr))
-      ```
-* **Macro Expansion**:
-  * **Purpose**: Transforms macro calls into their expanded forms before evaluation.
-  *   **Example Usage**:
-
-      ```lisp
-      (define x 0)
-      (unless (= x 0) '(x is not 0))  ; -> ()
-      (unless (= x 1) '(x is not 1))  ; -> (x is not 1)
-      ```
-* **`macroexpand`**:
-  * **Purpose**: A special form to view the expanded form of a macro without evaluating it.
-  *   **Syntax**:
-
-      ```lisp
-      (macroexpand macro-call)
-      ```
-  *   **Example**:
-
-      ```lisp
-      (macroexpand (unless (= x 1) '(x is not 1)))
-      ;; -> (if (= x 1) () (quote (x is not 1)))
-      ```
-* **`gensym`**:
-  * **Purpose**: Generates a unique symbol that is guaranteed not to be `eq` to any other symbol except itself. Useful for creating unique identifiers within macros.
-  *   **Usage**:
-
-      ```lisp
-      (gensym) ; -> G__0, G__1, etc.
-      ```
-
-### Comments
-
-Comments in **UniotLisp** follow the traditional Lisp syntax, using the semicolon (`;`) to start a single-line comment.
-
-*   **Syntax**:
-
-    ```lisp
-    ; This is a single-line comment
-    ```
-* **Behavior**: The interpreter ignores any text following a semicolon until the end of the line.
-*   **Example**:
-
-    ```lisp
-    (define a 10) ; This defines variable 'a' with value 10
-    (+ a 5)       ; -> 15
-    ```
-
-
-
-For further assistance or to contribute to the project, please refer to the project's repository or contact the maintainers.
+When an expression stops with an error instead, the example says so:
+
+```lisp
+(/ 7 0)   ; -> error: Division by zero
+```
+
+## Values
+
+### Integers
+
+Integers are 32-bit and signed. Arithmetic that would overflow stops with an error rather than wrapping around, and a number too large to represent is refused when the script is read.
+
+```lisp
+42                ; -> 42
+-7                ; -> -7
+(* 2000000000 2)  ; -> error: Integer overflow in *
+```
+
+There are no floating-point numbers. To work with fractions, scale your values — hundredths of a degree instead of degrees, for example.
+
+### Truth: `()` and `#t`
+
+`()` is the only false value. It is also the empty list.
+
+`#t` is the true literal, but **any value other than `()` is true — including `0`**:
+
+```lisp
+(if () 'yes 'no)   ; -> no
+(if 0 'yes 'no)    ; -> yes
+(if #t 'yes 'no)   ; -> yes
+```
+
+This matters on a device, where a pin read or an event value arrives as a number, and `0` is a true value like any other. To treat `0` as false, use [`bool`](#truth-and-predicates).
+
+### Symbols
+
+Symbols are names, such as `x`, `counter` or `my-function`. Two symbols with the same name are the same object. UniotLisp has no string type, so symbols often stand in for text:
+
+```lisp
+'hello   ; -> hello
+```
+
+### Lists
+
+Lists are built from cons cells: pairs of two values. A proper list ends in `()`; a dotted list ends in any other value.
+
+```lisp
+'(a b c)     ; -> (a b c)
+'(a . b)     ; -> (a . b)
+'(a b . c)   ; -> (a b . c)
+```
+
+## Quoting and evaluation
+
+A symbol is evaluated to the value it names, and a list to the result of calling its first element. **`quote`** prevents that, returning its argument as data. The single quote `'` is shorthand for it.
+
+```lisp
+(quote (a b c))   ; -> (a b c)
+'(a b c)          ; -> (a b c)
+'x                ; -> x
+```
+
+**`eval`** does the opposite: it evaluates data as code.
+
+```lisp
+(eval '(+ 1 2))   ; -> 3
+(define a 10)
+(eval '(+ a 5))   ; -> 15
+```
+
+**`list`** builds a list from its arguments, which — unlike with `quote` — are evaluated first:
+
+```lisp
+(list 1 2 3)             ; -> (1 2 3)
+(list (+ 1 2) (* 3 4))   ; -> (3 12)
+```
+
+## Lists
+
+| Function | What it does |
+| --- | --- |
+| `(cons a b)` | A new pair with `a` first and `b` second |
+| `(car list)` | The first element |
+| `(cdr list)` | Everything after the first element |
+| `(setcar pair value)` | Replaces the first element of a pair |
+| `(setcdr pair value)` | Replaces the rest of a pair |
+| `(length list)` | The number of elements |
+| `(list a b ...)` | A list of its arguments |
+| `(apply function list)` | Calls a function with the elements of a list as its arguments |
+
+```lisp
+(cons 'a 'b)             ; -> (a . b)
+(cons 'a '(b))           ; -> (a b)
+(car '(a b))             ; -> a
+(cdr '(a b))             ; -> (b)
+(length '(1 2))          ; -> 2
+(apply + (list 1 2 3))   ; -> 6
+```
+
+`car` and `cdr` of `()` are `()`, so walking off the end of a list is not an error:
+
+```lisp
+(car ())   ; -> ()
+(cdr ())   ; -> ()
+```
+
+## Arithmetic
+
+`+`, `-`, `*`, `/` and `%` take any number of arguments; `abs` gives the magnitude of a number.
+
+```lisp
+(+ 1 2 3)   ; -> 6
+(- 3)       ; -> -3
+(- 5 2 7)   ; -> -4
+(* 2 3 4)   ; -> 24
+(abs -5)    ; -> 5
+(+)         ; -> 0
+(*)         ; -> 1
+```
+
+`/` and `%` are integer operations that truncate towards zero:
+
+```lisp
+(/ 7 2)    ; -> 3
+(/ -7 2)   ; -> -3
+(% 10 3)   ; -> 1
+(% -7 2)   ; -> -1
+```
+
+Division by zero and overflow both stop the script with an error.
+
+## Comparison
+
+`<`, `<=`, `>` and `>=` compare numbers. Given more than two arguments, they check every neighbouring pair:
+
+```lisp
+(< 2 3)     ; -> #t
+(< 3 3)     ; -> ()
+(<= 3 3)    ; -> #t
+(< 1 2 3)   ; -> #t
+(< 1 3 2)   ; -> ()
+```
+
+**`eql`** is equality. Numbers are equal when their values are; everything else only when it is the very same object. Two lists with the same contents are not `eql`, because they are two different lists.
+
+```lisp
+(eql 1 1)                 ; -> #t
+(eql 'a 'a)               ; -> #t
+(eql (list 1) (list 1))   ; -> ()
+```
+
+**`=`** compares numbers, and also compares a number with a truth value by treating any non-zero number as true. That makes it convenient for testing a flag — but it is not an equality, so use `eql` when you mean "the same".
+
+```lisp
+(= 11 11)   ; -> #t
+(= 1 #t)    ; -> #t
+(= 0 ())    ; -> #t
+```
+
+## Truth and predicates
+
+These ask what kind of value something is:
+
+| Predicate | True when the value is |
+| --- | --- |
+| `numberp` | a number |
+| `symbolp` | a symbol |
+| `consp` | a pair — a non-empty list |
+| `listp` | a list, including `()` |
+| `atom` | anything but a pair, including `()` |
+| `functionp` | a function |
+
+```lisp
+(numberp 1)       ; -> #t
+(consp '(a))      ; -> #t
+(atom 'a)         ; -> #t
+(listp ())        ; -> #t
+(functionp car)   ; -> #t
+```
+
+**`not`** inverts truth under the language's own rule, where only `()` is false:
+
+```lisp
+(not ())   ; -> #t
+(not 0)    ; -> ()
+```
+
+**`bool`** converts a value to `#t` or `()` under the *numeric* rule instead: `0` and `()` are false, everything else is true. It exists for device values — a pin read or an event value carries its truth as `0` or `1`, and `not` on one of those asks the wrong question.
+
+```lisp
+(bool 0)    ; -> ()
+(bool 1)    ; -> #t
+(bool ())   ; -> ()
+(bool 'a)   ; -> #t
+```
+
+`bool` never fails, whatever it is given, and applying it to a value that is already `#t` or `()` changes nothing. If a script uses it often, give it a shorter name — `?` is a valid symbol:
+
+```lisp
+(define ? bool)
+(? 0)   ; -> ()
+```
+
+## Conditionals and sequencing
+
+**`if`** takes a condition, an expression to evaluate when it is true, and optionally one for when it is false:
+
+```lisp
+(if (< 1 2) 'smaller 'larger)   ; -> smaller
+(if () 'yes)                    ; -> ()
+```
+
+**`progn`** evaluates several expressions in order and returns the last one's value — the way to do more than one thing where a single expression is expected:
+
+```lisp
+(progn 1 2 3)   ; -> 3
+```
+
+**`and`** and **`or`** stop as soon as the answer is known, and return the value that decided it:
+
+```lisp
+(and 1 2)    ; -> 2
+(and 1 ())   ; -> ()
+(or () 5)    ; -> 5
+(and)        ; -> #t
+(or)         ; -> ()
+```
+
+Because `and` stops at the first false value, it can guard an expression that would otherwise fail — such as `(and (consp x) (car x))`.
+
+## Loops and recursion
+
+**`while`** repeats its body as long as its condition is true. Inside the loop, `#itr` is the number of the current iteration, counting from zero; in nested loops it belongs to the innermost one.
+
+```lisp
+(define total 0)
+(while (< #itr 3) (setq total (+ total 1)))
+total   ; -> 3
+```
+
+On a device, a script usually doesn't loop forever itself. It runs its work in a [task](../../general-concepts/scripting.md), which the device repeats on a schedule. A loop that never ends is stopped with an error rather than hanging the device.
+
+**A call in tail position uses no extra memory**, so a function that calls itself as the last thing it does runs in constant space, however long the list. This is the usual way to walk a list:
+
+```lisp
+(defun sum (l acc)
+  (if (eql l ()) acc (sum (cdr l) (+ acc (car l)))))
+(sum '(1 2 3) 0)   ; -> 6
+```
+
+Recursion that is *not* in tail position does use memory with each call, and is limited by the space the device sets aside for evaluation. Write recursive functions with an accumulator, as `sum` does, and they won't reach that limit.
+
+## Definitions
+
+| Form | What it does |
+| --- | --- |
+| `(define name value)` | Binds a variable |
+| `(defun name (params ...) body ...)` | Defines a function |
+| `(lambda (params ...) body ...)` | Makes a function without a name |
+| `(setq name value)` | Assigns to a variable that already exists |
+
+`define` and `defun` may be used again on the same name to replace it.
+
+```lisp
+(define a (+ 1 2))
+a                          ; -> 3
+(defun double (x) (+ x x))
+(double 4)                 ; -> 8
+(define triple (lambda (x) (* 3 x)))
+(triple 4)                 ; -> 12
+```
+
+`setq` only assigns to a variable that already exists:
+
+```lisp
+(setq a 5)            ; -> 5
+(setq undefined 1)    ; -> error: Undefined symbol: undefined
+```
+
+A function must be called with exactly as many arguments as it has parameters, and the parameters must have different names:
+
+```lisp
+(double 1 2)            ; -> error: Cannot apply function: too many arguments
+(defun f (x x) x)       ; -> error: Duplicate parameter: x
+```
+
+A parameter list may end in `. name`, which collects the remaining arguments into a list — or be a single name, which collects all of them:
+
+```lisp
+(defun rest-of (a . rest) rest)
+(rest-of 1 2 3)          ; -> (2 3)
+(defun all-of args args)
+(all-of 1 2)             ; -> (1 2)
+```
+
+Variables live as long as something still uses them. A function can keep one of its own between calls:
+
+```lisp
+(define counter
+  ((lambda (count)
+     (lambda () (setq count (+ count 1)) count))
+   0))
+(counter)   ; -> 1
+(counter)   ; -> 2
+```
+
+## Macros
+
+**`defmacro`** defines a macro: it receives its arguments unevaluated, and returns a form that is evaluated in its place.
+
+```lisp
+(defmacro unless (test . body)
+  (list 'if test () (cons 'progn body)))
+(unless (= 1 1) 'no)    ; -> ()
+(unless (= 1 2) 'yes)   ; -> yes
+```
+
+**`macroexpand`** shows the form a macro produces. It is a function, so quote what you give it:
+
+```lisp
+(macroexpand '(unless (= 1 1) 'no))   ; -> (if (= 1 1) () (progn (quote no)))
+```
+
+**`gensym`** returns a new symbol that no other code can name, for macros that need a variable of their own.
+
+## Output
+
+**`print`** writes a value and returns it, so it can sit inside a larger expression:
+
+```lisp
+(print 'hello)      ; -> hello
+(+ 1 (print 2))     ; -> 3
+```
+
+On a device, printed lines go to the device's log; in the Sandbox, they appear in the [Logger](../../platform/sandbox/logger.md) and the [Emulator](../../platform/sandbox/emulator.md). See [Debugging Scripts](../../general-concepts/scripting.md#debugging-scripts).
+
+## Comments
+
+`;` begins a comment that runs to the end of the line.
+
+```lisp
+; This whole line is a comment
+(+ 1 2) ; so is the rest of this one
+```
+
+## Writing your own helpers
+
+UniotLisp deliberately leaves out what can be written in UniotLisp itself: a script pays in memory only for what it defines. Here are common helpers, a few lines each. Copy the ones a script needs.
+
+One rule runs through all of them: **call yourself in tail position.** These versions carry their result along as they go, and run in constant space on a list of any length.
+
+```lisp
+(defun reverse (l acc)
+  (if (eql l ()) acc (reverse (cdr l) (cons (car l) acc))))
+
+(defun member (x l)
+  (if (eql l ()) () (if (eql x (car l)) l (member x (cdr l)))))
+
+(defun nth (n l) (if (= n 0) (car l) (nth (- n 1) (cdr l))))
+
+(defun reduce (f l acc)
+  (if (eql l ()) acc (reduce f (cdr l) (f acc (car l)))))
+
+(defun map (f l) (map1 f l ()))
+(defun map1 (f l acc)
+  (if (eql l ()) (reverse acc ()) (map1 f (cdr l) (cons (f (car l)) acc))))
+
+(defun filter (f l) (filter1 f l ()))
+(defun filter1 (f l acc)
+  (if (eql l ())
+      (reverse acc ())
+      (filter1 f (cdr l) (if (f (car l)) (cons (car l) acc) acc))))
+
+(defun min (a b) (if (< a b) a b))
+(defun max (a b) (if (> a b) a b))
+```
+
+```lisp
+(reverse '(1 2 3) ())               ; -> (3 2 1)
+(nth 1 '(a b c))                    ; -> b
+(reduce + '(1 2 3) 0)               ; -> 6
+(map double '(1 2 3))               ; -> (2 4 6)
+(filter (lambda (x) (> x 1)) '(1 2 3))   ; -> (2 3)
+(max 3 7)                           ; -> 7
+```
+
+Control structures are macros:
+
+```lisp
+(defmacro when (test . body) (list 'if test (cons 'progn body) ()))
+
+;; cond expands one clause at a time, so it takes any number of them
+(defmacro cond (clause . rest)
+  (if (eql rest ())
+      (list 'if (car clause) (cons 'progn (cdr clause)) ())
+      (list 'if (car clause) (cons 'progn (cdr clause)) (cons 'cond rest))))
+```
+
+```lisp
+(when (< 1 2) 'first 'second)          ; -> second
+(cond ((< 5 3) 'less) ((> 5 3) 'more)) ; -> more
+```
+
+A local variable is a `lambda` applied where it stands:
+
+```lisp
+((lambda (x y) (+ x y)) 1 2)   ; -> 3
+```
+
+## Coming from an older version
+
+Scripts written before UniotLisp 0.3.0 may need changes. Those that matter most:
+
+- **`eq` is now `eql`.**
+- **Only `()` is false.** `0` is true, so `(not 0)` is `()` — use `bool` for device values.
+- **`and` and `or` return the value that decided them**, not always `#t`.
+- **Overflow is an error**, and **`/` is exact integer division**.
+- **Calling a function with the wrong number of arguments is an error.**
+- **`define` and `defun` replace an existing definition** instead of refusing it.
+
+The full list is in the [UniotLisp changelog](https://github.com/uniot-io/uniot-lisp/blob/master/CHANGELOG.md).
