@@ -1,264 +1,78 @@
 # Uniot Core
 
-[Uniot Core](https://github.com/uniot-io/uniot-core) is a lightweight, open-source framework for building IoT devices on ESP8266 and ESP32 microcontrollers. It handles the heavy lifting of task scheduling, network management, and device communication, letting you focus on what makes your device unique. With an embedded Lisp interpreter for runtime scripting and a developer-friendly API, Uniot Core gives you both flexibility and control.
+Uniot Core is the open-source firmware framework every Uniot device runs. It connects a device to the platform, keeps it connected, and runs the scripts you deploy to it — so your firmware only has to describe the hardware. It is written for the Arduino framework on ESP8266 and ESP32 boards, and built with PlatformIO.
 
-From home automation to custom devices and prototypes, Uniot Core simplifies the development process while providing the power and reliability needed for production deployments.
+The source, the full API reference and the examples are in the [uniot-core](https://github.com/uniot-io/uniot-core) repository. This page is a map of it.
 
-## What You Get
+## What's inside
 
-- **Non-blocking task scheduler** with `setTimeout`, `setInterval` and `setImmediate`
-- **Event bus** for decoupled publish-subscribe communication between components
-- **Embedded UniotLisp interpreter**, so device behaviour can be changed over MQTT without reflashing. Scripts run on a fixed-size heap; a failing script is torn down without rebooting the device
-- **WiFi management** with automatic reconnection, a captive portal for end-user setup, and recovery paths for a device that can no longer reach its network
-- **MQTT client** that authenticates to the broker and signs what it publishes with COSE/Ed25519
-- **CBOR storage** on LittleFS for credentials, configuration and your own data
-- **NTP time** that survives reboots
+### Task scheduler
 
-See the [reference](https://github.com/uniot-io/uniot-core/blob/master/docs/reference.md) for how each of these is used.
+Runs periodic and one-shot work without blocking the device, with `setTimeout`, `setInterval` and `setImmediate`. See [Task Scheduler](https://github.com/uniot-io/uniot-core/blob/master/docs/reference.md#1-task-scheduler) in the reference.
+
+### Event system
+
+A publish-subscribe bus the parts of the firmware use to talk to each other without depending on one another. See [Event System](https://github.com/uniot-io/uniot-core/blob/master/docs/reference.md#2-event-system).
+
+### WiFi management
+
+Connects to the network and reconnects when it drops. Credentials come either from your code or from a captive portal where the device's user enters them. A reset button — or, if you enable it, a quick series of reboots — lets a device that can no longer reach its network start over. See [WiFi Management](https://github.com/uniot-io/uniot-core/blob/master/docs/reference.md#3-wifi-management).
+
+### UniotLisp scripting
+
+An embedded interpreter runs the scripts you deploy from the platform, so a device's behaviour changes without reflashing. Your firmware decides what scripts can reach: which pins, which buttons, and which functions of your own. See [Scripting](../general-concepts/scripting.md) and [Primitives](../general-concepts/primitives.md) in these docs, and [UniotLisp Scripting](https://github.com/uniot-io/uniot-core/blob/master/docs/reference.md#4-uniotlisp-scripting) in the reference.
+
+### Storage management
+
+Keeps credentials, configuration, the deployed script and your own data in flash, in the compact CBOR format. See [Storage Management](https://github.com/uniot-io/uniot-core/blob/master/docs/reference.md#5-storage-management).
+
+### Time management
+
+Keeps the clock in sync over NTP, and saves it so that a device starts with roughly the right time after a reboot, before the network is back. See [Time Management](https://github.com/uniot-io/uniot-core/blob/master/docs/reference.md#6-time-management).
+
+Messages between the device and the platform travel over MQTT, and the device signs what it publishes with its own Ed25519 key.
 
 ## Compatibility
 
-| Family  | Boards                                     |
-| ------- | ------------------------------------------ |
-| ESP8266 | ESP-12E, ESP-12F, NodeMCU, Wemos D1 Mini   |
-| ESP32   | ESP32 DevKit, ESP32-C3, ESP32-S2, ESP32-S3 |
+| Family | Boards |
+| --- | --- |
+| ESP8266 | ESP-12E, ESP-12F, NodeMCU, Wemos D1 Mini |
+| ESP32 | ESP32 DevKit, ESP32-C3, ESP32-S2, ESP32-S3 |
 
-Ready-made build environments live in the repository's `platformio.ini` as `ESP12E`, `ESP32` and `ESP32C3`. The framework targets the Arduino core and requires C++17.
+## Getting started
 
-## Installation
+Add Uniot Core to a PlatformIO project:
 
-### Prerequisites
-
-- [PlatformIO](https://platformio.org/) installed
-- ESP8266 or ESP32 development board
-- USB cable for programming
-
-### Using PlatformIO
-
-1. **Install PlatformIO**:
-
-   ```bash
-   pip install platformio
-   ```
-
-2. **Create a new project**:
-
-   ```bash
-   pio project init --board esp32doit-devkit-v1
-   ```
-
-3. **Configure `platformio.ini`**:
-
-   ```ini
-   [env:esp32]
-   platform = espressif32        ; Use espressif8266 for ESP8266 boards
-   framework = arduino
-   board = esp32doit-devkit-v1
-   monitor_speed = 115200
-
-   lib_deps =
-       uniot-io/uniot-core@^0.9.0
-
-   build_unflags =
-       -std=gnu++11
-
-   build_flags =
-       -std=gnu++17
-       -D UNIOT_CREATOR_ID=\"YOUR_CREATOR_ID\"
-       -D UNIOT_LOG_ENABLED=1
-       -D UNIOT_USE_LITTLEFS=1
-       -D UNIOT_LOG_LEVEL=UNIOT_LOG_LEVEL_INFO
-       -D MQTT_MAX_PACKET_SIZE=2048
-   ```
-
-   **Platform and Framework**: Ensure that the platform and framework settings match your microcontroller (e.g., `espressif8266` for ESP8266 or `espressif32` for ESP32).
-
-   Every flag is described under [Configuration](#configuration). `UNIOT_CREATOR_ID` is the only required one — the build fails without it.
-
-4. **Build and upload**:
-
-   ```bash
-   pio run --target upload
-   ```
-
-## Quick Start
-
-Here's a minimal example to get you started with Uniot Core:
-
-```c++
-#include <Uniot.h>
-
-void setup() {
-  Serial.begin(115200);
-
-  // Configure WiFi credentials.
-  // Omit this line to let the device open a captive portal instead,
-  // where the end user enters the credentials.
-  Uniot.configWiFiCredentials("YourSSID", "YourPassword");
-
-  // Configure WiFi status LED
-  Uniot.configWiFiStatusLed(LED_BUILTIN);
-
-  // Configure reset button
-  Uniot.configWiFiResetButton(0, LOW);
-
-  // Expose GPIO 12 to UniotLisp scripts as digital output 0
-  Uniot.registerLispDigitalOutput(12);
-
-  // Create a periodic task
-  Uniot.setInterval([]() {
-    Serial.println("Hello from Uniot!");
-  }, 1000);
-
-  // Initialize and start the platform
-  Uniot.begin();
-}
-
-void loop() {
-  // Execute scheduled tasks and process events
-  Uniot.loop();
-}
+```ini
+lib_deps =
+    uniot-io/uniot-core@^0.9.0
 ```
 
-### What This Does
+[Getting Started](../guides/getting-started.md) walks through a first project from an empty folder to a device on your dashboard.
 
-1. **Connects to WiFi** with automatic reconnection, falling back to a captive portal
-2. **Gives the user feedback and a way out** — LED blink patterns, and a button that resets the stored configuration
-3. **Makes GPIO 12 scriptable** — remote UniotLisp scripts drive it with `(dwrite 0 ...)`
-4. **Runs a periodic task** and processes everything from the event loop
+## Build flags
 
-{% hint style="info" %}
-Call at least one `configWiFi*` method before `Uniot.begin()` — that is what creates the network controller. Without it there is no status LED, reset button, or WiFi status events. A device with neither button nor LED can still create it with `configWiFiResetOnReboot()`.
-{% endhint %}
-
-## Scripting
-
-Scripts are written in UniotLisp, delivered over MQTT, and run without reflashing. Your sketch decides what they can reach:
-
-```c++
-Uniot.registerLispDigitalOutput(12, 13, 14);  // dwrite
-Uniot.registerLispDigitalInput(0, 4);         // dread
-Uniot.registerLispAnalogInput(A0);            // aread
-```
-
-**Pins are not addressed by GPIO number.** Each `registerLisp*` call assigns its pins a 0-based index in registration order, per primitive, and registering again **replaces** the previous set. See [The Register System](../general-concepts/primitives.md#the-register-system).
-
-- [Language description](uniot-lisp/language-description.md)
-- [Scripting guide](../general-concepts/scripting.md) and [primitives](../general-concepts/primitives.md)
-- [Custom primitives, events and registered objects](https://github.com/uniot-io/uniot-core/blob/master/docs/reference.md#4-uniotlisp-scripting)
+Uniot Core is configured with build flags in `platformio.ini`. One is required — `UNIOT_CREATOR_ID`, and the build fails without it. The rest tune logging, storage, memory and the network, and are listed with their defaults in [Build Flags](https://github.com/uniot-io/uniot-core#build-flags) in the repository.
 
 ## Examples
 
-Each directory is a self-contained PlatformIO project.
+Each is a complete PlatformIO project in the repository.
 
-| Example                                                                              | Hardware                                    | Shows                                                              |
-| ------------------------------------------------------------------------------------ | ------------------------------------------- | ------------------------------------------------------------------ |
-| [WittyCloud](https://github.com/uniot-io/uniot-core/tree/master/examples/WittyCloud) | WittyCloud ESP8266 board                    | RGB output, light sensor, button, everything exposed to scripts    |
-| [My9231Lamp](https://github.com/uniot-io/uniot-core/tree/master/examples/My9231Lamp) | ESP8266 smart bulb with a MY9231 LED driver | A custom Lisp primitive, and a device with no button or status LED |
-| [S20Socket](https://github.com/uniot-io/uniot-core/tree/master/examples/S20Socket)   | ESP8266 smart socket or relay board         | Relay control and a scriptable GPIO                                |
-| [LispHooks](https://github.com/uniot-io/uniot-core/tree/master/examples/LispHooks)   | Any ESP8266 board                           | Powering a sensor from the script lifecycle hooks                  |
-| [Buttons](https://github.com/uniot-io/uniot-core/tree/master/examples/Buttons)       | WittyCloud ESP8266 board                    | Two buttons exposed to scripts, and clearing stale presses         |
+| Example | Shows |
+| --- | --- |
+| [WittyCloud](https://github.com/uniot-io/uniot-core/tree/master/examples/WittyCloud) | RGB output, a light sensor and a button, all exposed to scripts |
+| [My9231Lamp](https://github.com/uniot-io/uniot-core/tree/master/examples/My9231Lamp) | A custom primitive, on a smart bulb with no button or status LED |
+| [S20Socket](https://github.com/uniot-io/uniot-core/tree/master/examples/S20Socket) | Relay control and a scriptable GPIO |
+| [LispHooks](https://github.com/uniot-io/uniot-core/tree/master/examples/LispHooks) | Powering a sensor on and off around the script that uses it |
+| [Buttons](https://github.com/uniot-io/uniot-core/tree/master/examples/Buttons) | Two buttons exposed to scripts, and clearing presses no script has read |
 
-## Configuration
+For a complete device, see the [Uniot Badge firmware](https://github.com/uniot-io/uniot-promo-badge-firmware).
 
-### Build Flags
+## Reference
 
-Configure Uniot Core behavior through build flags in `platformio.ini`:
+- [API reference](https://github.com/uniot-io/uniot-core/blob/master/docs/reference.md#api-reference) — every method, with its parameters
+- [Device status](https://github.com/uniot-io/uniot-core/blob/master/docs/reference.md#device-status) — what a device reports to the platform
+- [Troubleshooting](https://github.com/uniot-io/uniot-core/blob/master/docs/reference.md#troubleshooting) — WiFi, memory and upload problems
+- [Changelog](https://github.com/uniot-io/uniot-core/blob/master/CHANGELOG.md) — what changed in each release, and what to check before updating a device
 
-```ini
-build_flags =
-    -std=gnu++17
-    -D UNIOT_CREATOR_ID=\"UNIOT\"           # Device creator identifier (required)
-    -D UNIOT_LOG_ENABLED=1                   # Enable logging
-    -D UNIOT_USE_LITTLEFS=1                  # Use LittleFS filesystem
-    -D UNIOT_LOG_LEVEL=UNIOT_LOG_LEVEL_INFO  # Log level
-    -D MQTT_MAX_PACKET_SIZE=2048             # MQTT packet size
-```
-
-`lib/Core/Common.h` carries a default for every value below, so define one only to override it:
-
-| Flag                            | Default                         | Purpose                                                                                 |
-| ------------------------------- | ------------------------------- | --------------------------------------------------------------------------------------- |
-| `UNIOT_MQTT_HOST`               | `"mqtt.uniot.io"`               | Broker to connect to                                                                    |
-| `UNIOT_MQTT_PORT`               | `1883`                          | Broker port                                                                             |
-| `UNIOT_WIFI_AP_PREFIX`          | `"UNIOT"`                       | SSID prefix of the configuration portal                                                 |
-| `UNIOT_WIFI_AP_PASSWORD`        | `""` (open)                     | Password for that portal                                                                |
-| `UNIOT_WIFI_NO_SLEEP`           | `0`                             | Disable WiFi modem sleep                                                                |
-| `UNIOT_WIFI_REBOOT_RESET_COUNT` | `5`                             | Power cycles that clear stored credentials, once `configWiFiResetOnReboot()` enables it |
-| `UNIOT_WIFI_REBOOT_WINDOW_MS`   | `10000`                         | How long a reboot still counts towards that                                             |
-| `UNIOT_LISP_HEAP`               | 24576 (ESP32) / 12288 (ESP8266) | Interpreter heap, in bytes                                                              |
-| `UNIOT_LISP_MAX_EVAL_STACK`     | 3072 (ESP32) / 1280 (ESP8266)   | Evaluation stack budget, in bytes                                                       |
-
-The two Lisp values were measured against the full firmware rather than chosen, and the ESP8266 numbers have little room: the old 1280 budget's predecessor ran 112 bytes from a stack overflow. Raise `UNIOT_LISP_MAX_EVAL_STACK` only with a measurement from `tools/LispEvalDepth` on the same board and build.
-
-### Log Levels
-
-```c++
-UNIOT_LOG_LEVEL_ERROR    // Errors only
-UNIOT_LOG_LEVEL_WARN     // Warnings and errors
-UNIOT_LOG_LEVEL_INFO     // Info, warnings, and errors
-UNIOT_LOG_LEVEL_DEBUG    // All messages including debug (default when the flag is not set)
-UNIOT_LOG_LEVEL_TRACE    // All messages including trace
-```
-
-To disable logging entirely, set `UNIOT_LOG_ENABLED=0` — there is no "none" level.
-
-### Dependencies
-
-Uniot Core automatically manages these dependencies:
-
-- [uniot-cbor](https://github.com/uniot-io/uniot-cbor) - CBOR serialization
-- [uniot-lisp](https://github.com/uniot-io/uniot-lisp) - Lisp interpreter
-- [uniot-pubsubclient](https://github.com/uniot-io/uniot-pubsubclient) - MQTT client
-- [uniot-crypto](https://github.com/uniot-io/uniot-crypto) - Cryptography support
-- [uniot-esp-async-web-server](https://github.com/uniot-io/uniot-esp-async-web-server) - Async web server
-
-## Diagnostics
-
-`tools/` holds standalone PlatformIO sketches that measure interpreter behaviour on real hardware — `LispEvalDepth` reports how much stack an evaluation consumes, and `LispGC` exercises the collector under memory pressure. Each is its own project, built from its own directory:
-
-```bash
-cd tools/LispEvalDepth
-pio run -t upload -t monitor
-```
-
-These are measuring instruments, not a test suite: they print numbers for a human to read, and the eval-stack and heap budgets in `lib/Core/Common.h` were set from their output.
-
-## Documentation
-
-- **Reference**: [docs/reference.md](https://github.com/uniot-io/uniot-core/blob/master/docs/reference.md) — core components, API tables, best practices and troubleshooting
-- **API Reference (Doxygen)**: [https://core.docs.uniot.io](https://core.docs.uniot.io) — generate locally with `./scripts/generate_docs.sh`
-- **UniotLisp Language**: [Language Description](uniot-lisp/language-description.md)
-- **Scripting Guide**: [Scripting](../general-concepts/scripting.md)
-- **Primitives**: [Primitives](../general-concepts/primitives.md)
-
-## Contributing
-
-We welcome contributions! Here's how you can help:
-
-### Reporting Issues
-
-- Use [GitHub Issues](https://github.com/uniot-io/uniot-core/issues) for bug reports and feature requests
-- Include code examples and error logs
-- Specify your hardware platform (ESP8266/ESP32)
-
-### Pull Requests
-
-Branch from `master`, keep the existing code style, add Doxygen comments for new APIs, and say in the description which boards you tested on.
-
-## Community
-
-- **Website**: [https://uniot.io](https://uniot.io)
-- **Forum**: [https://community.uniot.io](https://community.uniot.io)
-- **GitHub**: [https://github.com/uniot-io/uniot-core](https://github.com/uniot-io/uniot-core)
-- **Email**: contact@uniot.io
-
-## License
-
-Uniot Core is licensed under the **GNU General Public License v3.0** — see the [LICENSE](https://github.com/uniot-io/uniot-core/blob/master/LICENSE) file for details.
-
-- ✅ **Freedom to use** commercially and personally
-- ✅ **Freedom to modify** and distribute modifications
-- ✅ **Freedom to distribute** copies
-- ⚠️ **Share-alike**: Distributed modifications must remain GPL-3.0
-- ⚠️ **Source code disclosure**: Distributed modified versions must include source code
+Uniot Core is licensed under the [GNU General Public License v3.0](https://github.com/uniot-io/uniot-core/blob/master/LICENSE).
