@@ -18,6 +18,10 @@ None of this logic is compiled into the firmware. You flash generic firmware onc
 - [PlatformIO](https://platformio.org/) installed — either the VSCode extension or the CLI.
 - A Uniot account — [Get Early Access](https://forms.fillout.com/t/k1LDnvkgvPus). Once you are in, copy your **account ID** from your profile page (it is also shown on the Add-new-device screen). You will need it in Step 1.
 
+{% hint style="info" %}
+**Have a Uniot Badge?** It has firmware of its own, so you don't need to build any. Install or update it from your browser with the [Firmware Installer](../platform/installer.md), and see the [Uniot Badge](uniot-badge.md) guide.
+{% endhint %}
+
 ## Step 1: Flash the Firmware
 
 ### Create a Project
@@ -346,7 +350,7 @@ The device doesn't treat the dashboard as anything special — everything simply
 
 **Upload fails or no serial port appears.** Hold the BOOT/FLASH button while PlatformIO prints "Connecting…"; make sure the CH340/CP2102 USB driver is installed; try adding `upload_speed = 115200` to `platformio.ini`.
 
-**I don't see the `UNIOT-xxxxxx` network.** The device has WiFi credentials, so it skips Access Point mode. If `configWiFiCredentials()` is still active in `setup()`, comment it out along with `configUser()` and upload again. Otherwise, clear the stored credentials: quick-press the button 4+ times, then hold it for ~3 seconds (all within ~5 seconds) — or power-cycle the device 5 times in quick succession (a built-in recovery mechanism, active by default).
+**I don't see the `UNIOT-xxxxxx` network.** The device has WiFi credentials, so it skips Access Point mode. If `configWiFiCredentials()` is still active in `setup()`, comment it out along with `configUser()` and upload again. Otherwise, clear the stored credentials: quick-press the button 4+ times, then hold it for ~3 seconds (all within ~5 seconds). A sketch that also calls `Uniot.configWiFiResetOnReboot()` can be reset by power-cycling it 5 times in quick succession instead; the one in this guide doesn't.
 
 **I can't join the device's network.** Forget the `UNIOT-xxxxxx` network on your phone or laptop and connect to it again.
 

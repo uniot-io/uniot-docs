@@ -8,7 +8,7 @@ The Uniot Platform is a comprehensive and versatile ecosystem designed to simpli
 2. [**Edge Computing**](foundations/edge-logic-deployment.md): On-device automation reduces dependency on centralized servers, ensuring higher reliability.
 3. [**Device Interconnectivity**](guides/two-devices-one-event.md): Seamless communication between devices using an event-driven approach.
 4. [**Custom Dashboards**](platform/dashboard.md): Flexible tools to design personalized dashboards for real-time monitoring and control.
-5. [**Unified Firmware**](advanced/uniot-core.md): Open-source Uniot Core firmware compatible with Arduino, simplifying the integration and management of devices.
+5. [**Unified Firmware**](advanced/uniot-core.md): Open-source Uniot Core firmware compatible with Arduino, simplifying the integration and management of devices. The Uniot Badge firmware installs straight from the browser with the [Firmware Installer](platform/installer.md).
 
 ## **Who is it for?**
 

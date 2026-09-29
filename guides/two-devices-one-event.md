@@ -249,7 +249,7 @@ What the script does:
 - **No sender check** — the bell does not care who rang. A board, the Emulator, or a widget: any `ring` with value `1` will do.
 
 {% hint style="info" %}
-Prefer typing? Paste the listings into the **Code Editor**. Once you edit code by hand the Visual Editor becomes read-only for that script. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
+Prefer typing? Switch the Sandbox to **Advanced** and paste the listings into the code editor instead of building blocks. Keep a script you write by hand in Advanced mode: switching back to Blockly replaces the code with what the blocks generate. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
 {% endhint %}
 
 ### Try It in the Emulator

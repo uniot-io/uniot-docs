@@ -49,7 +49,7 @@ A text-based editor for advanced users who want full control:
 
 - **Full Language Access**: Use all UniotLisp features and primitives
 - **Syntax Highlighting**: Visual feedback for code structure
-- **Error Detection**: Real-time syntax validation
+- **Error Detection**: When you compile, the line with an error is marked and the expression that failed is underlined
 - **Perfect for**: Advanced users, complex logic, performance-critical code
 
 <div><figure><img src="../.gitbook/assets/concepts/scripting/workflow_code.png" alt=""><figcaption></figcaption></figure></div>
@@ -65,27 +65,9 @@ Uniot Platform → MQTT Broker → Device → UniotLisp Interpreter → Executio
 **Delivery Flow**:
 
 1. **User creates/edits script** in the [Sandbox](../platform/sandbox/README.md)
-2. **Script is packaged** as CBOR-encoded MQTT message
-3. **Published to device topic**: `<domain>/users/<userId>/devices/<deviceId>/script`
-4. **Device receives script** via MQTT subscription
-5. **Script is validated** and optionally stored
-6. **Interpreter executes** the script
-
-**Script Payload Structure** (CBOR):
-
-```json
-{
-  "code": "(defun hello () (print 'hello-world)) (hello)",
-  "persist": true,
-  "timestamp": 1679968928
-}
-```
-
-**Fields**:
-
-- `code`: UniotLisp source code
-- `persist`: Whether to save script and run on reboot
-- `timestamp`: Timestamp when the script was sent
+2. **The script is sent to the device** over MQTT. A device that is offline receives it when it next connects.
+3. **The device stores the script**, so it runs again after a reboot
+4. **Interpreter executes** the script
 
 ### Script Execution
 
@@ -303,17 +285,14 @@ Use the `print` statement (the corresponding [visual block](../platform/sandbox/
 (print (eval ' (aread 0)))
 ```
 
-Printed messages are published to:
+Printed messages appear:
 
-- MQTT topic: `<domain>/users/<userId>/devices/<deviceId>/debug/log`
-- Visible under the “Logs” tab on the device page for deployed script
-- Visible in [the emulator logs](../platform/sandbox/emulator.md#logs)
+- Under the “Logs” tab on the device page, for a deployed script
+- In [the emulator logs](../platform/sandbox/emulator.md#logs), while emulating
 
 ### Errors
 
-If the interpreter encounters an error while executing a script, an event is published to:
-
-- MQTT topic: `<domain>/users/<userId>/devices/<deviceId>/debug/err`
+If the interpreter encounters an error while executing a script, the device reports it to the platform.
 
 You can see in the device list when an error occurs on one of them. The error message is displayed in the same place as the logs (device page → "Logs" tab).
 

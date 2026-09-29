@@ -314,7 +314,7 @@ The dashboard should be able to move the threshold while the script runs. At the
 This is the complete script, including the user-library block the editor adds. Save it; the checkpoint for this edit is in Step 4.
 
 {% hint style="info" %}
-Prefer typing? Paste the listing into the **Code Editor**. Once you edit code by hand the Visual Editor becomes read-only for that script. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
+Prefer typing? Switch the Sandbox to **Advanced** and paste the listing into the code editor instead of building blocks. Keep a script you write by hand in Advanced mode: switching back to Blockly replaces the code with what the blocks generate. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
 {% endhint %}
 
 ## Step 4: Watch and Tune from the Dashboard

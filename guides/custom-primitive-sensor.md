@@ -325,7 +325,7 @@ Two more jobs: publish the temperature whenever it changes, and accept a new set
 - **Vocabulary** — the user library block declares two words, `get_temp` and `dwrite`. Everything else in the script is plain UniotLisp; nothing in it says DHT22, GPIO4 or GPIO13.
 
 {% hint style="info" %}
-Prefer typing? Paste the listing into the **Code Editor**. Once you edit code by hand the Visual Editor becomes read-only for that script. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
+Prefer typing? Switch the Sandbox to **Advanced** and paste the listing into the code editor instead of building blocks. Keep a script you write by hand in Advanced mode: switching back to Blockly replaces the code with what the blocks generate. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
 {% endhint %}
 
 {% hint style="success" %}

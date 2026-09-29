@@ -120,7 +120,7 @@ What the script does:
 - **User library block** — the comment block at the top declares the primitives the script uses. The Visual Editor writes it from the blocks you placed.
 
 {% hint style="info" %}
-Prefer typing? Paste the listing into the **Code Editor** instead of building blocks. Once you edit code by hand the Visual Editor becomes read-only for that script. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
+Prefer typing? Switch the Sandbox to **Advanced** and paste the listing into the code editor instead of building blocks. Keep a script you write by hand in Advanced mode: switching back to Blockly replaces the code with what the blocks generate. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
 {% endhint %}
 
 ## Step 3: Add the Slider and Test Without Hardware

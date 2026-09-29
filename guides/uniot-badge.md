@@ -16,7 +16,13 @@ The Uniot Badge is equipped with the following hardware components:
 
 ## Getting Started
 
-To start working with the Uniot Badge, you need to flash the board and add it to the platform. The firmware source code can be found [here](https://github.com/uniot-io/uniot-promo-badge-firmware). Instructions for flashing and adding the device to the platform are available in the [Getting Started](../guides/getting-started.md) section.
+The badge comes with its firmware installed. To connect it to your account:
+
+1. Power it over USB-C. With no WiFi stored, it opens a WiFi network named `UNIOT-…`. Join it from your phone or computer.
+2. On the page that opens, enter your WiFi details and your Uniot account ID.
+3. When the badge is online, authorize it on the **Devices** page — see [Authorize the Device](getting-started.md#authorize-the-device).
+
+To update the firmware, or to install it on a badge that doesn't have it, use the [Firmware Installer](../platform/installer.md) at [install.uniot.io](https://install.uniot.io). An update keeps the badge's WiFi settings, identity and script.
 
 ## Promo
 
@@ -42,7 +48,7 @@ To interact with peripherals, the firmware has corresponding primitives. Read mo
 
 <div align="left"><figure><img src="../.gitbook/assets/uniot_badge_primitive_vibro.png" alt=""><figcaption></figcaption></figure></div>
 
-Vibrates the specified number of times (the period of one vibration is set in the [firmware](https://github.com/uniot-io/uniot-promo-badge-firmware/blob/main/lib/Vibro/Vibro.h#L9)).
+Vibrates the specified number of times (the period of one vibration is set in the [firmware](https://github.com/uniot-io/uniot-promo-badge-firmware/blob/1.0.0/lib/Vibro/Vibro.h#L8)).
 
 **Parameters:**
 
@@ -85,7 +91,16 @@ Turns on the set LEDs.
 
 ## Firmware
 
-The Uniot Badge is powered by firmware based on [Uniot Core](../advanced/uniot-core.md). You can find the source code of the firmware [here](https://github.com/uniot-io/uniot-promo-badge-firmware).
+The Uniot Badge is powered by firmware based on [Uniot Core](../advanced/uniot-core.md). Its source, and every release, are in the [uniot-promo-badge-firmware](https://github.com/uniot-io/uniot-promo-badge-firmware) repository.
+
+Each release comes in two builds, which differ only in WiFi transmit power:
+
+* **Compatible** works on every badge, at a shorter range. Badges ship with it.
+* **Full range** transmits at the chip's full power, for a badge whose radio copes with it.
+
+The [Firmware Installer](../platform/installer.md) shows which version and build a badge is running, and installs either one — see [Which radio build](../platform/installer.md#which-radio-build). It can also install a hardware test that checks the LEDs, the sensor, the button and the motor without a network or an account.
+
+Power-cycling the badge five times in quick succession clears its WiFi settings and opens the `UNIOT-…` network again. It helps when you've moved the badge to another network.
 
 ## Script Examples
 

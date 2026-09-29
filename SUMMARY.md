@@ -39,6 +39,7 @@
     - [Primitives](platform/sandbox/visual-editor/primitives.md)
   - [Logger](platform/sandbox/logger.md)
   - [Emulator](platform/sandbox/emulator.md)
+- [Firmware Installer](platform/installer.md)
 
 ## Advanced
 
