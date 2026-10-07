@@ -56,7 +56,7 @@ Open the **Sandbox** page and open **My First Script**.
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/welcome_script.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/welcome_script.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -143,7 +143,7 @@ Create a script called `Bell Button`. On a click it publishes `ring` with the va
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/bell_button_script.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/bell_button_script.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -198,7 +198,7 @@ Create a second script called `Bell`. When a `ring` event with the value `1` arr
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/bell_script.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/bell_script.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}

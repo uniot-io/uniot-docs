@@ -4,7 +4,7 @@ Text blocks handle string operations and text-based data. Use these blocks to cr
 
 ## value
 
-<div align="left"><figure><img src="../../../.gitbook/assets/text_value.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/text_value.svg" alt=""><figcaption></figcaption></figure></div>
 
 A text string constant. Use this block to create fixed text values for labels, messages, or event names.
 
@@ -18,11 +18,11 @@ A text string constant. Use this block to create fixed text values for labels, m
 
 **Example:**
 
-<div align="left"><figure><img src="../../../.gitbook/assets/text_value_example.png" alt=""><figcaption>Text value creation</figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/text_value_example.svg" alt=""><figcaption>Text value creation</figcaption></figure></div>
 
 ## quote
 
-<div align="left"><figure><img src="../../../.gitbook/assets/text_quote.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/text_quote.svg" alt=""><figcaption></figcaption></figure></div>
 
 Converts an expression or value into a string representation without evaluating it. Useful for capturing code as text.
 
@@ -36,7 +36,7 @@ Converts an expression or value into a string representation without evaluating 
 
 ## eval
 
-<div align="left"><figure><img src="../../../.gitbook/assets/text_eval.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/text_eval.svg" alt=""><figcaption></figcaption></figure></div>
 
 Evaluates a text string as UniotLisp code and returns the result. Use this to execute dynamic code or parse text-based expressions.
 
@@ -50,7 +50,7 @@ Evaluates a text string as UniotLisp code and returns the result. Use this to ex
 
 ## print
 
-<div align="left"><figure><img src="../../../.gitbook/assets/text_print.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/text_print.svg" alt=""><figcaption></figcaption></figure></div>
 
 Sends a log message to the MQTT broker. Messages appear on the device details page for monitoring and debugging, and in the Emulator's logs panel when the script runs in the [Emulator](../emulator.md#logs).
 
@@ -60,4 +60,4 @@ Sends a log message to the MQTT broker. Messages appear on the device details pa
 
 **Example:**
 
-<div align="left"><figure><img src="../../../.gitbook/assets/text_print_example.png" alt=""><figcaption>Logging messages</figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/text_print_example.svg" alt=""><figcaption>Logging messages</figcaption></figure></div>

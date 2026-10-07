@@ -4,7 +4,7 @@ Functions let you organize code into reusable blocks. Create custom functions wi
 
 ## function definition
 
-<div align="left"><figure><img src="../../../.gitbook/assets/functions_template.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/functions_template.svg" alt=""><figcaption></figcaption></figure></div>
 
 Defines a new function that can be called from anywhere in your script. Click the gear icon to add parameters and configure the return value.
 
@@ -18,7 +18,7 @@ Defines a new function that can be called from anywhere in your script. Click th
 
 ## function call
 
-<div align="left"><figure><img src="../../../.gitbook/assets/functions_call.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/functions_call.svg" alt=""><figcaption></figcaption></figure></div>
 
 Executes a previously defined function. Provide values for any parameters the function expects.
 

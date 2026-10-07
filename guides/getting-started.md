@@ -264,7 +264,7 @@ Open the **Sandbox** page. Every new account comes with a welcome script called 
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/welcome_script.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/welcome_script.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -288,18 +288,19 @@ Open the **Sandbox** page. Every new account comes with a welcome script called 
 ; it runs indefinitely. The context is released after
 ; each run, allowing other processes to run smoothly.
 (task 0 50 '
- (list
-  ; If the button '0' is clicked, emit an event 'led' to toggle state.
+ (progn
+; If the button '0' is clicked, emit an event 'led' to toggle state.
   (if
    (bclicked 0)
-   (list
+   (progn
     (push_event 'led
-     (not state))))
-  ; When the 'led' event is triggered, set 'state' to the received
-  ; value and write to pin '0', driving the LED accordingly.
+     (not
+      (bool state)))))
+; When the ‘led’ event is triggered, set ‘state’ to the received
+; value and write to pin ‘0’, driving the LED accordingly.
   (if
    (is_event 'led)
-   (list
+   (progn
     (setq state
      (pop_event 'led))
     (dwrite 0 state)))))

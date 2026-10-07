@@ -4,7 +4,7 @@ Math blocks provide numerical operations and calculations for your scripts. Use 
 
 ## value
 
-<div align="left"><figure><img src="../../../.gitbook/assets/math_value.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/math_value.svg" alt=""><figcaption></figcaption></figure></div>
 
 A numeric constant. Use this block to provide fixed numbers for calculations, comparisons, or as parameters to other blocks.
 
@@ -14,11 +14,11 @@ A numeric constant. Use this block to provide fixed numbers for calculations, co
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/math_value_example.png" alt=""><figcaption>Define temperature thresholds</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/math_value_example.svg" alt=""><figcaption>Define temperature thresholds</figcaption></figure></div>
 
 ## math operation
 
-<div align="left"><figure><img src="../../../.gitbook/assets/math_operation.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img width="138" src="../../../.gitbook/assets/math_operation.png" alt=""><figcaption></figcaption></figure></div>
 
 Applies a single-value mathematical operation. Choose from absolute value (removes sign) or negation (flips positive to negative and vice versa).
 
@@ -33,11 +33,11 @@ Applies a single-value mathematical operation. Choose from absolute value (remov
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/math_operation_example.png" alt=""><figcaption>Temperature difference calculation</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/math_operation_example.svg" alt=""><figcaption>Temperature difference calculation</figcaption></figure></div>
 
 ## arithmetic
 
-<div align="left"><figure><img src="../../../.gitbook/assets/math_arithmetic.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/math_arithmetic.svg" alt=""><figcaption></figcaption></figure></div>
 
 Performs basic arithmetic operations between two numbers.
 
@@ -53,11 +53,11 @@ Performs basic arithmetic operations between two numbers.
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/math_arithmetic_example.png" alt=""><figcaption>Convert raw sensor value to voltage</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/math_arithmetic_example.svg" alt=""><figcaption>Convert raw sensor value to voltage</figcaption></figure></div>
 
 ## number condition
 
-<div align="left"><figure><img src="../../../.gitbook/assets/math_number_condition.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img width="193" src="../../../.gitbook/assets/math_number_condition.png" alt=""><figcaption></figcaption></figure></div>
 
 Checks whether a number meets a specific condition. Use this for pattern detection or periodic actions.
 
@@ -72,11 +72,11 @@ Checks whether a number meets a specific condition. Use this for pattern detecti
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/math_number_condition_example.png" alt=""><figcaption>Read sensor value every 5th script execution</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/math_number_condition_example.svg" alt=""><figcaption>Read sensor value every 5th script execution</figcaption></figure></div>
 
 ## remainder
 
-<div align="left"><figure><img src="../../../.gitbook/assets/math_remainder.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/math_remainder.svg" alt=""><figcaption></figcaption></figure></div>
 
 Calculates the remainder after dividing one number by another (modulo operation). Useful for creating repeating patterns or detecting multiples.
 
@@ -91,4 +91,4 @@ Calculates the remainder after dividing one number by another (modulo operation)
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/loops_iterator_example.png" alt=""><figcaption>Alternate on/off pattern for multiple LEDs</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/loops_iterator_example.svg" alt=""><figcaption>Alternate on/off pattern for multiple LEDs</figcaption></figure></div>

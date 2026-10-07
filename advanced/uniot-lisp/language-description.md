@@ -252,6 +252,21 @@ Because `and` stops at the first false value, it can guard an expression that wo
 total   ; -> 3
 ```
 
+When an inner loop finishes, `#itr` is the outer loop's count again. To use the outer count inside the inner loop, store it first:
+
+```lisp
+(define row ())
+(define cells 0)
+(while (< #itr 3)
+  (setq row (+ #itr 0))
+  (while (< #itr 4) (setq cells (+ cells (+ (* row 4) #itr)))))
+cells   ; -> 66
+```
+
+{% hint style="warning" %}
+**Known issue:** `(setq row #itr)` stores a link to the loop counter rather than its value, so `row` changes along with `#itr`: it follows the inner loop, and a count saved inside a loop reads `0` once the loop has finished. Until this is fixed, store a copy, as above: `(+ #itr 0)` makes a new number. The fix is coming in the next release of the interpreter, after which `(setq row #itr)` keeps its value.
+{% endhint %}
+
 On a device, a script usually doesn't loop forever itself. It runs its work in a [task](../../general-concepts/scripting.md), which the device repeats on a schedule. A loop that never ends is stopped with an error rather than hanging the device.
 
 **A call in tail position uses no extra memory**, so a function that calls itself as the last thing it does runs in constant space, however long the list. This is the usual way to walk a list:

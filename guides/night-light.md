@@ -106,7 +106,7 @@ Open the **Sandbox** page and create a script called `Night Light`. The first ve
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/night_light_1.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/night_light_1.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -150,7 +150,7 @@ The LED should be on whenever the reading is below a threshold. Outside the task
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/night_light_2.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/night_light_2.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -200,7 +200,7 @@ The device should report the reading to the dashboard, but only when it has move
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/night_light_3.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/night_light_3.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -260,7 +260,7 @@ The dashboard should be able to move the threshold while the script runs. At the
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/night_light_4.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/night_light_4.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}

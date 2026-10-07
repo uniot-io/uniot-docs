@@ -30,16 +30,16 @@ A drag-and-drop interface for users who prefer graphical programming:
 
 **Example Visual Blocks**:
 
-<div><figure><img src="../.gitbook/assets/concepts/scripting/workflow_visual.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/scripting_example_1.svg" alt=""><figcaption></figcaption></figure></div>
 
 **Generated UniotLisp Code**:
 
 ```lisp
 (task 0 100 '
- (list
+ (progn
   (if
    (bclicked 0)
-   (list
+   (progn
     (dwrite 0 #t)))))
 ```
 
@@ -52,7 +52,43 @@ A text-based editor for advanced users who want full control:
 - **Error Detection**: When you compile, the line with an error is marked and the expression that failed is underlined
 - **Perfect for**: Advanced users, complex logic, performance-critical code
 
-<div><figure><img src="../.gitbook/assets/concepts/scripting/workflow_code.png" alt=""><figcaption></figcaption></figure></div>
+For example, **"My First Script"**, the script every new account comes with, as UniotLisp code:
+
+```lisp
+;;; begin-user-library
+;; This block describes the library of user functions.
+;; So the editor knows that your device implements it.
+;
+; (defjs bclicked (button_id)) ;-> Bool
+; (defjs dwrite (pin state)) ;-> Bool
+;
+;;; end-user-library
+
+(define state ())
+
+(setq state ())
+
+; Runs the task every '50' ms. Since 'times' is '0',
+; it runs indefinitely. The context is released after
+; each run, allowing other processes to run smoothly.
+(task 0 50 '
+ (progn
+; If the button '0' is clicked, emit an event 'led' to toggle state.
+  (if
+   (bclicked 0)
+   (progn
+    (push_event 'led
+     (not
+      (bool state)))))
+; When the ‘led’ event is triggered, set ‘state’ to the received
+; value and write to pin ‘0’, driving the LED accordingly.
+  (if
+   (is_event 'led)
+   (progn
+    (setq state
+     (pop_event 'led))
+    (dwrite 0 state)))))
+```
 
 ### Script Delivery
 
@@ -102,14 +138,14 @@ Each script provides a main execution loop through the `task` statement. This bl
 
 Example (run forever every 100 ms):
 
-<div><figure><img src="../.gitbook/assets/concepts/scripting/workflow_visual.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/scripting_example_1.svg" alt=""><figcaption></figcaption></figure></div>
 
 ```lisp
 (task 0 100 '
- (list
+ (progn
   (if
    (bclicked 0)
-   (list
+   (progn
     (dwrite 0 #t)))))
 ```
 
@@ -140,16 +176,16 @@ Below are pairs of visual blocks and the generated UniotLisp code.
 
 Run task every 100 ms; if button 0 clicked → digital write true to pin 0.
 
-<div><figure><img src="../.gitbook/assets/concepts/scripting/example_1.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/scripting_example_1.svg" alt=""><figcaption></figcaption></figure></div>
 
 Generated code:
 
 ```lisp
 (task 0 100 '
- (list
+ (progn
   (if
    (bclicked 0)
-   (list
+   (progn
     (dwrite 0 #t)))))
 ```
 
@@ -157,17 +193,20 @@ Generated code:
 
 Run task every 500 ms; toggle LED at pin 0.
 
-<div><figure><img src="../.gitbook/assets/concepts/scripting/example_2.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/scripting_example_2.svg" alt=""><figcaption></figcaption></figure></div>
 
 Generated code:
 
 ```lisp
 (define state ())
+
 (setq state ())
+
 (task 0 500 '
- (list
+ (progn
   (setq state
-   (not state))
+   (not
+    (bool state)))
   (dwrite 0 state)))
 ```
 
@@ -175,19 +214,19 @@ Generated code:
 
 Run task every 5 s; if sensor (A0) > 512 → LED on else LED off.
 
-<div><figure><img src="../.gitbook/assets/concepts/scripting/example_3.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/scripting_example_3.svg" alt=""><figcaption></figcaption></figure></div>
 
 Generated code:
 
 ```lisp
 (task 0 5000 '
- (list
+ (progn
   (if
    (>
     (aread 0) 512)
-   (list
+   (progn
     (dwrite 0 #t))
-   (list
+   (progn
     (dwrite 0 ())))))
 ```
 
@@ -195,20 +234,23 @@ Generated code:
 
 Run task every 100 ms; if button clicked → toggle LED.
 
-<div><figure><img src="../.gitbook/assets/concepts/scripting/example_4.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/scripting_example_4.svg" alt=""><figcaption></figcaption></figure></div>
 
 Generated code:
 
 ```lisp
 (define state ())
+
 (setq state ())
+
 (task 0 100 '
- (list
+ (progn
   (if
    (bclicked 0)
-   (list
+   (progn
     (setq state
-     (not state))
+     (not
+      (bool state)))
     (dwrite 0 state)))))
 ```
 

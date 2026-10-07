@@ -475,7 +475,7 @@ Once the device reconnects, the Visual Editor shows a `set_led_brightness` block
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/concepts/primitives/custom_example.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/custom_primitive_example.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -491,7 +491,7 @@ Once the device reconnects, the Visual Editor shows a `set_led_brightness` block
 ;;; end-user-library
 
 (task 0 100 '
- (list
+ (progn
   (set_led_brightness 0 128)))
 ```
 

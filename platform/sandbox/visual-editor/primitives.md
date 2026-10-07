@@ -14,7 +14,7 @@ For user-defined primitives, the visual editor cannot automatically determine wh
 
 ## analog read
 
-<div align="left"><figure><img src="../../../.gitbook/assets/primitives_analog_read.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/primitives_analog_read.svg" alt=""><figcaption></figcaption></figure></div>
 
 Reads an analog value from the specified register. Use this for sensors that output variable voltage levels.
 
@@ -28,11 +28,11 @@ Reads an analog value from the specified register. Use this for sensors that out
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/primitives_analog_read_example.png" alt=""><figcaption>Check light level and push event if it's too low</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/primitives_analog_read_example.svg" alt=""><figcaption>Check light level and push event if it's too low</figcaption></figure></div>
 
 ## analog write
 
-<div align="left"><figure><img src="../../../.gitbook/assets/primitives_analog_write.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/primitives_analog_write.svg" alt=""><figcaption></figcaption></figure></div>
 
 Writes an analog (PWM) value to the specified register. Use this to control LED brightness, motor speed, or other variable outputs.
 
@@ -47,11 +47,11 @@ Writes an analog (PWM) value to the specified register. Use this to control LED 
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/primitives_analog_write_example.png" alt=""><figcaption>Receive brightness value from dashboard and set LED accordingly</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/primitives_analog_write_example.svg" alt=""><figcaption>Receive brightness value from dashboard and set LED accordingly</figcaption></figure></div>
 
 ## digital read
 
-<div align="left"><figure><img src="../../../.gitbook/assets/primitives_digital_read.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/primitives_digital_read.svg" alt=""><figcaption></figcaption></figure></div>
 
 Reads the digital state from the specified register (HIGH or LOW).
 
@@ -65,11 +65,11 @@ Reads the digital state from the specified register (HIGH or LOW).
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/primitives_digital_read_example.png" alt=""><figcaption>Read switch state and push event when changed</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/primitives_digital_read_example.svg" alt=""><figcaption>Read switch state and push event when changed</figcaption></figure></div>
 
 ## digital write
 
-<div align="left"><figure><img src="../../../.gitbook/assets/primitives_digital_write.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/primitives_digital_write.svg" alt=""><figcaption></figcaption></figure></div>
 
 Sets a digital register to HIGH or LOW. Use this to control LEDs, relays, or other on/off outputs.
 
@@ -80,11 +80,11 @@ Sets a digital register to HIGH or LOW. Use this to control LEDs, relays, or oth
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/primitives_digital_write_example.png" alt=""><figcaption>Check for event and control LED state</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/primitives_digital_write_example.svg" alt=""><figcaption>Check for event and control LED state</figcaption></figure></div>
 
 ## button clicked
 
-<div align="left"><figure><img src="../../../.gitbook/assets/primitives_button_clicked.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/primitives_button_clicked.svg" alt=""><figcaption></figcaption></figure></div>
 
 Detects button press events on the specified register. Returns true when a press-and-release cycle is detected, then resets until the next click.
 
@@ -98,11 +98,11 @@ Detects button press events on the specified register. Returns true when a press
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/primitives_button_clicked_example.png" alt=""><figcaption>Toggle LED state on button click</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/primitives_button_clicked_example.svg" alt=""><figcaption>Toggle LED state on button click</figcaption></figure></div>
 
 ## user primitive (template)
 
-<div align="left"><figure><img src="../../../.gitbook/assets/primitives_user_primitive.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/primitives_user_primitive.svg" alt=""><figcaption></figcaption></figure></div>
 
 Creates a custom primitive definition that you'll implement in your firmware. Click the gear icon to configure parameters and return type.
 
@@ -120,7 +120,7 @@ Creates a custom primitive definition that you'll implement in your firmware. Cl
 
 ## user primitive (autogenerated)
 
-<div align="left"><figure><img src="../../../.gitbook/assets/primitives_user_primitive_auto.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/primitives_user_primitive_auto.svg" alt=""><figcaption></figcaption></figure></div>
 
 Calls a custom primitive already defined in your device firmware. These blocks are automatically generated based on primitives registered in your firmware code.
 
@@ -138,4 +138,4 @@ Calls a custom primitive already defined in your device firmware. These blocks a
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/primitives_user_primitive_auto_example.png" alt=""><figcaption>Custom LED strip control</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/primitives_user_primitive_auto_example.svg" alt=""><figcaption>Custom LED strip control</figcaption></figure></div>
