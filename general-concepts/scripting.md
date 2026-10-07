@@ -107,29 +107,24 @@ Uniot Platform → MQTT Broker → Device → UniotLisp Interpreter → Executio
 
 ### Script Execution
 
-The UniotLisp interpreter executes scripts in a sandboxed environment:
+Before a script is sent, the Sandbox compiles it in the browser, against the selected device's memory limits, so syntax errors and most mistakes are caught before the script reaches the device. See [Compile, emulate, deploy](../platform/sandbox/README.md#compile-emulate-deploy).
 
-**Execution Lifecycle**:
+On the device:
 
-```
-Script Received → Parse → Validate → Execute → Monitor → Report
-```
+1. **A fresh interpreter is built for the script**, with memory of its own, sized by the firmware, and the primitives the firmware registered. A new script replaces the one that was running.
+2. **The script runs from top to bottom.** Definitions and assignments run once. A `task` schedules its body to run on a timer; a script without one simply finishes, and the interpreter is shut down.
+3. **The task body runs on its schedule**, and between runs the device does its other work: the network, buttons, timers.
+4. **Printed lines and errors go to the platform**, and appear under the device's **Logs** tab. An error stops the script; the device itself keeps running.
 
-1. **Parsing**: Code is parsed into Abstract Syntax Tree (AST)
-2. **Validation**: Syntax and semantic checks
-3. **Execution**: Code runs in isolated environment
-4. **Monitoring**: Memory and execution time tracking
-5. **Reporting**: Errors and logs sent back via MQTT
+**What a script can reach:**
 
-**Interpreter Sandbox Limitations**:
-
-- ✅ **Allowed**: Registered primitives, defined variables, safe operations
-- ❌ **Restricted**: Direct memory access, system calls, infinite loops (watchdog)
-- 🔒 **Protected**: Only registered GPIO pins accessible
+- **Only what the firmware provides.** A script works through the primitives the firmware registered. Pins and buttons are addressed by their index in the [register](primitives.md#the-register-system), so a script can only reach the ones the firmware made available.
+- **Only its own memory.** Running out stops the script with `Memory exhausted`, not the device.
+- **No endless loops.** A loop, together with the loops inside it, may run for 20,000 passes ([Loops](../platform/sandbox/visual-editor/loops.md#how-long-a-loop-may-run)), and recursion too deep for the device is stopped with an error as well. Work that should go on for as long as the device runs belongs in the task.
 
 ### Task-based Execution Model
 
-Each script provides a main execution loop through the `task` statement. This block must be included in a script. The scheduler calls the script periodically.
+A script does its ongoing work in a `task`, which the device runs on a schedule. A script has at most one task; the Sandbox warns about a second. A script without a task runs once, from top to bottom, and stops.
 
 - `(task times period ' body)`
   - `times`: how many times to run (use `0` for infinite)
@@ -153,20 +148,16 @@ This model keeps scripts cooperative and responsive.
 
 ### Script Persistence
 
-Scripts can persist across device reboots:
+The platform keeps the last script sent to each device, and delivers it whenever the device connects. On top of that, the device can store the script itself, so that it starts again as soon as the device does, before the network is back.
 
-**Persistence Options**:
+Deploying from the Sandbox stores the script on the device. When you choose a device in the dialog, or in a **Deploy** widget's settings on a dashboard, the **Store script on the device** option decides it; it is on by default.
 
-| Mode           | Description                  | Use Case                    |
-| -------------- | ---------------------------- | --------------------------- |
-| **Volatile**   | Runs once, not saved         | Testing, temporary behavior |
-| **Persistent** | Saved to flash, runs on boot | Production automation rules |
+| After a restart | Stored on the device | Not stored |
+| --- | --- | --- |
+| **Runs again** | Straight away, even without a network | Once the device has reconnected and received it |
+| **Use for** | Anything the device should keep doing on its own | Trying a script out |
 
-**Storage**:
-
-- Scripts stored in filesystem
-- Checksum verified on load
-- Failed scripts don't prevent boot
+A stored script that stops with an error doesn't stop the device: the error is reported, and the device carries on without a script until one is delivered again — the next deploy, or the platform's copy the next time the device connects.
 
 ## Examples
 
