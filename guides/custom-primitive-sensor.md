@@ -31,7 +31,7 @@ The Adafruit DHT library talks to the sensor, and it depends on Adafruit's Unifi
 
 ```ini
 lib_deps =
-    uniot-io/uniot-core@^0.8.1
+    uniot-io/uniot-core@^0.9.0
     adafruit/DHT sensor library@^1.4.6
     adafruit/Adafruit Unified Sensor@^1.1.14
 ```
@@ -112,7 +112,7 @@ Open the **Sandbox** page, select your device in the sidebar, and create a scrip
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/thermostat_1.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/thermostat_1.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -184,7 +184,7 @@ The AC should switch on when the temperature rises above a setpoint, switch off 
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/thermostat_2.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/thermostat_2.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -253,7 +253,7 @@ Two more jobs: publish the temperature whenever it changes, and accept a new set
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/thermostat_3.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/thermostat_3.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -325,7 +325,7 @@ Two more jobs: publish the temperature whenever it changes, and accept a new set
 - **Vocabulary** — the user library block declares two words, `get_temp` and `dwrite`. Everything else in the script is plain UniotLisp; nothing in it says DHT22, GPIO4 or GPIO13.
 
 {% hint style="info" %}
-Prefer typing? Paste the listing into the **Code Editor**. Once you edit code by hand the Visual Editor becomes read-only for that script. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
+Prefer typing? Switch the Sandbox to **Advanced** and paste the listing into the code editor instead of building blocks. Keep a script you write by hand in Advanced mode: switching back to Blockly replaces the code with what the blocks generate. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
 {% endhint %}
 
 {% hint style="success" %}
@@ -380,8 +380,8 @@ The script's only hardware words are `get_temp` and `dwrite`. A board with a dif
 
 ## What's Next
 
-{% content-ref url="schedule-on-the-device.md" %}
-[Schedule on the Device](schedule-on-the-device.md)
+{% content-ref url="uniot-badge.md" %}
+[Uniot Badge](uniot-badge.md)
 {% endcontent-ref %}
 
 {% content-ref url="../general-concepts/primitives.md" %}

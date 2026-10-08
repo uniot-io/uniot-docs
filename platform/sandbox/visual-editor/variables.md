@@ -10,7 +10,7 @@ Create variables through the Variables section in the toolbox before using them.
 
 ## set
 
-<div align="left"><figure><img src="../../../.gitbook/assets/variables_set.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/variables_set.svg" alt=""><figcaption></figcaption></figure></div>
 
 Assigns a value to a variable. If the variable doesn't exist, it's created automatically.
 
@@ -21,11 +21,11 @@ Assigns a value to a variable. If the variable doesn't exist, it's created autom
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/variables_set_example.png" alt=""><figcaption>Setting variables</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/variables_set_example.svg" alt=""><figcaption>Setting variables</figcaption></figure></div>
 
 ## get
 
-<div align="left"><figure><img src="../../../.gitbook/assets/variables_get.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/variables_get.svg" alt=""><figcaption></figcaption></figure></div>
 
 Retrieves the current value stored in a variable.
 
@@ -39,11 +39,11 @@ Retrieves the current value stored in a variable.
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/variables_get_example.png" alt=""><figcaption>Getting variable values</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/variables_get_example.svg" alt=""><figcaption>Getting variable values</figcaption></figure></div>
 
 ## change
 
-<div align="left"><figure><img src="../../../.gitbook/assets/variables_change.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../../../.gitbook/assets/variables_change.svg" alt=""><figcaption></figcaption></figure></div>
 
 Increments or decrements a numeric variable by adding a value to it. Use negative values to subtract.
 
@@ -54,11 +54,11 @@ Increments or decrements a numeric variable by adding a value to it. Use negativ
 
 **Example:**
 
-<div><figure><img src="../../../.gitbook/assets/variables_change_example.png" alt=""><figcaption>Modifying variables</figcaption></figure></div>
+<div><figure><img src="../../../.gitbook/assets/variables_change_example.svg" alt=""><figcaption>Modifying variables</figcaption></figure></div>
 
 ## Managing Variables
 
-<div align="left"><figure><img src="../../../.gitbook/assets/variables_dropdown.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img width="233" src="../../../.gitbook/assets/variables_dropdown.png" alt=""><figcaption></figcaption></figure></div>
 
 The variable dropdown menu in each block provides options to:
 

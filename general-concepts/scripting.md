@@ -30,16 +30,16 @@ A drag-and-drop interface for users who prefer graphical programming:
 
 **Example Visual Blocks**:
 
-<div><figure><img src="../.gitbook/assets/concepts/scripting/workflow_visual.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/scripting_example_1.svg" alt=""><figcaption></figcaption></figure></div>
 
 **Generated UniotLisp Code**:
 
 ```lisp
 (task 0 100 '
- (list
+ (progn
   (if
    (bclicked 0)
-   (list
+   (progn
     (dwrite 0 #t)))))
 ```
 
@@ -49,10 +49,46 @@ A text-based editor for advanced users who want full control:
 
 - **Full Language Access**: Use all UniotLisp features and primitives
 - **Syntax Highlighting**: Visual feedback for code structure
-- **Error Detection**: Real-time syntax validation
+- **Error Detection**: When you compile, the line with an error is marked and the expression that failed is underlined
 - **Perfect for**: Advanced users, complex logic, performance-critical code
 
-<div><figure><img src="../.gitbook/assets/concepts/scripting/workflow_code.png" alt=""><figcaption></figcaption></figure></div>
+For example, **"My First Script"**, the script every new account comes with, as UniotLisp code:
+
+```lisp
+;;; begin-user-library
+;; This block describes the library of user functions.
+;; So the editor knows that your device implements it.
+;
+; (defjs bclicked (button_id)) ;-> Bool
+; (defjs dwrite (pin state)) ;-> Bool
+;
+;;; end-user-library
+
+(define state ())
+
+(setq state ())
+
+; Runs the task every '50' ms. Since 'times' is '0',
+; it runs indefinitely. The context is released after
+; each run, allowing other processes to run smoothly.
+(task 0 50 '
+ (progn
+; If the button '0' is clicked, emit an event 'led' to toggle state.
+  (if
+   (bclicked 0)
+   (progn
+    (push_event 'led
+     (not
+      (bool state)))))
+; When the ‘led’ event is triggered, set ‘state’ to the received
+; value and write to pin ‘0’, driving the LED accordingly.
+  (if
+   (is_event 'led)
+   (progn
+    (setq state
+     (pop_event 'led))
+    (dwrite 0 state)))))
+```
 
 ### Script Delivery
 
@@ -65,53 +101,30 @@ Uniot Platform → MQTT Broker → Device → UniotLisp Interpreter → Executio
 **Delivery Flow**:
 
 1. **User creates/edits script** in the [Sandbox](../platform/sandbox/README.md)
-2. **Script is packaged** as CBOR-encoded MQTT message
-3. **Published to device topic**: `<domain>/users/<userId>/devices/<deviceId>/script`
-4. **Device receives script** via MQTT subscription
-5. **Script is validated** and optionally stored
-6. **Interpreter executes** the script
-
-**Script Payload Structure** (CBOR):
-
-```json
-{
-  "code": "(defun hello () (print 'hello-world)) (hello)",
-  "persist": true,
-  "timestamp": 1679968928
-}
-```
-
-**Fields**:
-
-- `code`: UniotLisp source code
-- `persist`: Whether to save script and run on reboot
-- `timestamp`: Timestamp when the script was sent
+2. **The script is sent to the device** over MQTT. A device that is offline receives it when it next connects.
+3. **The device stores the script**, so it runs again after a reboot
+4. **Interpreter executes** the script
 
 ### Script Execution
 
-The UniotLisp interpreter executes scripts in a sandboxed environment:
+Before a script is sent, the Sandbox compiles it in the browser, against the selected device's memory limits, so syntax errors and most mistakes are caught before the script reaches the device. See [Compile, emulate, deploy](../platform/sandbox/README.md#compile-emulate-deploy).
 
-**Execution Lifecycle**:
+On the device:
 
-```
-Script Received → Parse → Validate → Execute → Monitor → Report
-```
+1. **A fresh interpreter is built for the script**, with memory of its own, sized by the firmware, and the primitives the firmware registered. A new script replaces the one that was running.
+2. **The script runs from top to bottom.** Definitions and assignments run once. A `task` schedules its body to run on a timer; a script without one simply finishes, and the interpreter is shut down.
+3. **The task body runs on its schedule**, and between runs the device does its other work: the network, buttons, timers.
+4. **Printed lines and errors go to the platform**, and appear under the device's **Logs** tab. An error stops the script; the device itself keeps running.
 
-1. **Parsing**: Code is parsed into Abstract Syntax Tree (AST)
-2. **Validation**: Syntax and semantic checks
-3. **Execution**: Code runs in isolated environment
-4. **Monitoring**: Memory and execution time tracking
-5. **Reporting**: Errors and logs sent back via MQTT
+**What a script can reach:**
 
-**Interpreter Sandbox Limitations**:
-
-- ✅ **Allowed**: Registered primitives, defined variables, safe operations
-- ❌ **Restricted**: Direct memory access, system calls, infinite loops (watchdog)
-- 🔒 **Protected**: Only registered GPIO pins accessible
+- **Only what the firmware provides.** A script works through the primitives the firmware registered. Pins and buttons are addressed by their index in the [register](primitives.md#the-register-system), so a script can only reach the ones the firmware made available.
+- **Only its own memory.** Running out stops the script with `Memory exhausted`, not the device.
+- **No endless loops.** A loop, together with the loops inside it, may run for 20,000 passes ([Loops](../platform/sandbox/visual-editor/loops.md#how-long-a-loop-may-run)), and recursion too deep for the device is stopped with an error as well. Work that should go on for as long as the device runs belongs in the task.
 
 ### Task-based Execution Model
 
-Each script provides a main execution loop through the `task` statement. This block must be included in a script. The scheduler calls the script periodically.
+A script does its ongoing work in a `task`, which the device runs on a schedule. A script has at most one task; the Sandbox warns about a second. A script without a task runs once, from top to bottom, and stops.
 
 - `(task times period ' body)`
   - `times`: how many times to run (use `0` for infinite)
@@ -120,14 +133,14 @@ Each script provides a main execution loop through the `task` statement. This bl
 
 Example (run forever every 100 ms):
 
-<div><figure><img src="../.gitbook/assets/concepts/scripting/workflow_visual.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/scripting_example_1.svg" alt=""><figcaption></figcaption></figure></div>
 
 ```lisp
 (task 0 100 '
- (list
+ (progn
   (if
    (bclicked 0)
-   (list
+   (progn
     (dwrite 0 #t)))))
 ```
 
@@ -135,20 +148,16 @@ This model keeps scripts cooperative and responsive.
 
 ### Script Persistence
 
-Scripts can persist across device reboots:
+The platform keeps the last script sent to each device, and delivers it whenever the device connects. On top of that, the device can store the script itself, so that it starts again as soon as the device does, before the network is back.
 
-**Persistence Options**:
+Deploying from the Sandbox stores the script on the device. When you choose a device in the dialog, or in a **Deploy** widget's settings on a dashboard, the **Store script on the device** option decides it; it is on by default.
 
-| Mode           | Description                  | Use Case                    |
-| -------------- | ---------------------------- | --------------------------- |
-| **Volatile**   | Runs once, not saved         | Testing, temporary behavior |
-| **Persistent** | Saved to flash, runs on boot | Production automation rules |
+| After a restart | Stored on the device | Not stored |
+| --- | --- | --- |
+| **Runs again** | Straight away, even without a network | Once the device has reconnected and received it |
+| **Use for** | Anything the device should keep doing on its own | Trying a script out |
 
-**Storage**:
-
-- Scripts stored in filesystem
-- Checksum verified on load
-- Failed scripts don't prevent boot
+A stored script that stops with an error doesn't stop the device: the error is reported, and the device carries on without a script until one is delivered again — the next deploy, or the platform's copy the next time the device connects.
 
 ## Examples
 
@@ -158,16 +167,16 @@ Below are pairs of visual blocks and the generated UniotLisp code.
 
 Run task every 100 ms; if button 0 clicked → digital write true to pin 0.
 
-<div><figure><img src="../.gitbook/assets/concepts/scripting/example_1.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/scripting_example_1.svg" alt=""><figcaption></figcaption></figure></div>
 
 Generated code:
 
 ```lisp
 (task 0 100 '
- (list
+ (progn
   (if
    (bclicked 0)
-   (list
+   (progn
     (dwrite 0 #t)))))
 ```
 
@@ -175,17 +184,20 @@ Generated code:
 
 Run task every 500 ms; toggle LED at pin 0.
 
-<div><figure><img src="../.gitbook/assets/concepts/scripting/example_2.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/scripting_example_2.svg" alt=""><figcaption></figcaption></figure></div>
 
 Generated code:
 
 ```lisp
 (define state ())
+
 (setq state ())
+
 (task 0 500 '
- (list
+ (progn
   (setq state
-   (not state))
+   (not
+    (bool state)))
   (dwrite 0 state)))
 ```
 
@@ -193,19 +205,19 @@ Generated code:
 
 Run task every 5 s; if sensor (A0) > 512 → LED on else LED off.
 
-<div><figure><img src="../.gitbook/assets/concepts/scripting/example_3.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/scripting_example_3.svg" alt=""><figcaption></figcaption></figure></div>
 
 Generated code:
 
 ```lisp
 (task 0 5000 '
- (list
+ (progn
   (if
    (>
     (aread 0) 512)
-   (list
+   (progn
     (dwrite 0 #t))
-   (list
+   (progn
     (dwrite 0 ())))))
 ```
 
@@ -213,20 +225,23 @@ Generated code:
 
 Run task every 100 ms; if button clicked → toggle LED.
 
-<div><figure><img src="../.gitbook/assets/concepts/scripting/example_4.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/scripting_example_4.svg" alt=""><figcaption></figcaption></figure></div>
 
 Generated code:
 
 ```lisp
 (define state ())
+
 (setq state ())
+
 (task 0 100 '
- (list
+ (progn
   (if
    (bclicked 0)
-   (list
+   (progn
     (setq state
-     (not state))
+     (not
+      (bool state)))
     (dwrite 0 state)))))
 ```
 
@@ -303,17 +318,14 @@ Use the `print` statement (the corresponding [visual block](../platform/sandbox/
 (print (eval ' (aread 0)))
 ```
 
-Printed messages are published to:
+Printed messages appear:
 
-- MQTT topic: `<domain>/users/<userId>/devices/<deviceId>/debug/log`
-- Visible under the “Logs” tab on the device page for deployed script
-- Visible in [the emulator logs](../platform/sandbox/emulator.md#logs)
+- Under the “Logs” tab on the device page, for a deployed script
+- In [the emulator logs](../platform/sandbox/emulator.md#logs), while emulating
 
 ### Errors
 
-If the interpreter encounters an error while executing a script, an event is published to:
-
-- MQTT topic: `<domain>/users/<userId>/devices/<deviceId>/debug/err`
+If the interpreter encounters an error while executing a script, the device reports it to the platform.
 
 You can see in the device list when an error occurs on one of them. The error message is displayed in the same place as the logs (device page → "Logs" tab).
 
@@ -370,5 +382,4 @@ Whether you're building smart home automation, industrial monitoring, or custom 
 
 - [**Primitives**](./primitives.md): Understanding built-in and custom primitives
 - [**UniotLisp Reference**](../advanced/uniot-lisp/README.md): Complete language documentation
-- [**MQTT Protocol**](../api-reference/mqtt-convention.md): How scripts are delivered to devices
-- [**Uniot Platform Guide**](../platform/README.md): Using the visual editor and code editor
+- [**Sandbox**](../platform/sandbox/README.md): Using the visual editor and code editor

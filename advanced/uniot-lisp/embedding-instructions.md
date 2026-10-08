@@ -1,421 +1,304 @@
 # Embedding Instructions
 
-This section is tailored for developers who intendextend the functionality of the UniotLisp interpreter and understand the details better. It covers setup, initialization, extending the interpreter with custom primitives or constants, utilizing the API, and handling advanced configurations.
+This page is for C and C++ developers who want to run the UniotLisp interpreter inside their own program: create it, give it functions of their own, and evaluate code with it.
 
-## Getting Started
+{% hint style="info" %}
+If you are writing firmware with [Uniot Core](../uniot-core.md), you don't need this page. Uniot Core creates and runs the interpreter for you, and adds functions to it through a higher-level API — see [Primitives](../../general-concepts/primitives.md).
+{% endhint %}
 
-To begin using UniotLisp, follow these steps:
+The interpreter is a single C file with no dependencies beyond the C standard library. It allocates one heap when it starts and never calls `malloc` again, which is what makes it suitable for microcontrollers.
 
-1.  **Obtain the Source Code**:
+## Getting the source
 
-    Download or clone the **uniot-lisp** repository from GitHub:
+The source is in the [uniot-lisp](https://github.com/uniot-io/uniot-lisp) repository: `src/libminilisp.c` and `src/libminilisp.h`. With PlatformIO, add it to your project by version tag:
 
-    ```sh
-    git clone https://github.com/uniot-io/uniot-lisp.git
-    ```
-
-    Ensure you have access to the `libminilisp.h`, `libminilisp.c` and `memcheck.h` files.
-2. **Include in Your Project**:
-   * Add `libminilisp.c` to your project's source files.
-   *   Include the header in your code:
-
-       ```c++
-       #include "libminilisp.h"
-       ```
-3.  **Define Print Functions**:
-
-    ```c++
-    void printOut(const char *msg, int size) {
-        fprintf(stdout, "OUT: %s\n", msg);
-    }
-
-    void printLog(const char *msg, int size) {
-        fprintf(stdout, "LOG: %s\n", msg);
-    }
-
-    void printErr(const char *msg, int size) {
-        fprintf(stderr, "ERR: %s\n", msg);
-    }
-    ```
-4.  **Initialize an Environment**:
-
-    ```c++
-    void *env_constructor[3];
-    void *root = NULL;
-    Obj **genv;
-
-    env_constructor[0] = root;
-    env_constructor[1] = NULL;
-    env_constructor[2] = ROOT_END;
-    root = env_constructor;
-    genv = (Obj **)(env_constructor + 1);
-    ```
-5.  **Initialize the Interpreter and Create an Environment**:
-
-    ```c++
-    // Initialize the interpreter with a specified memory size (e.g., 4096 bytes)
-    lisp_create(4096);
-    lisp_set_printers(printOut, printLog, printErr);
-
-    // Create a global environment and define constants and primitives
-    *genv = make_env(root, &Nil, &Nil);
-    define_constants(root, genv);
-    define_primitives(root, genv);
-    ```
-6.  **Evaluate Lisp Code**:
-
-    ```c++
-    const char *code = "(+ 1 2 3)";
-    if (lisp_eval(root, genv, code)) {
-        // Evaluation succeeded
-    } else {
-        // Handle evaluation error
-    }
-    ```
-7.  **Cleanup**:
-
-    ```c++
-    lisp_destroy();
-    ```
-8.  **Full Example Code**:
-
-    ```c++
-    #include <stdio.h>
-    #include "UniotLisp.h"
-
-    void printOut(const char *msg, int size) {
-        fprintf(stdout, "OUT: %s\n", msg);
-    }
-
-    void printLog(const char *msg, int size) {
-        fprintf(stdout, "LOG: %s\n", msg);
-    }
-
-    void printErr(const char *msg, int size) {
-        fprintf(stderr, "ERR: %s\n", msg);
-    }
-
-    int main() {
-        void *env_constructor[3];
-        void *root = NULL;
-        Obj **genv;
-
-        env_constructor[0] = root;
-        env_constructor[1] = NULL;
-        env_constructor[2] = ROOT_END;
-        root = env_constructor;
-        genv = (Obj **)(env_constructor + 1);
-
-        lisp_create(4096);
-        lisp_set_printers(printOut, printLog, printErr);
-
-        *genv = make_env(root, &Nil, &Nil);
-        define_constants(root, genv);
-        define_primitives(root, genv);
-
-        const char *code = "(+ 1 2 3)";
-        if (lisp_eval(root, genv, code)) {
-            // Evaluation succeeded
-        } else {
-            // Handle evaluation error
-        }
-
-        lisp_destroy();
-
-        return 0;
-    }
-    ```
-
-    This code evaluates the expression `(+ 1 2 3)`, which results in `6`.
-
-## Basic Concepts
-
-Understanding the foundational concepts of UniotLisp will aid in effectively utilizing and extending the interpreter.
-
-### Object Representation
-
-**UniotLisp** represents all Lisp entities as `Obj` structures. Each `Obj` can represent various data types, such as integers, symbols, lists (cons cells), functions, macros, and more.
-
-#### **Obj Structure**
-
-```c++
-typedef struct Obj {
-    unsigned char type;      // Type tag
-    ...
-} Obj;
+```ini
+lib_deps =
+    https://github.com/uniot-io/uniot-lisp.git#0.4.0
 ```
 
-#### **Type Tags**
+In any other build, compile `libminilisp.c` along with your own sources and include `libminilisp.h`.
 
-* `TINT`: Integer
-* `TCELL`: Cons cell (pair)
-* `TSYMBOL`: Symbol
-* `TPRIMITIVE`: Primitive function
-* `TFUNCTION`: User-defined function
-* `TMACRO`: Macro
-* `TENV`: Environment frame
-* `TMOVED`: Forwarding pointer (used by GC)
-* `TTRUE`, `TNIL`, `TDOT`, `TCPAREN`: Special constants
+## A minimal host
 
-### Memory Management and Garbage Collection
+This complete program creates an interpreter, evaluates an expression, and prints the result:
 
-**UniotLisp** employs a **copying garbage collector** based on Cheney's algorithm to manage memory efficiently.
+```c
+#include <stdio.h>
+#include "libminilisp.h"
 
-#### **Copying Garbage Collector**
+static void print_out(const char *msg, int size) { printf("%.*s\n", size, msg); }
+static void print_log(const char *msg, int size) { printf("log: %.*s\n", size, msg); }
+static void print_err(const char *msg, int size) { fprintf(stderr, "error: %.*s\n", size, msg); }
 
-* **Semispace Allocation**: The heap is divided into two equal halves (`memory` and `from_space`). Objects are copied from the active semispace to the other during garbage collection.
-* **Forwarding Pointers**: When an object is moved, a forwarding pointer (`TMOVED` type) is placed in its original location to avoid duplicate copies.
-* **Root Management**: Roots are managed through macros (`ADD_ROOT`, `DEFINE1`, etc.) that track pointers on the C stack to ensure live objects are retained.
+int main(void) {
+    void *root = NULL;
+    DEFINE1(env);
 
-#### **Allocation Strategy**
+    lisp_set_printers(print_out, print_log, print_err);
 
-* **Memory Allocation (`alloc`)**: Allocates memory for new objects, triggering garbage collection if necessary.
-* **Memory Exhaustion**: If memory cannot be allocated even after GC, the interpreter terminates with an error.
+    lisp_create(24576, 8192);   // a 24 KB heap, 8 KB of stack for evaluation
+    if (!lisp_is_created()) {
+        return 1;
+    }
 
-### Parsing and Evaluation
+    *env = make_env(root, &Nil, &Nil);
+    define_constants(root, env);
+    define_primitives(root, env);
 
-**UniotLisp** parses Lisp code using a **recursive-descent parser** and evaluates expressions in an environment model.
+    lisp_eval(root, env, "(+ 1 2)");   // prints 3
 
-#### **Parsing**
+    lisp_destroy();
+    return 0;
+}
+```
 
-* **Tokenization**: The `read_expr` function reads characters, identifies tokens (integers, symbols, parentheses), and constructs corresponding `Obj` structures.
-* **Symbol Interning**: Symbols are interned to ensure uniqueness, optimizing symbol comparisons and storage.
+Step by step:
 
-#### **Evaluation**
+1. **`root` and `DEFINE1(env)`** set up the garbage collector's view of your variables — see [Keeping objects alive](#keeping-objects-alive). The environment holds every definition, so it must be one of them.
+2. **`lisp_set_printers`** installs the functions that receive output — see [Output and errors](#output-and-errors).
+3. **`lisp_create`** allocates the heap. Check **`lisp_is_created`** afterwards: a heap that can't be allocated, or is larger than the interpreter can address, leaves it false.
+4. **`make_env`** creates the global environment, and **`define_constants`** and **`define_primitives`** fill it with the language's built-in values and functions.
+5. **`lisp_eval`** reads and evaluates a string of code.
+6. **`lisp_destroy`** frees the heap. Call `lisp_create` again to start over.
 
-* **Evaluator (`eval`)**: Processes `Obj` structures, handling self-evaluating objects, variable lookups, function applications, and macro expansions.
-* **Environment Model**: Variables are stored in environments (`TENV`), allowing for lexical scoping and nested environments.
+When the environment must outlive the function that creates it — in firmware, where it is created in `setup()` and used in every later call — declare the root frame at file scope instead, as the interpreter's own REPL does:
 
-## Adding New Primitives
+```c
+static void *root = NULL;
+static void *root_frame[3];
+static Obj **env;
 
-Extending UniotLisp with new primitives allows you to introduce custom functionalities tailored to your application's needs. This section guides you through the process of defining and registering new primitive functions.
+void setup_interpreter(void) {
+    root_frame[0] = root;
+    root_frame[1] = NULL;
+    root_frame[2] = ROOT_END;
+    root = root_frame;
+    env = (Obj **)(root_frame + 1);
+    // ... then lisp_create, make_env and the rest as above
+}
+```
 
-### Defining a Primitive Function
+## Heap and stack
 
-A primitive function in UniotLisp is a C function that follows a specific signature:
+```c
+void lisp_create(size_t size, size_t max_eval_stack);
+```
 
-```c++
+**`size`** is the heap, in bytes. Every value a script creates lives in it. The largest heap that can be asked for is `LISP_MAX_HEAP`, 65535 bytes; `lisp_create` refuses anything larger. **`lisp_mem_used()`** returns how much of the heap is in use.
+
+**`max_eval_stack`** limits how much of the C stack a single evaluation may use, in bytes. Recursion in a script runs on the C stack, and overrunning it would crash the whole program, so the interpreter measures what it uses as it goes and stops the script with an error before that happens. Pass `0` to remove the limit.
+
+To choose a value, start from the stack available where you call `lisp_eval`, subtract what your error handling needs, and leave a margin. The global **`eval_stack_max`** records the most stack any evaluation has used since `lisp_create`; run your heaviest scripts and read it.
+
+For reference, Uniot Core gives scripts a 24 KB heap and 3 KB of evaluation stack on an ESP32, and 12 KB and 1.25 KB on an ESP8266.
+
+## Evaluating code
+
+| Function | What it does |
+| --- | --- |
+| `bool lisp_eval(void *root, Obj **env, const char *code)` | Reads and evaluates every expression in `code`, in order. Returns `false` if one of them failed, and stops there. |
+| `bool safe_eval(void *root, Obj **env, Obj **expr)` | Evaluates one expression that has already been read. Returns `false` if it failed. |
+| `Obj *eval(void *root, Obj **env, Obj **obj)` | Evaluates one expression, raising errors to the caller — for use inside [primitives](#adding-primitives). |
+| `Obj *eval_list(void *root, Obj **env, Obj **list)` | Evaluates each element of a list and returns a list of the results. |
+
+The value of each expression is passed to the output printer.
+
+## Output and errors
+
+```c
+typedef void (*print_def)(const char *msg, int size);
+void lisp_set_printers(print_def out, print_def log, print_def err);
+```
+
+The interpreter never writes anywhere itself. It hands text to three functions you provide:
+
+| Printer | Receives |
+| --- | --- |
+| `out` | The value of each expression `lisp_eval` evaluates |
+| `log` | What the script prints with `print` |
+| `err` | The message of an error that stopped the script |
+
+The text is not null-terminated; use `size`. Two rules apply to every printer, and neither is checked:
+
+- **Copy the text before returning.** It lives in a buffer the interpreter reuses.
+- **Don't evaluate Lisp from inside a printer**, directly or indirectly. The error printer in particular runs partway through the interpreter recovering from the error.
+
+When `lisp_eval` returns `false`, **`lisp_error_idx()`** and **`lisp_error_end()`** give the span of the expression that failed, as offsets into the code you passed — enough to highlight it in an editor:
+
+```c
+const char *code = "(+ 1 2)\n(foo 3)\n(+ 4 5)";
+if (!lisp_eval(root, env, code)) {
+    int start = lisp_error_idx();   // 8
+    int end = lisp_error_end();     // 15: the span is "(foo 3)"
+}
+```
+
+Here the first expression prints `3`, the second fails with `Undefined symbol: foo`, and the third is never evaluated.
+
+## Adding primitives
+
+A primitive is a function written in C that a script can call by name. This is how a host gives scripts access to its hardware or services.
+
+```c
 typedef struct Obj *Primitive(void *root, struct Obj **env, struct Obj **args);
 ```
 
-**Parameters**:
+A primitive receives its arguments **unevaluated**, as a list. It decides whether and how to evaluate them — usually all of them, with `eval_list`. It returns a value, and reports a problem by calling `error()`, which stops the script and never returns.
 
-* `void *root`: Root pointer for garbage collection.
-* `struct Obj **env`: Current environment.
-* `struct Obj **args`: List of arguments passed to the primitive.
+This one adds two integers:
 
-**Return Value**: A pointer to an `Obj` representing the result.
-
-**Example**: Define a primitive that adds two integers.
-
-```c++
+```c
 static Obj *prim_add_two(void *root, Obj **env, Obj **args) {
     if (length(*args) != 2)
-        error("add_two expects exactly two arguments");
+        error("add-two takes two arguments");
 
-    Obj *evaluated_args = eval_list(root, env, args);
+    Obj *values = eval_list(root, env, args);
+    Obj *a = values->car;
+    Obj *b = values->cdr->car;
+    if (a->type != TINT || b->type != TINT)
+        error("add-two takes only numbers");
 
-    if (evaluated_args->car->type != TINT || evaluated_args->cdr->car->type != TINT)
-        error("add_two expects integer arguments");
-
-    int sum = evaluated_args->car->value + evaluated_args->cdr->car->value;
+    int32_t sum;
+    if (__builtin_add_overflow(a->value, b->value, &sum))
+        error("Integer overflow in add-two");
     return make_int(root, sum);
 }
 ```
 
-### Registering the Primitive
+Register it after `define_primitives`, under the name scripts will use:
 
-After defining the primitive function, you need to register it within the interpreter's environment using `add_primitive`.
-
-**Function Signature**:
-
-```c++
-void add_primitive(void *root, Obj **env, const char *name, Primitive *fn);
-```
-
-**Parameters**:
-
-* `void *root`: Root pointer for garbage collection.
-* `Obj **env`: Current environment.
-* `const char *name`: Name of the primitive as it will appear in Lisp.
-* `Primitive *fn`: Pointer to the C function implementing the primitive.
-
-**Example**: Register the `add_two` primitive.
-
-```c++
+```c
 add_primitive(root, env, "add-two", prim_add_two);
 ```
 
-**Usage in Lisp Code**:
+```lisp
+(add-two 3 4)     ; -> 7
+(add-two 3)       ; -> error: add-two takes two arguments
+(add-two 'a 4)    ; -> error: add-two takes only numbers
+```
+
+The pieces a primitive works with:
+
+| | |
+| --- | --- |
+| `int length(Obj *list)` | The number of elements, or `-1` if it isn't a proper list |
+| `Obj *make_int(void *root, int32_t value)` | A new integer |
+| `Obj *make_symbol(void *root, const char *name)` | A new symbol |
+| `True`, `Nil` | The values `#t` and `()`, to return as truth values |
+| `obj->type` | One of `TINT`, `TCELL`, `TSYMBOL`, `TPRIMITIVE`, `TFUNCTION`, `TMACRO`, `TENV`, `TTRUE`, `TNIL` |
+| `obj->value` | The number, when `type` is `TINT` |
+| `obj->car`, `obj->cdr` | The two halves, when `type` is `TCELL` |
+| `obj->name` | The name, when `type` is `TSYMBOL` |
+| `error(fmt, ...)` | Stops the script with a `printf`-style message |
+
+Integer arithmetic in the language raises on overflow, and a primitive that does its own arithmetic should do the same, as `add-two` does.
+
+### Keeping objects alive
+
+The garbage collector reclaims every object it can't find a reference to, and it can run whenever anything is allocated — inside `make_int`, `eval_list`, or any other call that creates a value. A pointer held only in an ordinary C variable is invisible to it, so an object you still need can be reclaimed while you hold it.
+
+`add-two` is safe without extra care because it reads both numbers out of the list before its one allocation, `make_int`. A primitive that has to keep an object across an allocation must declare it with one of the **`DEFINE1`** to **`DEFINE7`** macros, which make it visible to the collector.
+
+This one evaluates its two arguments one at a time and returns the first. It holds the first result while it evaluates the second, which can allocate, so the first must be declared:
+
+```c
+static Obj *prim_first_of(void *root, Obj **env, Obj **args) {
+    if (length(*args) != 2)
+        error("first-of takes two arguments");
+
+    DEFINE1(first);
+    *first = eval(root, env, &(*args)->car);
+    eval(root, env, &(*args)->cdr->car);   // may collect; *first survives because it is declared
+    return *first;
+}
+```
 
 ```lisp
-(add-two 3 4) ; -> 7
+(first-of (list 1 2) (list 3 4))   ; -> (1 2)
 ```
 
-## Adding Constants
+The macros declare `Obj **` variables, so use them through `*`. Declare them before any loop, never inside one.
 
-Defining constants allows you to introduce fixed values that can be referenced within Lisp code. Constants are immutable and cannot be reassigned.
+## Adding constants
 
-Use `add_constant` or `add_constant_int` to register the constant within the environment.
+A constant is a name with a fixed value. Scripts can read it but not change it.
 
-**Function Signatures**:
+```c
+add_constant_int(root, env, "LED_COUNT", 10);
 
-```c++
-void add_constant(void *root, Obj **env, const char *name, Obj **val);
-void add_constant_int(void *root, Obj **env, const char *name, int value);
+DEFINE1(greeting);
+*greeting = make_symbol(root, "hello");
+add_constant(root, env, "GREETING", greeting);
 ```
-
-### Registering the Constant
-
-**Example**: Register the `#version` constant.
-
-```c++
-Obj *VERSION = make_int(root, 10203); // Represents the version 1.2.3
-add_constant(root, env, "#version", &VERSION);
-```
-
-or
-
-```c++
-add_constant_int(root, env, "#version", 10203);
-```
-
-**Usage in Lisp Code**:
 
 ```lisp
-(define legacy-version 10101) ; Represents the legacy version 1.1.1
-(if
- (> #version legacy-version)
- (print 'continue)
- (print 'this_version_is_not_supported))
+LED_COUNT            ; -> 10
+(setq LED_COUNT 5)   ; -> error: Cannot change constant LED_COUNT
 ```
 
-## Error Handling
+**`get_variable(root, env, name)`** looks a name up from C — to read a value a script has set, for example. It raises if the name isn't defined.
 
-UniotLisp incorporates robust error handling to ensure the interpreter remains stable and provides informative feedback.
+## Declaring functions the host implements elsewhere
 
-### Error Function
+**`handle_pruner`** is for a host that implements some functions somewhere other than C — in JavaScript in a browser, say — and wants a script to declare them in Lisp. Call it from a primitive that acts as a declaration form, passing the name of a single dispatch primitive:
 
-The `error` function is used to report errors and terminate the current evaluation gracefully.
-
-```c++
-void __attribute((noreturn)) error(const char *fmt, ...);
+```c
+static Obj *prim_defjs(void *root, Obj **env, Obj **args) {
+    return handle_pruner(root, env, args, "js_call", true);
+}
 ```
 
-**Usage**:
-
-```c++
-error("Undefined symbol: %s", symbol_name);
+```lisp
+(defjs vibro (times))
 ```
 
-## Non-Local Exits
+This defines `vibro` as a function of one argument whose body calls `(js_call 'vibro times)`. With `include_name` false, the name is left out and the body is `(js_call times)`. Declaring a name that is already defined is an error.
 
-UniotLisp uses `setjmp` and `longjmp` to handle errors without crashing the interpreter. When an error occurs, the interpreter jumps back to a safe state, allowing for continued operation or graceful termination.
+## Letting other work run
 
-### Common Error Scenarios
+```c
+typedef void (*yield_def)();
+void lisp_set_cycle_yield(yield_def yield);
+```
 
-Some common error scenarios encountered during Lisp evaluation include:
+A script's loop can run for a long time without returning control. Set a yield function and the interpreter calls it on every `while` iteration and every tail call, so the host can feed a watchdog timer or let other tasks run.
 
-*   **Malformed Expressions**: Incorrect syntax or structure.
+A script that loops forever is stopped with an error rather than hanging the host — see [Build configuration](#build-configuration).
 
-    ```lisp
-    (cons 1) ; Error: cons expects exactly two arguments
-    ```
-*   **Type Mismatches**: Operations on incompatible types.
+## Garbage collection
 
-    ```lisp
-    (+ 'a 2) ; Error: + expects integer arguments
-    ```
-*   **Undefined Symbols**: Referencing symbols that haven't been defined.
+The collector is chosen when the library is compiled:
 
-    ```lisp
-    (print x) ; Error: Undefined symbol x
-    ```
-*   **Memory Exhaustion**: Running out of allocated memory.
+| `MINILISP_GC` | |
+| --- | --- |
+| `MINILISP_GC_MARK_SWEEP` (default) | Objects never move, and collecting needs no memory beyond the heap. Suits small devices, where a second heap-sized block may not be available. |
+| `MINILISP_GC_COPYING` | Allocation is faster, but every collection needs a second block the size of the heap, and objects move. |
 
-    ```c++
-    error("Memory exhausted");
-    ```
+Mark-sweep is the default everywhere on purpose: the two collectors run out of memory under different conditions, so the same script could fit on one and fail on the other.
 
-## API Usage
+**`gc(root)`** runs a collection immediately. Setting **`always_gc`** to `true` runs one before every allocation, which makes a primitive that forgets to [keep an object alive](#keeping-objects-alive) fail at once instead of occasionally.
 
-UniotLisp provides a set of API functions to interact with the interpreter programmatically. These functions facilitate creating environments, evaluating code, managing memory, and customizing interpreter behavior.
+## Build configuration
 
-### Lifecycle Management
+These are compile-time definitions; set them with `-D` to override the default.
 
-*   **`lisp_create`**: Initializes the interpreter with a specified memory size.
+| Definition | Default | Effect |
+| --- | --- | --- |
+| `MINILISP_MAX_LOOP_ITERATIONS` | 20000 | `while` iterations allowed in one top-level expression, counted across all its loops, before it is stopped as endless |
+| `MINILISP_MAX_TAIL_CALLS` | same | Tail calls allowed in one chain before it is stopped as endless |
+| `MINILISP_GC` | `MINILISP_GC_MARK_SWEEP` | The collector, as above |
+| `MINILISP_GC_MARK_STACK` | 128 | The mark-sweep collector's work stack, in entries. Running out is not an error, only slower. |
+| `MINILISP_GC_DEBUG` | 0 | `1` adds `debug_gc` (log each collection), `verify_gc` (check the heap after each) and `fail_gc_alloc` (simulate running out of memory) — for debugging a collector or a primitive |
+| `MINILISP_GC_STATS` | 0 | `1` adds the `lisp_stats` counters and `lisp_stats_reset()` for measuring collector performance, timed by a clock you assign to `lisp_stats_clock` |
 
-    ```c++
-    void lisp_create(size_t size);
-    ```
-*   **`lisp_destroy`**: Cleans up and frees allocated memory.
+These are fixed in the header:
 
-    ```c++
-    void lisp_destroy(void);
-    ```
-*   **`lisp_is_created`**: Checks if the interpreter has been initialized.
+| Limit | Value |
+| --- | --- |
+| `LISP_MAX_HEAP` | 65535 — the largest heap |
+| `SYMBOL_MAX_LEN` | 64 — the longest symbol name |
+| `LISP_MESSAGE_MAX_LEN` | 128 — the longest error or log message |
+| `LISP_PRINT_MAX_LEN` | 256 — the longest printed value; output is truncated to it |
 
-    ```c++
-    bool lisp_is_created();
-    ```
-
-### Evaluation Interface
-
-*   **`lisp_eval`**: Parses and evaluates Lisp code from a string.
-
-    ```c++
-    bool lisp_eval(void *root, Obj **env, const char *code);
-    ```
-*   **`safe_eval`**: Evaluates an expression with error protection.
-
-    ```c++
-    bool safe_eval(void *root, Obj **env, Obj **expr);
-    ```
-
-### Configuration
-
-*   **`lisp_set_cycle_yield`**: Sets a yield function to allow cooperative multitasking during long-running operations.
-
-    ```c++
-    void lisp_set_cycle_yield(yield_def yield);
-    ```
-
-    Define a yield function that conforms to the `yield_def` type:
-
-    ```c++
-    typedef void (*yield_def)();
-
-    void my_yield_function() {
-        // Perform yield operations, such as yielding control to an event loop
-    }
-    ```
-
-    Register the yield function:
-
-    ```c++
-    lisp_set_cycle_yield(my_yield_function);
-    ```
-*   **`lisp_set_printers`**: Configures output handlers for standard output, logs, and errors.
-
-    ```c++
-    void lisp_set_printers(print_def out, print_def log, print_def err);
-    ```
-
-### System Information
-
-*   **`lisp_mem_used`**: Retrieves the amount of memory used.
-
-    ```c++
-    size_t lisp_mem_used(void);
-    ```
-*   **`lisp_error_idx`**: Gets the current index in the input buffer where an error occurred.
-
-    ```c++
-    int lisp_error_idx(void);
-    ```
-
-## Conclusion
-
-**UniotLisp** offers a lightweight yet powerful Lisp interpreter suitable for embedding within C applications. Its minimalist design ensures ease of integration, while its extensible architecture allows developers to tailor its capabilities to specific requirements. By understanding its core concepts, utilizing built-in primitives, and leveraging the ability to add custom functionalities, developers can effectively harness UniotLisp for a variety of applications.
-
-For further assistance or to contribute to the project, please refer to the project's repository or contact the maintainers.
+`LISP_VERSION` holds the library version as a single integer: `major * 10000 + minor * 100 + patch`, so 0.4.0 is `400`.

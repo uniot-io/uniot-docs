@@ -106,7 +106,7 @@ Open the **Sandbox** page and create a script called `Night Light`. The first ve
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/night_light_1.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/night_light_1.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -150,7 +150,7 @@ The LED should be on whenever the reading is below a threshold. Outside the task
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/night_light_2.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/night_light_2.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -200,7 +200,7 @@ The device should report the reading to the dashboard, but only when it has move
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/night_light_3.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/night_light_3.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -260,7 +260,7 @@ The dashboard should be able to move the threshold while the script runs. At the
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/night_light_4.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/night_light_4.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -314,7 +314,7 @@ The dashboard should be able to move the threshold while the script runs. At the
 This is the complete script, including the user-library block the editor adds. Save it; the checkpoint for this edit is in Step 4.
 
 {% hint style="info" %}
-Prefer typing? Paste the listing into the **Code Editor**. Once you edit code by hand the Visual Editor becomes read-only for that script. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
+Prefer typing? Switch the Sandbox to **Advanced** and paste the listing into the code editor instead of building blocks. Keep a script you write by hand in Advanced mode: switching back to Blockly replaces the code with what the blocks generate. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
 {% endhint %}
 
 ## Step 4: Watch and Tune from the Dashboard

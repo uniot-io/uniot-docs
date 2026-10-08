@@ -16,14 +16,20 @@ The Uniot Badge is equipped with the following hardware components:
 
 ## Getting Started
 
-To start working with the Uniot Badge, you need to flash the board and add it to the platform. The firmware source code can be found [here](https://github.com/uniot-io/uniot-promo-badge-firmware). Instructions for flashing and adding the device to the platform are available in the [Getting Started](../guides/getting-started.md) section.
+The badge comes with its firmware installed. To connect it to your account:
+
+1. Power it over USB-C. With no WiFi stored, it opens a WiFi network named `UNIOT-…`. Join it from your phone or computer.
+2. On the page that opens, enter your WiFi details and your Uniot account ID.
+3. When the badge is online, authorize it on the **Devices** page — see [Authorize the Device](getting-started.md#authorize-the-device).
+
+To update the firmware, or to install it on a badge that doesn't have it, use the [Firmware Installer](../platform/installer.md) at [install.uniot.io](https://install.uniot.io). An update keeps the badge's WiFi settings, identity and script.
 
 ## Promo
 
 You can redeem the promo code by scanning the QR code on your badge. This promo code will extend your plan by:
 
 * **Device: +1**
-* **Dashboard: 1**
+* **Dashboard: +1**
 * **Script: +1**
 
 A script and a dashboard, both named 'Uniot Promo Badge,' will also be created on the platform for demonstration purposes. You can deploy the script to the badge and try it out in interaction with the dashboard.
@@ -40,9 +46,9 @@ To interact with peripherals, the firmware has corresponding primitives. Read mo
 
 #### vibro
 
-<div align="left"><figure><img src="../.gitbook/assets/uniot_badge_primitive_vibro.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../.gitbook/assets/uniot_badge_primitive_vibro.svg" alt=""><figcaption></figcaption></figure></div>
 
-Vibrates the specified number of times (the period of one vibration is set in the [firmware](https://github.com/uniot-io/uniot-promo-badge-firmware/blob/main/lib/Vibro/Vibro.h#L9)).
+Vibrates the specified number of times (the period of one vibration is set in the [firmware](https://github.com/uniot-io/uniot-promo-badge-firmware/blob/1.0.0/lib/Vibro/Vibro.h#L8)).
 
 **Parameters:**
 
@@ -50,7 +56,7 @@ Vibrates the specified number of times (the period of one vibration is set in th
 
 #### tof\_distance
 
-<div align="left"><figure><img src="../.gitbook/assets/uniot_badge_primitive_tof.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../.gitbook/assets/uniot_badge_primitive_tof.svg" alt=""><figcaption></figcaption></figure></div>
 
 Reads the value of the distance sensor.
 
@@ -60,13 +66,13 @@ Reads the value of the distance sensor.
 
 #### pixel\_clear
 
-<div align="left"><figure><img src="../.gitbook/assets/uniot_badge_primitive_pixel_clear.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../.gitbook/assets/uniot_badge_primitive_pixel_clear.svg" alt=""><figcaption></figcaption></figure></div>
 
 Turns all LEDs off.
 
 #### pixel\_set
 
-<div align="left"><figure><img src="../.gitbook/assets/uniot_badge_primitive_pixel_set.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../.gitbook/assets/uniot_badge_primitive_pixel_set.svg" alt=""><figcaption></figcaption></figure></div>
 
 Sets an LED's color.
 
@@ -79,19 +85,28 @@ Sets an LED's color.
 
 #### pixel\_show
 
-<div align="left"><figure><img src="../.gitbook/assets/uniot_badge_primitive_pixel_show.png" alt=""><figcaption></figcaption></figure></div>
+<div align="left"><figure><img src="../.gitbook/assets/uniot_badge_primitive_pixel_show.svg" alt=""><figcaption></figcaption></figure></div>
 
 Turns on the set LEDs.
 
 ## Firmware
 
-The Uniot Badge is powered by firmware based on [Uniot Core](../advanced/uniot-core.md). You can find the source code of the firmware [here](https://github.com/uniot-io/uniot-promo-badge-firmware).
+The Uniot Badge is powered by firmware based on [Uniot Core](../advanced/uniot-core.md). Its source, and every release, are in the [uniot-promo-badge-firmware](https://github.com/uniot-io/uniot-promo-badge-firmware) repository.
+
+Each release comes in two builds, which differ only in WiFi transmit power:
+
+* **Compatible** works on every badge, at a shorter range. Badges ship with it.
+* **Full range** transmits at the chip's full power, for a badge whose radio copes with it.
+
+The [Firmware Installer](../platform/installer.md) shows which version and build a badge is running, and installs either one — see [Which radio build](../platform/installer.md#which-radio-build). It can also install a hardware test that checks the LEDs, the sensor, the button and the motor without a network or an account.
+
+Power-cycling the badge five times in quick succession clears its WiFi settings and opens the `UNIOT-…` network again. It helps when you've moved the badge to another network.
 
 ## Script Examples
 
 ### Promo Badge
 
-<figure><img src="../.gitbook/assets/uniot_badge_script_promo.png" alt=""><figcaption><p>The visual script</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/uniot_badge_script_promo.svg" alt=""><figcaption><p>The visual script</p></figcaption></figure>
 
 The visual script generates the following code:
 
@@ -140,49 +155,51 @@ The visual script generates the following code:
 (setq blue 10)
 
 (task 0 80 '
- (list
+ (progn
   (if
    (is_event 'red)
-   (list
+   (progn
     (setq red
      (pop_event 'red))))
   (if
    (is_event 'green)
-   (list
+   (progn
     (setq green
      (pop_event 'green))))
   (if
    (is_event 'blue)
-   (list
+   (progn
     (setq blue
      (pop_event 'blue))))
   (if
    (bclicked 0)
-   (list
+   (progn
     (setq led_fill
-     (not led_fill))
+     (not
+      (bool led_fill)))
     (vibro 2)))
   (setq distance
    (tof_distance))
   (setq led
    (map distance 40 360 0 10))
   (pixel_clear)
-  (if led_fill
-   (list
+  (if
+   (bool led_fill)
+   (progn
     (while
      (< #itr
       (+ led 1))
      (pixel_set #itr red green blue)))
-   (list
+   (progn
     (pixel_set led red green blue)))
   (pixel_show)
   (if
    (is_event 'capture)
-   (list
+   (progn
     (if
-     (=
+     (eql
       (pop_event 'capture) 1)
-     (list
+     (progn
       (push_event 'distance distance)))))))
 ```
 {% endcode %}
@@ -216,7 +233,7 @@ To demonstrate the functionality of the badge, this script uses several blocks:
 
 With this script, you can turn the badge into a personal reminder tool. It can vibrate at set frequencies to remind you to take a break, drink water, or stretch. The LEDs are also used to show different colors based on the type of reminder – blue for hydration, green for stretching, red for break.
 
-<figure><img src="../.gitbook/assets/uniot_badge_script_reminder.png" alt=""><figcaption><p>The visual script</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/uniot_badge_script_reminder.svg" alt=""><figcaption><p>The visual script</p></figcaption></figure>
 
 The visual script generates the following code:
 
@@ -234,7 +251,7 @@ The visual script generates the following code:
 ;
 ;;; end-user-library
 
-(define WATER_INTEVAL ())
+(define WATER_INTERVAL ())
 (define water_timer ())
 (define current_reminder ())
 (define red ())
@@ -243,28 +260,28 @@ The visual script generates the following code:
 (define TASK_INTERVAL ())
 (define green ())
 (define STRETCH_INTERVAL ())
-(define active ())
 (define stretch_timer ())
 (define blue ())
+(define active ())
 ; Describe this function...
 (defun process_reminder
  (type timer)
  (if
   (<= timer 0)
-  (list
+  (progn
    (setq active #t)
    (setq current_reminder type)
    (if
-    (= current_reminder 1)
-    (list
+    (eql current_reminder 1)
+    (progn
      (setq blue 255))
     (if
-     (= current_reminder 2)
-     (list
+     (eql current_reminder 2)
+     (progn
       (setq red 255))
      (if
-      (= current_reminder 3)
-      (list
+      (eql current_reminder 3)
+      (progn
        (setq green 255)))))
    (vibro 3)
    (pixel_clear)
@@ -275,18 +292,18 @@ The visual script generates the following code:
 ; Reset active reminder
 (defun reset_reminder ()
  (if
-  (= current_reminder 1)
-  (list
-   (setq water_timer WATER_INTEVAL)
+  (eql current_reminder 1)
+  (progn
+   (setq water_timer WATER_INTERVAL)
    (setq blue 0)))
  (if
-  (= current_reminder 2)
-  (list
+  (eql current_reminder 2)
+  (progn
    (setq break_timer BREAK_INTERVAL)
    (setq red 0)))
  (if
-  (= current_reminder 3)
-  (list
+  (eql current_reminder 3)
+  (progn
    (setq stretch_timer STRETCH_INTERVAL)
    (setq green 0)))
  (setq active ())
@@ -294,7 +311,7 @@ The visual script generates the following code:
  (pixel_clear)
  (pixel_show))
 
-(setq WATER_INTEVAL
+(setq WATER_INTERVAL
  (* 60
   (* 60 1000)))
 (setq BREAK_INTERVAL
@@ -304,7 +321,7 @@ The visual script generates the following code:
  (* 90
   (* 60 1000)))
 
-(setq water_timer WATER_INTEVAL)
+(setq water_timer WATER_INTERVAL)
 (setq break_timer BREAK_INTERVAL)
 (setq stretch_timer STRETCH_INTERVAL)
 
@@ -316,7 +333,7 @@ The visual script generates the following code:
 (setq blue 0)
 
 (task 0 TASK_INTERVAL '
- (list
+ (progn
   (setq water_timer
    (+ water_timer
     (- TASK_INTERVAL)))
@@ -327,20 +344,23 @@ The visual script generates the following code:
    (+ stretch_timer
     (- TASK_INTERVAL)))
   (if
-   (not active)
-   (list
+   (not
+    (bool active))
+   (progn
     (process_reminder 1 water_timer)))
   (if
-   (not active)
-   (list
+   (not
+    (bool active))
+   (progn
     (process_reminder 2 break_timer)))
   (if
-   (not active)
-   (list
+   (not
+    (bool active))
+   (progn
     (process_reminder 3 stretch_timer)))
   (if
    (bclicked 0)
-   (list
+   (progn
     (reset_reminder)))))
 ```
 {% endcode %}
@@ -351,7 +371,7 @@ Let's take a closer look at the individual parts of the script:
   * **`TASK_INTERVAL`**: The task execution interval (in **ms**).
   * **`WATER_INTERVAL`**: How often you want to drink water (every 60 minutes, in **ms**).
   * **`BREAK_INTERVAL`**: How often you want to take a break (every 180 minutes, in **ms**).
-  * **`STRETCH_INTEVAL`**: How often you want to stretch (every 90 minutes, in **ms**).
+  * **`STRETCH_INTERVAL`**: How often you want to stretch (every 90 minutes, in **ms**).
   * **`water_timer`**: The water timer, set to the corresponding frequency value.
   * **`break_timer`**: The break timer, set to the corresponding frequency value.
   * **`stretch_timer`**: The stretch timer, set to the corresponding frequency value.
@@ -373,7 +393,7 @@ Let's take a closer look at the individual parts of the script:
 
 With the following script the badge can act as as a control device for household appliances. There is a tap gesture (quick down-up motion) detection. The appliance state switched when tap is detected.
 
-<figure><img src="../.gitbook/assets/uniot_badge_script_appliance_control.png" alt=""><figcaption><p>The visual script</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/uniot_badge_script_appliance_control.svg" alt=""><figcaption><p>The visual script</p></figcaption></figure>
 
 The visual script generates the following code:
 
@@ -383,80 +403,80 @@ The visual script generates the following code:
 ;; This block describes the library of user functions.
 ;; So the editor knows that your device implements it.
 ;
+; (defjs tof_distance ()) ;-> Int
 ; (defjs pixel_clear ()) ;-> Bool
 ; (defjs pixel_set (_0 _1 _2 _3)) ;-> Bool
 ; (defjs pixel_show ()) ;-> Bool
-; (defjs tof_distance ()) ;-> Int
 ;
 ;;; end-user-library
 
 (define TAP_DURATION ())
 (define TASK_INTERVAL ())
-(define is_detector ())
+(define TAP_THRESH_MIN ())
 (define distance ())
-(define TAP_TRESH_MIN ())
-(define fixed_distance ())
-(define tap_timer ())
-(define TAP_TRESH_MAX ())
+(define TAP_THRESH_MAX ())
 (define state ())
+(define tap_timer ())
 (define tap_state ())
-; Describe this function...
-(defun updateLEDs ()
- (pixel_clear)
- (if
-  (is_event 'appliance-state)
-  (list
-   (setq state
-    (=
-     (pop_event 'appliance-state) 1))))
- (if state
-  (list
-   (while
-    (< #itr 10)
-    (pixel_set #itr 0 5 0))))
- (pixel_show))
 ; Describe this function...
 (defun trackGesture ()
  (if
-  (= tap_state 0)
-  (list
+  (eql tap_state 0)
+  (progn
    (if
     (and
-     (>= distance TAP_TRESH_MIN)
-     (<= distance TAP_TRESH_MAX))
-    (list
+     (>= distance TAP_THRESH_MIN)
+     (<= distance TAP_THRESH_MAX))
+    (progn
      (setq tap_state 1)
      (setq tap_timer TAP_DURATION))))
-  (list
+  (progn
    (setq tap_timer
     (+ tap_timer
      (- TASK_INTERVAL)))
    (if
     (<= tap_timer 0)
-    (list
+    (progn
      (setq tap_state 0)
      (setq tap_timer 0))
     (if
      (and
-      (= tap_state 1)
-      (< distance TAP_TRESH_MIN))
-     (list
+      (eql tap_state 1)
+      (< distance TAP_THRESH_MIN))
+     (progn
       (setq tap_state 2))
      (if
       (and
-       (= tap_state 2)
+       (eql tap_state 2)
        (and
-        (>= distance TAP_TRESH_MIN)
-        (< distance TAP_TRESH_MAX)))
-      (list
+        (>= distance TAP_THRESH_MIN)
+        (< distance TAP_THRESH_MAX)))
+      (progn
        (push_event 'appliance-state
-        (not state))
+        (not
+         (bool state)))
        (setq tap_state 0)
        (setq tap_timer 0))))))))
+; Describe this function...
+(defun updateLEDs ()
+ (pixel_clear)
+ (if
+  (is_event 'appliance-state)
+  (progn
+   (setq state
+    (eql
+     (pop_event 'appliance-state) 1))))
+ (if
+  (bool state)
+  (progn
+   (while
+    (< #itr 10)
+    (pixel_set #itr 0 5 0))))
+ (pixel_show))
 
 (setq TAP_DURATION 400)
-(setq TAP_TRESH_MIN 150)
-(setq TAP_TRESH_MAX 500)
+(setq TAP_THRESH_MIN 150)
+(setq TAP_THRESH_MAX 500)
 (setq tap_state 0)
 (setq tap_timer 0)
 
@@ -465,7 +485,7 @@ The visual script generates the following code:
 (setq state ())
 
 (task 0 TASK_INTERVAL '
- (list
+ (progn
   (setq distance
    (tof_distance))
   (trackGesture)
@@ -485,8 +505,8 @@ The script consist of the following parts:
     * **`2`**: Hand detected below minimum threshold.
     * **`3`**: Hand is back within the thresholds.
   * **`TAP_DURATION`**: The maximum allowed time (in **ms**) for a valid tap.
-  * **`TAP_TRESH_MAX`**: The sensor distance below which gesture detecion starts.
-  * **`TAP_TRESH_MIN`**: The sensor distance below which a tap state is considered as **`2`**.
+  * **`TAP_THRESH_MAX`**: The sensor distance below which gesture detection starts.
+  * **`TAP_THRESH_MIN`**: The sensor distance below which a tap state is considered as **`2`**.
   * **`tap_timer`**: The timer to track a tap validity.
 * **Run Task Block**: Configured to run every `TASK_INTERVAL` milliseconds indefinitely (as the `times` parameter is set to `0`).
 * **Distance Sensor Reading**: Calls the `tof_distance` primitive and sets the value of the sensor to the `distance` variable.
@@ -497,7 +517,7 @@ The script consist of the following parts:
 
 With a few additions to the previous script, the device can turn into a motion detector with just one event (this event can be generated by a widget on the dashboard or by another device).
 
-<figure><img src="../.gitbook/assets/uniot_badge_script_appliance_control_alarm.png" alt=""><figcaption><p>The visual script</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/uniot_badge_script_appliance_control_alarm.svg" alt=""><figcaption><p>The visual script</p></figcaption></figure>
 
 The visual script generates the following code:
 
@@ -507,34 +527,81 @@ The visual script generates the following code:
 ;; This block describes the library of user functions.
 ;; So the editor knows that your device implements it.
 ;
+; (defjs tof_distance ()) ;-> Int
 ; (defjs pixel_clear ()) ;-> Bool
 ; (defjs pixel_set (_0 _1 _2 _3)) ;-> Bool
 ; (defjs pixel_show ()) ;-> Bool
-; (defjs tof_distance ()) ;-> Int
 ;
 ;;; end-user-library
 
-(define TAP_DURATION ())
 (define TASK_INTERVAL ())
-(define TAP_TRESH_MIN ())
+(define TAP_DURATION ())
 (define distance ())
-(define TAP_TRESH_MAX ())
+(define TAP_THRESH_MIN ())
 (define state ())
+(define TAP_THRESH_MAX ())
 (define tap_timer ())
 (define is_detector ())
 (define tap_state ())
 (define fixed_distance ())
 ; Describe this function...
+(defun trackIntrusion ()
+ (if
+  (not
+   (eql distance fixed_distance))
+  (progn
+   (push_event 'alarm 1))))
+; Describe this function...
+(defun trackGesture ()
+ (if
+  (eql tap_state 0)
+  (progn
+   (if
+    (and
+     (>= distance TAP_THRESH_MIN)
+     (<= distance TAP_THRESH_MAX))
+    (progn
+     (setq tap_state 1)
+     (setq tap_timer TAP_DURATION))))
+  (progn
+   (setq tap_timer
+    (+ tap_timer
+     (- TASK_INTERVAL)))
+   (if
+    (<= tap_timer 0)
+    (progn
+     (setq tap_state 0)
+     (setq tap_timer 0))
+    (if
+     (and
+      (eql tap_state 1)
+      (< distance TAP_THRESH_MIN))
+     (progn
+      (setq tap_state 2))
+     (if
+      (and
+       (eql tap_state 2)
+       (and
+        (>= distance TAP_THRESH_MIN)
+        (< distance TAP_THRESH_MAX)))
+      (progn
+       (push_event 'appliance-state
+        (not
+         (bool state)))
+       (setq tap_state 0)
+       (setq tap_timer 0))))))))
+; Describe this function...
 (defun updateLEDs ()
  (pixel_clear)
  (if
   (is_event 'appliance-state)
-  (list
+  (progn
    (setq state
-    (=
+    (eql
      (pop_event 'appliance-state) 1))))
- (if state
-  (list
+ (if
+  (bool state)
+  (progn
    (while
     (< #itr 10)
     (pixel_set #itr 0 5 0))))
@@ -543,60 +610,16 @@ The visual script generates the following code:
 (defun guardCheck ()
  (if
   (is_event 'protection)
-  (list
+  (progn
    (setq is_detector
-    (=
+    (eql
      (pop_event 'protection) 1))
-   (if is_detector
-    (list
+   (if
+    (bool is_detector)
+    (progn
      (setq fixed_distance distance))
-    (list
+    (progn
      (push_event 'alarm 0))))))
-; Describe this function...
-(defun trackIntrusion ()
- (if
-  (not
-   (= distance fixed_distance))
-  (list
-   (push_event 'alarm 1))))
-; Describe this function...
-(defun trackGesture ()
- (if
-  (= tap_state 0)
-  (list
-   (if
-    (and
-     (>= distance TAP_TRESH_MIN)
-     (<= distance TAP_TRESH_MAX))
-    (list
-     (setq tap_state 1)
-     (setq tap_timer TAP_DURATION))))
-  (list
-   (setq tap_timer
-    (+ tap_timer
-     (- TASK_INTERVAL)))
-   (if
-    (<= tap_timer 0)
-    (list
-     (setq tap_state 0)
-     (setq tap_timer 0))
-    (if
-     (and
-      (= tap_state 1)
-      (< distance TAP_TRESH_MIN))
-     (list
-      (setq tap_state 2))
-     (if
-      (and
-       (= tap_state 2)
-       (and
-        (>= distance TAP_TRESH_MIN)
-        (< distance TAP_TRESH_MAX)))
-      (list
-       (push_event 'appliance-state
-        (not state))
-       (setq tap_state 0)
-       (setq tap_timer 0))))))))
 
 (setq TASK_INTERVAL 30)
 (setq distance 0)
@@ -605,20 +628,21 @@ The visual script generates the following code:
 (setq fixed_distance 0)
 
 (setq TAP_DURATION 400)
-(setq TAP_TRESH_MIN 150)
-(setq TAP_TRESH_MAX 500)
+(setq TAP_THRESH_MIN 150)
+(setq TAP_THRESH_MAX 500)
 (setq tap_state 0)
 (setq tap_timer 0)
 
 (task 0 TASK_INTERVAL '
- (list
+ (progn
   (setq distance
    (tof_distance))
   (guardCheck)
-  (if is_detector
-   (list
+  (if
+   (bool is_detector)
+   (progn
     (trackIntrusion))
-   (list
+   (progn
     (trackGesture)
     (updateLEDs)))))
 ```

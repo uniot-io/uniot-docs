@@ -15,6 +15,7 @@
   - [Two Devices, One Event](guides/two-devices-one-event.md)
   - [Add a Real Sensor with a Custom Primitive](guides/custom-primitive-sensor.md)
   <!-- - [Schedule on the Device](guides/schedule-on-the-device.md) -->
+  <!-- When publishing Schedule on the Device, make it the first "What's Next" of custom-primitive-sensor.md again, in place of Uniot Badge. -->
   - [Uniot Badge](guides/uniot-badge.md)
 
 ## General Concepts
@@ -38,6 +39,7 @@
     - [Primitives](platform/sandbox/visual-editor/primitives.md)
   - [Logger](platform/sandbox/logger.md)
   - [Emulator](platform/sandbox/emulator.md)
+- [Firmware Installer](platform/installer.md)
 
 ## Advanced
 
@@ -46,6 +48,8 @@
   - [Language Description](advanced/uniot-lisp/language-description.md)
   - [Embedding Instructions](advanced/uniot-lisp/embedding-instructions.md)
 
+<!-- Hidden until the public API is implemented; the convention below predates it.
 ## API
 
 - [MQTT Convention](api-reference/mqtt-convention.md)
+-->

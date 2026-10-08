@@ -72,7 +72,7 @@ Open the **Sandbox** page and create a script called `Dimmer`. It has two jobs. 
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/dimmer_script.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/dimmer_script.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -120,7 +120,7 @@ What the script does:
 - **User library block** — the comment block at the top declares the primitives the script uses. The Visual Editor writes it from the blocks you placed.
 
 {% hint style="info" %}
-Prefer typing? Paste the listing into the **Code Editor** instead of building blocks. Once you edit code by hand the Visual Editor becomes read-only for that script. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
+Prefer typing? Switch the Sandbox to **Advanced** and paste the listing into the code editor instead of building blocks. Keep a script you write by hand in Advanced mode: switching back to Blockly replaces the code with what the blocks generate. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
 {% endhint %}
 
 ## Step 3: Add the Slider and Test Without Hardware
@@ -160,7 +160,7 @@ Press **Deploy** in the Emulator's header. The script replaces the one from the 
 
 Set the slider to about half. Unplug the board and plug it back in. The onboard LED blinks while the device reconnects, and once it goes dark the breadboard LED comes back at half brightness. Nobody moved the slider.
 
-Two things made that happen. The persistent script was restored from flash, as in the previous guide. And because the widget has **Retain** on, the broker kept the last `brightness` value and replayed it to the device as soon as it subscribed, so the script's first **is event** check already found it. See [Retain](../platform/dashboard.md#retain) and [Retained Messages](../api-reference/mqtt-convention.md#retained-messages).
+Two things made that happen. The persistent script was restored from flash, as in the previous guide. And because the widget has **Retain** on, the broker kept the last `brightness` value and replayed it to the device as soon as it subscribed, so the script's first **is event** check already found it. See [Retain](../platform/dashboard.md#retain).
 
 The Emulator behaves the same way. Stop it, start a fresh run, and the **Analog Write** gauge jumps to the slider's level immediately: the retained value seeds the event queue on the first check.
 

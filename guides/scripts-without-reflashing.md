@@ -30,7 +30,7 @@ The script keeps one variable, `state`, flips it every half second, and writes i
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/blink_script.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/blink_script.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -70,7 +70,7 @@ What the script does:
 - **User library block** — the comment block at the top of the code declares which primitives the script uses. The Visual Editor writes it from the blocks you placed; there is nothing to add for it.
 
 {% hint style="info" %}
-Prefer typing? Paste the listing into the **Code Editor** instead of building blocks. Once you edit code by hand the Visual Editor becomes read-only for that script, and compiling the blocks again would overwrite your code. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
+Prefer typing? Switch the Sandbox to **Advanced** and paste the listing into the code editor instead of building blocks. Keep a script you write by hand in Advanced mode: switching back to Blockly replaces the code with what the blocks generate. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
 {% endhint %}
 
 ### Run It in the Emulator
@@ -101,7 +101,7 @@ The second script reacts to input and talks back. Create a script called `Counte
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/counter_script.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/counter_script.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}

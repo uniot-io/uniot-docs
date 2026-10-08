@@ -9,7 +9,7 @@ Two boards run the script from [Getting Started](getting-started.md). Press the 
 - A doorbell: one peer publishes `ring`, the other blinks three times when it hears it.
 - The dashboard as a third peer, with a **Push Button** that rings the bell and an **LED** that flashes with it.
 
-Every device, dashboard and Emulator in your account shares one event bus. A device knows nothing about the other devices; it only knows event names. Publish `ring`, and whoever listens for `ring` reacts, whether that is a board, a widget, or a browser tab. See [Event Communication](../api-reference/mqtt-convention.md#event-communication) for the topics underneath.
+Every device, dashboard and Emulator in your account shares one event bus. A device knows nothing about the other devices; it only knows event names. Publish `ring`, and whoever listens for `ring` reacts, whether that is a board, a widget, or a browser tab.
 
 ## Prerequisites
 
@@ -56,7 +56,7 @@ Open the **Sandbox** page and open **My First Script**.
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/welcome_script.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/welcome_script.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -143,7 +143,7 @@ Create a script called `Bell Button`. On a click it publishes `ring` with the va
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/bell_button_script.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/bell_button_script.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -198,7 +198,7 @@ Create a second script called `Bell`. When a `ring` event with the value `1` arr
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/bell_script.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/bell_script.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -249,7 +249,7 @@ What the script does:
 - **No sender check** — the bell does not care who rang. A board, the Emulator, or a widget: any `ring` with value `1` will do.
 
 {% hint style="info" %}
-Prefer typing? Paste the listings into the **Code Editor**. Once you edit code by hand the Visual Editor becomes read-only for that script. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
+Prefer typing? Switch the Sandbox to **Advanced** and paste the listings into the code editor instead of building blocks. Keep a script you write by hand in Advanced mode: switching back to Blockly replaces the code with what the blocks generate. See [Visual Editor vs. Code Editor](../platform/sandbox/README.md#visual-editor-vs-code-editor).
 {% endhint %}
 
 ### Try It in the Emulator
@@ -327,8 +327,4 @@ A third board with the Getting Started firmware joins the doorbell by having **B
 
 {% content-ref url="../platform/dashboard.md" %}
 [Dashboard](../platform/dashboard.md)
-{% endcontent-ref %}
-
-{% content-ref url="../api-reference/mqtt-convention.md" %}
-[MQTT Convention](../api-reference/mqtt-convention.md)
 {% endcontent-ref %}

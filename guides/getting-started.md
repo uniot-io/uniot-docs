@@ -18,6 +18,10 @@ None of this logic is compiled into the firmware. You flash generic firmware onc
 - [PlatformIO](https://platformio.org/) installed — either the VSCode extension or the CLI.
 - A Uniot account — [Get Early Access](https://forms.fillout.com/t/k1LDnvkgvPus). Once you are in, copy your **account ID** from your profile page (it is also shown on the Add-new-device screen). You will need it in Step 1.
 
+{% hint style="info" %}
+**Have a Uniot Badge?** It has firmware of its own, so you don't need to build any. Install or update it from your browser with the [Firmware Installer](../platform/installer.md), and see the [Uniot Badge](uniot-badge.md) guide.
+{% endhint %}
+
 ## Step 1: Flash the Firmware
 
 ### Create a Project
@@ -39,7 +43,7 @@ monitor_speed = 115200
 board_build.filesystem = littlefs
 
 lib_deps =
-    uniot-io/uniot-core@^0.8.1
+    uniot-io/uniot-core@^0.9.0
 
 build_unflags =
     -std=gnu++11
@@ -70,7 +74,7 @@ monitor_speed = 115200
 board_build.filesystem = littlefs
 
 lib_deps =
-    uniot-io/uniot-core@^0.8.1
+    uniot-io/uniot-core@^0.9.0
 
 build_unflags =
     -std=gnu++11
@@ -90,7 +94,7 @@ Using a different ESP32 board? Change `board` accordingly (e.g. `esp32dev`).
 {% endtab %}
 {% endtabs %}
 
-`UNIOT_CREATOR_ID` is **required** — the build fails without it. The full list of build flags is described in [Build Flags](../advanced/uniot-core.md#build-flags). For ESP32-C3 boards (extra USB flags) and projects targeting several boards at once, see [Multi-Environment Configuration](../advanced/uniot-core.md#multi-environment-configuration).
+`UNIOT_CREATOR_ID` is **required** — the build fails without it. The full list of build flags is described in [Build Flags](../advanced/uniot-core.md#build-flags). For ESP32-C3 boards (extra USB flags) and projects targeting several boards at once, see the ready-made environments in Uniot Core's [platformio.ini](https://github.com/uniot-io/uniot-core/blob/master/platformio.ini).
 
 ### Write main.cpp
 
@@ -200,7 +204,7 @@ Some ESP32 boards (e.g. the official ESP32-DevKitC) have no onboard user LED. If
 Prefer not to put credentials in code? Comment out both lines. The device will then open a captive portal on boot, and you will provision it from your phone in Step 2.
 {% endhint %}
 
-While connecting, Uniot Core blinks the connection status on the LED; once connected, the LED goes dark and your scripts own it (if WiFi drops, the core temporarily takes it back). Note that scripts address hardware by logical index, not GPIO number: the button is exposed as `(bclicked 0)`, and the LED as digital output `0` for `(dwrite 0 ...)` and as digital input `0` for `(dread 0)`, which returns the current level of the LED pin — see [the register system](../general-concepts/primitives.md#the-register-system) for how indices work and [WiFi Management](../advanced/uniot-core.md#wifi-management) for details on the WiFi subsystem.
+While connecting, Uniot Core blinks the connection status on the LED; once connected, the LED goes dark and your scripts own it (if WiFi drops, the core temporarily takes it back). Note that scripts address hardware by logical index, not GPIO number: the button is exposed as `(bclicked 0)`, and the LED as digital output `0` for `(dwrite 0 ...)` and as digital input `0` for `(dread 0)`, which returns the current level of the LED pin — see [the register system](../general-concepts/primitives.md#the-register-system) for how indices work and [WiFi Management](https://github.com/uniot-io/uniot-core/blob/master/docs/reference.md#3-wifi-management) for details on the WiFi subsystem.
 
 ### Upload
 
@@ -260,7 +264,7 @@ Open the **Sandbox** page. Every new account comes with a welcome script called 
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/welcome_script.png" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/welcome_script.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -284,18 +288,19 @@ Open the **Sandbox** page. Every new account comes with a welcome script called 
 ; it runs indefinitely. The context is released after
 ; each run, allowing other processes to run smoothly.
 (task 0 50 '
- (list
-  ; If the button '0' is clicked, emit an event 'led' to toggle state.
+ (progn
+; If the button '0' is clicked, emit an event 'led' to toggle state.
   (if
    (bclicked 0)
-   (list
+   (progn
     (push_event 'led
-     (not state))))
-  ; When the 'led' event is triggered, set 'state' to the received
-  ; value and write to pin '0', driving the LED accordingly.
+     (not
+      (bool state)))))
+; When the ‘led’ event is triggered, set ‘state’ to the received
+; value and write to pin ‘0’, driving the LED accordingly.
   (if
    (is_event 'led)
-   (list
+   (progn
     (setq state
      (pop_event 'led))
     (dwrite 0 state)))))
@@ -346,7 +351,7 @@ The device doesn't treat the dashboard as anything special — everything simply
 
 **Upload fails or no serial port appears.** Hold the BOOT/FLASH button while PlatformIO prints "Connecting…"; make sure the CH340/CP2102 USB driver is installed; try adding `upload_speed = 115200` to `platformio.ini`.
 
-**I don't see the `UNIOT-xxxxxx` network.** The device has WiFi credentials, so it skips Access Point mode. If `configWiFiCredentials()` is still active in `setup()`, comment it out along with `configUser()` and upload again. Otherwise, clear the stored credentials: quick-press the button 4+ times, then hold it for ~3 seconds (all within ~5 seconds) — or power-cycle the device 5 times in quick succession (a built-in recovery mechanism, active by default).
+**I don't see the `UNIOT-xxxxxx` network.** The device has WiFi credentials, so it skips Access Point mode. If `configWiFiCredentials()` is still active in `setup()`, comment it out along with `configUser()` and upload again. Otherwise, clear the stored credentials: quick-press the button 4+ times, then hold it for ~3 seconds (all within ~5 seconds). A sketch that also calls `Uniot.configWiFiResetOnReboot()` can be reset by power-cycling it 5 times in quick succession instead; the one in this guide doesn't.
 
 **I can't join the device's network.** Forget the `UNIOT-xxxxxx` network on your phone or laptop and connect to it again.
 

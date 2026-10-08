@@ -70,7 +70,7 @@ The [Emulator](sandbox/emulator.md#events) is on the same bus: widgets react to 
 
 ### Retain
 
-With **Retain** on, the broker keeps the last value a widget published and replays it to a device when it connects and to the dashboard when it loads, so a switch position or a slider level survives a reboot or a page refresh. With it off, values reach whoever is listening at that moment and are then forgotten. Turning Retain off on a widget also clears the value the broker kept. See [Retained Messages](../api-reference/mqtt-convention.md#retained-messages) for the protocol side.
+With **Retain** on, the broker keeps the last value a widget published and replays it to a device when it connects and to the dashboard when it loads, so a switch position or a slider level survives a reboot or a page refresh. With it off, values reach whoever is listening at that moment and are then forgotten. Turning Retain off on a widget also clears the value the broker kept.
 
 {% hint style="warning" %}
 
@@ -78,4 +78,4 @@ With **Retain** on, the broker keeps the last value a widget published and repla
 
 {% endhint %}
 
-See [Getting Started](../guides/getting-started.md#step-4-control-it-from-the-dashboard) for the seeded Switch and LED in action, and the [MQTT convention](../api-reference/mqtt-convention.md#event-communication) for the topics involved.
+See [Getting Started](../guides/getting-started.md#step-4-control-it-from-the-dashboard) for the seeded Switch and LED in action.
