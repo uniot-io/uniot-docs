@@ -1,0 +1,3 @@
+redirects:
+  # Getting Started moved from Guides to the top level; uniot-ui links the old URL.
+  guides/getting-started: getting-started.md

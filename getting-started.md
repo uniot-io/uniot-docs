@@ -9,7 +9,7 @@ A device whose physical button, onboard LED, and browser dashboard all talk thro
 - Press the physical button — the onboard LED toggles, and the dashboard reflects it.
 - Toggle a switch on the dashboard — the onboard LED follows.
 
-None of this logic is compiled into the firmware. You flash generic firmware once; the behavior comes from a small script deployed to the device over the air, and devices, scripts, and dashboards all communicate through events. This is Uniot's core idea — read more in [Edge Logic Deployment](../foundations/edge-logic-deployment.md).
+None of this logic is compiled into the firmware. You flash generic firmware once; the behavior comes from a small script deployed to the device over the air, and devices, scripts, and dashboards all communicate through events. This is Uniot's core idea — read more in [Edge Logic Deployment](foundations/edge-logic-deployment.md).
 
 ## Prerequisites
 
@@ -19,7 +19,7 @@ None of this logic is compiled into the firmware. You flash generic firmware onc
 - A Uniot account — sign up at [app.uniot.io](https://app.uniot.io). Once you are in, copy your **account ID** from your profile page (it is also shown on the Add-new-device screen). You will need it in Step 1.
 
 {% hint style="info" %}
-**Have a Uniot Badge?** It has firmware of its own, so you don't need to build any. Install or update it from your browser with the [Firmware Installer](../platform/installer.md), and see the [Uniot Badge](uniot-badge.md) guide.
+**Have a Uniot Badge?** It has firmware of its own, so you don't need to build any. Install or update it from your browser with the [Firmware Installer](platform/installer.md), and see the [Uniot Badge](guides/uniot-badge.md) guide.
 {% endhint %}
 
 ## Step 1: Flash the Firmware
@@ -94,7 +94,7 @@ Using a different ESP32 board? Change `board` accordingly (e.g. `esp32dev`).
 {% endtab %}
 {% endtabs %}
 
-`UNIOT_CREATOR_ID` is **required** — the build fails without it. The full list of build flags is described in [Build Flags](../advanced/uniot-core.md#build-flags). For ESP32-C3 boards (extra USB flags) and projects targeting several boards at once, see the ready-made environments in Uniot Core's [platformio.ini](https://github.com/uniot-io/uniot-core/blob/master/platformio.ini).
+`UNIOT_CREATOR_ID` is **required** — the build fails without it. The full list of build flags is described in [Build Flags](advanced/uniot-core.md#build-flags). For ESP32-C3 boards (extra USB flags) and projects targeting several boards at once, see the ready-made environments in Uniot Core's [platformio.ini](https://github.com/uniot-io/uniot-core/blob/master/platformio.ini).
 
 ### Write main.cpp
 
@@ -204,7 +204,7 @@ Some ESP32 boards (e.g. the official ESP32-DevKitC) have no onboard user LED. If
 Prefer not to put credentials in code? Comment out both lines. The device will then open a captive portal on boot, and you will provision it from your phone in Step 2.
 {% endhint %}
 
-While connecting, Uniot Core blinks the connection status on the LED; once connected, the LED goes dark and your scripts own it (if WiFi drops, the core temporarily takes it back). Note that scripts address hardware by logical index, not GPIO number: the button is exposed as `(bclicked 0)`, and the LED as digital output `0` for `(dwrite 0 ...)` and as digital input `0` for `(dread 0)`, which returns the current level of the LED pin — see [the register system](../general-concepts/primitives.md#the-register-system) for how indices work and [WiFi Management](https://github.com/uniot-io/uniot-core/blob/master/docs/reference.md#3-wifi-management) for details on the WiFi subsystem.
+While connecting, Uniot Core blinks the connection status on the LED; once connected, the LED goes dark and your scripts own it (if WiFi drops, the core temporarily takes it back). Note that scripts address hardware by logical index, not GPIO number: the button is exposed as `(bclicked 0)`, and the LED as digital output `0` for `(dwrite 0 ...)` and as digital input `0` for `(dread 0)`, which returns the current level of the LED pin — see [the register system](general-concepts/primitives.md#the-register-system) for how indices work and [WiFi Management](https://github.com/uniot-io/uniot-core/blob/master/docs/reference.md#3-wifi-management) for details on the WiFi subsystem.
 
 ### Upload
 
@@ -264,7 +264,7 @@ Open the **Sandbox** page. Every new account comes with a welcome script called 
 {% tabs %}
 {% tab title="Visual Editor" %}
 
-<div><figure><img src="../.gitbook/assets/welcome_script.svg" alt=""><figcaption></figcaption></figure></div>
+<div><figure><img src=".gitbook/assets/welcome_script.svg" alt=""><figcaption></figcaption></figure></div>
 {% endtab %}
 
 {% tab title="UniotLisp" %}
@@ -313,20 +313,20 @@ Open the **Sandbox** page. Every new account comes with a welcome script called 
 What the script does:
 
 - **State variable** — `state` starts as `false` and tracks whether the LED is on.
-- **Task** — `(task 0 50 '...)` runs the body every 50 ms, forever (`times` is `0`). Every script is built around this [task model](../general-concepts/scripting.md#task-based-execution-model).
+- **Task** — `(task 0 50 '...)` runs the body every 50 ms, forever (`times` is `0`). Every script is built around this [task model](general-concepts/scripting.md#task-based-execution-model).
 - **Button check** — when `(bclicked 0)` reports a click, the script publishes the `led` event with the toggled value. Events travel through MQTT, so the dashboard (and other devices) hear them too.
-- **Event handler** — when a `led` event arrives, the script saves its value into `state` and writes it to digital output `0` via `dwrite`. Indices like `0` refer to [registered pins](../general-concepts/primitives.md#the-register-system), not raw GPIO numbers.
+- **Event handler** — when a `led` event arrives, the script saves its value into `state` and writes it to digital output `0` via `dwrite`. Indices like `0` refer to [registered pins](general-concepts/primitives.md#the-register-system), not raw GPIO numbers.
 
 The firmware from Step 1 already provides these indices: `bclicked 0` is your BOOT/FLASH button, and the onboard LED is both digital output `0` (`dwrite`) and digital input `0` (`dread`, which reads the pin level back).
 
 {% hint style="info" %}
-No hardware at hand? You can run this script in the [Emulator](../platform/sandbox/emulator.md) and interact with virtual components instead.
+No hardware at hand? You can run this script in the [Emulator](platform/sandbox/emulator.md) and interact with virtual components instead.
 {% endhint %}
 
-To deploy: with the script open, press **Deploy**, select the device you authorized in Step 2, and confirm. The [Sandbox](../platform/sandbox/README.md) page describes the full development workflow.
+To deploy: with the script open, press **Deploy**, select the device you authorized in Step 2, and confirm. The [Sandbox](platform/sandbox/README.md) page describes the full development workflow.
 
 {% hint style="success" %}
-**Checkpoint** — press the **BOOT/FLASH** button on the board: the onboard LED toggles with each press (remember, inverted on ESP8266). Nothing happens? Open your device's page, check the **Logs** tab, and see [Debugging Scripts](../general-concepts/scripting.md#debugging-scripts).
+**Checkpoint** — press the **BOOT/FLASH** button on the board: the onboard LED toggles with each press (remember, inverted on ESP8266). Nothing happens? Open your device's page, check the **Logs** tab, and see [Debugging Scripts](general-concepts/scripting.md#debugging-scripts).
 {% endhint %}
 
 ## Step 4: Control It from the Dashboard
@@ -341,7 +341,7 @@ With the script deployed, the device, the script, and the dashboard form one loo
 - **Press the physical button** — the script publishes `led` with the toggled value to the MQTT broker. The broker delivers it back to the script (which updates `state` and drives the LED via `dwrite`) and to the dashboard (whose widgets update).
 - **Toggle the Switch widget** — the dashboard publishes the same `led` event, and the script receives and handles it in exactly the same way.
 
-The device doesn't treat the dashboard as anything special — everything simply speaks events. See [Dashboard](../platform/dashboard.md) for widgets and layout editing.
+The device doesn't treat the dashboard as anything special — everything simply speaks events. See [Dashboard](platform/dashboard.md) for widgets and layout editing.
 
 {% hint style="success" %}
 **Checkpoint** — it works in both directions: pressing the physical button flips the Switch and LED widgets, and toggling the Switch flips the onboard LED (ESP8266: "on" = unlit).
@@ -359,28 +359,28 @@ The device doesn't treat the dashboard as anything special — everything simply
 
 **The LED keeps blinking.** A medium or fast blink that never stops means wrong credentials or a router out of range. Hold the button for 3–5 seconds to force a reconnect attempt. If that doesn't help, fix the values in `setup()` and upload again — or, if you used the captive portal, clear the WiFi config (see above) and redo Step 2.
 
-**The script is deployed but nothing happens.** Open your device's page and check the **Logs** tab for script errors, the **Script** tab to confirm the deployment, and the **Registers** tab to confirm pin indices — then see [Debugging Scripts](../general-concepts/scripting.md#debugging-scripts).
+**The script is deployed but nothing happens.** Open your device's page and check the **Logs** tab for script errors, the **Script** tab to confirm the deployment, and the **Registers** tab to confirm pin indices — then see [Debugging Scripts](general-concepts/scripting.md#debugging-scripts).
 
 ## What's Next
 
 You now have the full loop — firmware, over-the-air scripts, and a dashboard. Keep going:
 
-{% content-ref url="../general-concepts/scripting.md" %}
-[Scripting](../general-concepts/scripting.md)
+{% content-ref url="general-concepts/scripting.md" %}
+[Scripting](general-concepts/scripting.md)
 {% endcontent-ref %}
 
-{% content-ref url="../general-concepts/primitives.md" %}
-[Primitives](../general-concepts/primitives.md)
+{% content-ref url="general-concepts/primitives.md" %}
+[Primitives](general-concepts/primitives.md)
 {% endcontent-ref %}
 
-{% content-ref url="../platform/dashboard.md" %}
-[Dashboard](../platform/dashboard.md)
+{% content-ref url="platform/dashboard.md" %}
+[Dashboard](platform/dashboard.md)
 {% endcontent-ref %}
 
-{% content-ref url="../foundations/edge-logic-deployment.md" %}
-[Edge Logic Deployment](../foundations/edge-logic-deployment.md)
+{% content-ref url="foundations/edge-logic-deployment.md" %}
+[Edge Logic Deployment](foundations/edge-logic-deployment.md)
 {% endcontent-ref %}
 
-{% content-ref url="uniot-badge.md" %}
-[Uniot Badge](uniot-badge.md)
+{% content-ref url="guides/uniot-badge.md" %}
+[Uniot Badge](guides/uniot-badge.md)
 {% endcontent-ref %}

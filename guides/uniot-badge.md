@@ -20,7 +20,7 @@ The badge comes with its firmware installed. To connect it to your account:
 
 1. Power it over USB-C. With no WiFi stored, it opens a WiFi network named `UNIOT-…`. Join it from your phone or computer.
 2. On the page that opens, enter your WiFi details and your Uniot account ID.
-3. When the badge is online, authorize it on the **Devices** page — see [Authorize the Device](getting-started.md#authorize-the-device).
+3. When the badge is online, authorize it on the **Devices** page — see [Authorize the Device](../getting-started.md#authorize-the-device).
 
 To update the firmware, or to install it on a badge that doesn't have it, use the [Firmware Installer](../platform/installer.md) at [install.uniot.io](https://install.uniot.io). An update keeps the badge's WiFi settings, identity and script.
 

@@ -15,7 +15,7 @@ A dashboard is a grid of widgets, each bound to an Event. Every dashboard, devic
 
 {% hint style="info" %}
 
-**New account?** "My First Dashboard" comes with a Switch and an LED, both bound to the event `led`, and a script that ties them to a pin. [Getting Started](../guides/getting-started.md#step-4-control-it-from-the-dashboard) walks through it.
+**New account?** "My First Dashboard" comes with a Switch and an LED, both bound to the event `led`, and a script that ties them to a pin. [Getting Started](../getting-started.md#step-4-control-it-from-the-dashboard) walks through it.
 
 {% endhint %}
 
@@ -78,4 +78,4 @@ With **Retain** on, the broker keeps the last value a widget published and repla
 
 {% endhint %}
 
-See [Getting Started](../guides/getting-started.md#step-4-control-it-from-the-dashboard) for the seeded Switch and LED in action.
+See [Getting Started](../getting-started.md#step-4-control-it-from-the-dashboard) for the seeded Switch and LED in action.

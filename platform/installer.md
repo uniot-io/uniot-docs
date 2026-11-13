@@ -3,7 +3,7 @@
 [install.uniot.io](https://install.uniot.io) installs and updates the [Uniot Badge](../guides/uniot-badge.md) firmware from your browser. It tells you which firmware the badge is running and which is available, and when it's done it checks that the new version has started. You don't need to install anything on your computer.
 
 {% hint style="info" %}
-The installer has firmware for the Uniot Badge only. To put Uniot Core on another board, build your own firmware with PlatformIO, as in [Getting Started](../guides/getting-started.md).
+The installer has firmware for the Uniot Badge only. To put Uniot Core on another board, build your own firmware with PlatformIO, as in [Getting Started](../getting-started.md).
 {% endhint %}
 
 ## What you need
@@ -33,7 +33,7 @@ A new board, or one that you've erased, starts with nothing stored. After instal
 
 1. Join the WiFi network named `UNIOT-…` from your phone or computer.
 2. On the page that opens, enter your WiFi details and your Uniot account ID.
-3. When the badge is online, authorize it on the **Devices** page — see [Authorize the Device](../guides/getting-started.md#authorize-the-device).
+3. When the badge is online, authorize it on the **Devices** page — see [Authorize the Device](../getting-started.md#authorize-the-device).
 
 ## Which radio build
 

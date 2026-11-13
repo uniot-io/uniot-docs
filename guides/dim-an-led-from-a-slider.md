@@ -13,7 +13,7 @@ The firmware line is the important part. Scripts address hardware by logical ind
 
 ## Prerequisites
 
-- The board from [Getting Started](getting-started.md), online and authorized under your account, with the PlatformIO project from that guide still at hand. You will upload once more.
+- The board from [Getting Started](../getting-started.md), online and authorized under your account, with the PlatformIO project from that guide still at hand. You will upload once more.
 - An LED, a 220 Ω resistor, and two jumper wires. A breadboard makes it tidy but is not required.
 
 ## Step 1: Register an Analog Output

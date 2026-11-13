@@ -1,6 +1,6 @@
 # Two Devices, One Event
 
-Two boards run the script from [Getting Started](getting-started.md). Press the button on one and the LED on both toggles, and the dashboard follows. Then the two get different jobs, a doorbell button and a bell, by deploying different scripts: no firmware change, no rule written in the cloud, no configuration linking them. About 15 minutes, and no extra hardware if the Emulator stands in for the second board.
+Two boards run the script from [Getting Started](../getting-started.md). Press the button on one and the LED on both toggles, and the dashboard follows. Then the two get different jobs, a doorbell button and a bell, by deploying different scripts: no firmware change, no rule written in the cloud, no configuration linking them. About 15 minutes, and no extra hardware if the Emulator stands in for the second board.
 
 ## What You'll Build
 
@@ -21,13 +21,13 @@ Every device, dashboard and Emulator in your account shares one event bus. A dev
 **Pushed events are real.** Every device in your account that handles `led` or `ring` will react to this guide. If something else already uses those names, pick different ones and use them consistently in the scripts and widgets below.
 {% endhint %}
 
-On ESP8266 boards the onboard LED is inverted: "on" in a script means the LED goes dark. Every checkpoint below still holds with light and dark swapped, and a mixed pair will simply blink out of phase with each other. See the note in Getting Started's [Write main.cpp](getting-started.md#write-maincpp) section.
+On ESP8266 boards the onboard LED is inverted: "on" in a script means the LED goes dark. Every checkpoint below still holds with light and dark swapped, and a mixed pair will simply blink out of phase with each other. See the note in Getting Started's [Write main.cpp](../getting-started.md#write-maincpp) section.
 
 ## Step 1: Bring Up the Second Peer
 
 {% tabs %}
 {% tab title="Second board" %}
-Repeat Step 1 and Step 2 of [Getting Started](getting-started.md) on the second board: flash the firmware for its family, connect it to your WiFi, and authorize it under the same account. Use the `platformio.ini` and `main.cpp` from that guide as they are; the only thing the two boards must share is the account.
+Repeat Step 1 and Step 2 of [Getting Started](../getting-started.md) on the second board: flash the firmware for its family, connect it to your WiFi, and authorize it under the same account. Use the `platformio.ini` and `main.cpp` from that guide as they are; the only thing the two boards must share is the account.
 
 Give it a name you can tell apart from A. Open the device's page from the **Devices** page and rename it, for example `Bell`.
 

@@ -48,7 +48,7 @@ lib_deps =
     uniot-io/uniot-core@^0.9.0
 ```
 
-[Getting Started](../guides/getting-started.md) walks through a first project from an empty folder to a device on your dashboard.
+[Getting Started](../getting-started.md) walks through a first project from an empty folder to a device on your dashboard.
 
 ## Build flags
 

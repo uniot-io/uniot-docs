@@ -1,6 +1,6 @@
 # Scripts Without Reflashing
 
-You flashed the firmware once in [Getting Started](getting-started.md). In this guide you never touch the USB cable again: you write two different scripts, test each one in the browser, and push each one to the board over the air. Then you power-cycle the board and watch the last script come back on its own. About 10 minutes.
+You flashed the firmware once in [Getting Started](../getting-started.md). In this guide you never touch the USB cable again: you write two different scripts, test each one in the browser, and push each one to the board over the air. Then you power-cycle the board and watch the last script come back on its own. About 10 minutes.
 
 ## What You'll Build
 
@@ -12,11 +12,11 @@ This is the everyday loop of the platform: the board is generic, the behavior is
 
 ## Prerequisites
 
-- The board from [Getting Started](getting-started.md), online and authorized under your account.
+- The board from [Getting Started](../getting-started.md), online and authorized under your account.
 - Nothing else. The firmware from Getting Started already exposes the onboard LED as digital output `0` and the BOOT/FLASH button as button `0`, and this guide does not change it.
 
 {% hint style="info" %}
-On ESP8266 boards the onboard LED is inverted: `dwrite` writes raw pin levels, and GPIO2 lights when LOW, so "on" in a script means the LED goes dark. The Emulator does not know this; its Digital Write card lights whenever the script writes true. The blink looks the same either way, but the counter's LED is lit after odd presses instead of even. Every checkpoint below still holds with light and dark swapped. To make the board match the Emulator, wire an external LED with a resistor from GPIO2 to GND, as described in Getting Started's [Write main.cpp](getting-started.md#write-maincpp) section.
+On ESP8266 boards the onboard LED is inverted: `dwrite` writes raw pin levels, and GPIO2 lights when LOW, so "on" in a script means the LED goes dark. The Emulator does not know this; its Digital Write card lights whenever the script writes true. The blink looks the same either way, but the counter's LED is lit after odd presses instead of even. Every checkpoint below still holds with light and dark swapped. To make the board match the Emulator, wire an external LED with a resistor from GPIO2 to GND, as described in Getting Started's [Write main.cpp](../getting-started.md#write-maincpp) section.
 {% endhint %}
 
 ## Step 1: Blink, from the Emulator to the Board

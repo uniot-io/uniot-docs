@@ -5,10 +5,10 @@
   * [Firmware](getting-started/firmware.md)
   * [Connect Device](getting-started/connect-device.md)
   * [Troubleshooting](getting-started/troubleshooting.md) -->
+- [Getting Started](getting-started.md)
+  <!-- - [Device Network](guides/device-network.md) -->
 - [Guides](guides/README.md)
-  - [Getting Started](guides/getting-started.md)
-    <!-- - [Device Network](guides/device-network.md) -->
-    <!-- Guides ladder, hidden skeletons; publish in this order between Getting Started and Uniot Badge: -->
+  <!-- Guides ladder, hidden skeletons; publish in this order between Getting Started and Uniot Badge: -->
   - [Scripts Without Reflashing](guides/scripts-without-reflashing.md)
   - [Dim an LED from a Slider](guides/dim-an-led-from-a-slider.md)
   - [A Night Light That Thinks for Itself](guides/night-light.md)

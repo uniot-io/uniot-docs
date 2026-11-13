@@ -1,20 +1,20 @@
 # Guides
 
-The guides are hands-on. Each one takes 20 to 40 minutes, starts from the board you set up in [Getting Started](getting-started.md), and adds the smallest possible change to prove one thing the platform does well: changing a device's behavior without reflashing, letting the device decide on its own, linking devices through events, or teaching scripts a new primitive written in C++.
+The guides are hands-on. Each one takes 20 to 40 minutes, starts from the board you set up in [Getting Started](../getting-started.md), and adds the smallest possible change to prove one thing the platform does well: changing a device's behavior without reflashing, letting the device decide on its own, linking devices through events, or teaching scripts a new primitive written in C++.
 
 Follow them in order. Every guide builds its script in the [Sandbox](../platform/sandbox/README.md), runs it in the [Emulator](../platform/sandbox/emulator.md) first, and deploys it only once it behaves. Because the Emulator talks to real dashboards and devices, guides 1, 4, 5 and 6 can be followed almost entirely without extra hardware.
 
 ## Start Here
 
-{% content-ref url="getting-started.md" %}
-[Getting Started](getting-started.md)
+{% content-ref url="../getting-started.md" %}
+[Getting Started](../getting-started.md)
 {% endcontent-ref %}
 
 ## Learning Path
 
 | #   | Guide                                                       | What you build                                         | What it proves                                      | Extra hardware                |
 | --- | ----------------------------------------------------------- | ------------------------------------------------------ | --------------------------------------------------- | ----------------------------- |
-| 0   | [Getting Started](getting-started.md)                       | Button, LED and dashboard linked by one event          | Flash once, deploy logic over the air               | None                          |
+| 0   | [Getting Started](../getting-started.md)                    | Button, LED and dashboard linked by one event          | Flash once, deploy logic over the air               | None                          |
 | 1   | [Scripts Without Reflashing](scripts-without-reflashing.md) | A blink and a press counter, swapped over the air      | Sandbox workflow, task model, persistent scripts    | None                          |
 | 2   | [Dim an LED from a Slider](dim-an-led-from-a-slider.md)     | A dashboard slider driving PWM brightness              | Register indices, control widgets, retained events  | LED and resistor              |
 | 3   | [A Night Light That Thinks for Itself](night-light.md)      | Light sensor, threshold and LED, decided on the device | Edge logic, publishing only changes, works offline  | Potentiometer or LDR          |
