@@ -6,7 +6,7 @@ hidden: true
 
 To connect your device to the Uniot Platform, you need to have:
 
-1. Registered account in Uniot App ([Get Early Access](https://forms.fillout.com/t/k1LDnvkgvPus))
+1. Registered account in Uniot App ([app.uniot.io](https://app.uniot.io))
 2. Device with a [firmware](./firmware.md) based on Uniot Core
 
 To add a device, visit the devices page on the Platform, where you can initiate the addition of a device. You will be redirected to the settings page, follow the instructions.

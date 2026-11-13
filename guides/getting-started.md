@@ -16,7 +16,7 @@ None of this logic is compiled into the firmware. You flash generic firmware onc
 - A supported board. This guide provides ready-to-use configurations for **NodeMCU-class ESP8266** and **ESP32 DevKit** boards; any other ESP8266/ESP32 board works with minor pin tweaks.
 - A USB **data** cable (some charging cables carry no data).
 - [PlatformIO](https://platformio.org/) installed — either the VSCode extension or the CLI.
-- A Uniot account — [Get Early Access](https://forms.fillout.com/t/k1LDnvkgvPus). Once you are in, copy your **account ID** from your profile page (it is also shown on the Add-new-device screen). You will need it in Step 1.
+- A Uniot account — sign up at [app.uniot.io](https://app.uniot.io). Once you are in, copy your **account ID** from your profile page (it is also shown on the Add-new-device screen). You will need it in Step 1.
 
 {% hint style="info" %}
 **Have a Uniot Badge?** It has firmware of its own, so you don't need to build any. Install or update it from your browser with the [Firmware Installer](../platform/installer.md), and see the [Uniot Badge](uniot-badge.md) guide.
